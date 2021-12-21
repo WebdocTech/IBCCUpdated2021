@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Alert_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cc_allitems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_qualificationDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Qualification Details"
+                android:textAlignment="center"
+                android:textColor="@color/myAppColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Select Country*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/CountryLayout"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualificationDetails" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CountryLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                <ImageView
+                    android:id="@+id/countryImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/certificate"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_country"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/countryImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Examining Body*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/ExaminingBodyLayout"
+                app:layout_constraintTop_toBottomOf="@+id/CountryLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ExaminingBodyLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/CountryLayout"
+                app:layout_constraintStart_toStartOf="@+id/CountryLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+                <ImageView
+                    android:id="@+id/examiningBodyImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/diploma"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_examining_body"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/examiningBodyImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ExaminingBodyNameLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_oval"
+                android:visibility="gone"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/ExaminingBodyLayout"
+                app:layout_constraintStart_toStartOf="@+id/ExaminingBodyLayout"
+                app:layout_constraintTop_toBottomOf="@+id/ExaminingBodyLayout">
+
+                <ImageView
+                    android:id="@+id/examiningBodyNameImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/question_circles"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/et_examining_body_name"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Examining Body Name"
+                    android:inputType="number"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/examiningBodyNameImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Qualification*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/QualificationLayout"
+                app:layout_constraintTop_toBottomOf="@+id/ExaminingBodyNameLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/QualificationLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/ExaminingBodyLayout"
+                app:layout_constraintStart_toStartOf="@+id/ExaminingBodyLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                <ImageView
+                    android:id="@+id/qualificationImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/learning"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_qualification"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/qualificationImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Group*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/GroupLayout"
+                app:layout_constraintTop_toBottomOf="@+id/QualificationLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/GroupLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/QualificationLayout"
+                app:layout_constraintStart_toStartOf="@+id/QualificationLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView13">
+
+                <ImageView
+                    android:id="@+id/groupImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/building"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_group"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/groupImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/SessionLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/GroupLayout"
+                app:layout_constraintStart_toStartOf="@+id/GroupLayout"
+                app:layout_constraintTop_toBottomOf="@+id/GroupLayout">
+
+                <ImageView
+                    android:id="@+id/sessionImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/question_circles"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/et_session"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:digits="0123456789-"
+                    android:hint="Session (2012-2016)"
+                    android:inputType="number"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/sessionImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Purpose of Equivalence*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/SessionLayout"
+                app:layout_constraintTop_toBottomOf="@+id/SessionLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/PurposeOfEquivalenceLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/SessionLayout"
+                app:layout_constraintStart_toStartOf="@+id/SessionLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+                <ImageView
+                    android:id="@+id/purposeOfEquivalenceImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/building"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_purpose_of_equivalence"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/purposeOfEquivalenceImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Grading System*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/PurposeOfEquivalenceLayout"
+                app:layout_constraintTop_toBottomOf="@+id/PurposeOfEquivalenceLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/GradingSystemLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/PurposeOfEquivalenceLayout"
+                app:layout_constraintStart_toStartOf="@+id/PurposeOfEquivalenceLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                <ImageView
+                    android:id="@+id/gradingSystemImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/building"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_grading_system"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/gradingSystemImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Examination System*"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/GradingSystemLayout"
+                app:layout_constraintTop_toBottomOf="@+id/GradingSystemLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ExaminationSystemLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                android:visibility="gone"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/GradingSystemLayout"
+                app:layout_constraintStart_toStartOf="@+id/GradingSystemLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+                <ImageView
+                    android:id="@+id/examinationSystemImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/building"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_examination_system"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/examinationSystemImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_subjects"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Subjects"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_15"
+                app:layout_constraintEnd_toEndOf="@+id/GradingSystemLayout"
+                app:layout_constraintStart_toStartOf="@+id/GradingSystemLayout"
+                app:layout_constraintTop_toBottomOf="@+id/ExaminationSystemLayout" />
+
+            <Button
+                android:id="@+id/btn_select_subject"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/red_button_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Select Subject Grades/Marks"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/tv_subjects"
+                app:layout_constraintStart_toStartOf="@+id/tv_subjects"
+                app:layout_constraintTop_toBottomOf="@+id/tv_subjects"></Button>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_subs_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/border_rectangle"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/tv_subjects"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_subjects"
+                app:layout_constraintTop_toBottomOf="@+id/btn_select_subject" />
+
+            <TextView
+                android:id="@+id/tv_files_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Files"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_15"
+                app:layout_constraintStart_toStartOf="@+id/rv_subs_one"
+                app:layout_constraintTop_toBottomOf="@+id/rv_subs_one" />
+
+            <Button
+                android:id="@+id/btn_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/border_rectangle"
+                android:padding="3dp"
+                android:text="Upload Documents Education and Certificates"
+                android:textColor="@color/myAppColor"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_files_heading"
+                app:layout_constraintStart_toEndOf="@+id/tv_files_heading"
+                app:layout_constraintTop_toTopOf="@+id/tv_files_heading" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/selectedFilesLayout"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/border_rectangle"
+                app:layout_constraintEnd_toEndOf="@+id/rv_subs_one"
+                app:layout_constraintStart_toStartOf="@+id/rv_subs_one"
+                app:layout_constraintTop_toBottomOf="@+id/tv_files_heading">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_files"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_uploadHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Add required educational documents as evidence to upload"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_files"
+                    app:layout_constraintEnd_toEndOf="@+id/rv_files"
+                    app:layout_constraintStart_toStartOf="@+id/rv_files"
+                    app:layout_constraintTop_toTopOf="@+id/rv_files" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btn_upload_transport"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_rectangle"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="Document Evidence of study Abroad/Dual National"
+                android:textColor="@color/myAppColor"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectedFilesLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/selectedFilesLayout_trans"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_marginStart="16dp"
+                android:visibility="gone"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/border_rectangle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_upload_transport">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_files_trans"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_uploadHint_trans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Please attach first 2 pages of passport and all pages with Exit/Entry stamps"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rv_files_trans"
+                    app:layout_constraintEnd_toEndOf="@+id/rv_files_trans"
+                    app:layout_constraintStart_toStartOf="@+id/rv_files_trans"
+                    app:layout_constraintTop_toTopOf="@+id/rv_files_trans" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btn_update"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/border_rectangle"
+                android:backgroundTint="@color/myAppColor"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Update"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectedFilesLayout_trans" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cc_add_marks"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/gray_button_background"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_subjects"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_add_marks"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_add_marks"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/red_button_background"
+                android:text="Done"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/rv_subjects" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/iv_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/about" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

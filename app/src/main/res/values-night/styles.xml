@@ -1,0 +1,18 @@
+<resources>
+
+
+
+    <!-- Splash Screen theme -->
+
+    <style name="MyHintAppearanceStyle" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/darkred</item>
+    </style>
+
+    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/darkred</item>
+        <item name="colorControlNormal">@color/darkred</item>
+    </style>
+
+
+</resources>

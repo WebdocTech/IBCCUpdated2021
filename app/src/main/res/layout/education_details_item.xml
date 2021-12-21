@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="230dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/border_rectangle">
+
+    <ImageView
+        android:id="@+id/iv_remove"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_edit"
+        app:srcCompat="@drawable/ic_remove"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_certificateValue"
+        app:layout_constraintEnd_toStartOf="@+id/iv_remove"
+        app:layout_constraintTop_toTopOf="@+id/tv_certificateValue"
+        app:srcCompat="@drawable/ic_edit"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_certificate"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Certificate"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_program"
+        app:layout_constraintEnd_toStartOf="@+id/tv_certificateValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_certificateValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_certificate"
+        app:layout_constraintEnd_toStartOf="@+id/iv_edit"
+        app:layout_constraintStart_toEndOf="@+id/tv_certificate"
+        app:layout_constraintTop_toTopOf="@+id/tv_certificate" />
+
+    <TextView
+        android:id="@+id/tv_program"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Program"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_group"
+        app:layout_constraintEnd_toEndOf="@+id/tv_certificate"
+        app:layout_constraintStart_toStartOf="@+id/tv_certificate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_certificate" />
+
+    <TextView
+        android:id="@+id/tv_programValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_program"
+        app:layout_constraintEnd_toEndOf="@+id/tv_certificateValue"
+        app:layout_constraintStart_toEndOf="@+id/tv_program"
+        app:layout_constraintTop_toTopOf="@+id/tv_program" />
+
+    <TextView
+        android:id="@+id/tv_group"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Group"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_board"
+        app:layout_constraintEnd_toEndOf="@+id/tv_program"
+        app:layout_constraintStart_toStartOf="@+id/tv_program"
+        app:layout_constraintTop_toBottomOf="@+id/tv_program" />
+
+    <TextView
+        android:id="@+id/tv_groupValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_group"
+        app:layout_constraintEnd_toEndOf="@+id/tv_programValue"
+        app:layout_constraintStart_toEndOf="@+id/tv_group"
+        app:layout_constraintTop_toTopOf="@+id/tv_group" />
+
+    <TextView
+        android:id="@+id/tv_board"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Board"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_passingYear"
+        app:layout_constraintEnd_toEndOf="@+id/tv_group"
+        app:layout_constraintStart_toStartOf="@+id/tv_group"
+        app:layout_constraintTop_toBottomOf="@+id/tv_group" />
+
+    <TextView
+        android:id="@+id/tv_boardValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_board"
+        app:layout_constraintEnd_toEndOf="@+id/tv_groupValue"
+        app:layout_constraintStart_toEndOf="@+id/tv_board"
+        app:layout_constraintTop_toTopOf="@+id/tv_board" />
+
+    <TextView
+        android:id="@+id/tv_passingYear"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Passing Year"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_marksObtained"
+        app:layout_constraintEnd_toEndOf="@+id/tv_board"
+        app:layout_constraintStart_toStartOf="@+id/tv_board"
+        app:layout_constraintTop_toBottomOf="@+id/tv_board" />
+
+    <TextView
+        android:id="@+id/tv_passingYearValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_passingYear"
+        app:layout_constraintEnd_toEndOf="@+id/tv_boardValue"
+        app:layout_constraintStart_toEndOf="@+id/tv_passingYear"
+        app:layout_constraintTop_toTopOf="@+id/tv_passingYear" />
+
+    <TextView
+        android:id="@+id/tv_marksObtained"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Marks Obtained"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_totalMarks"
+        app:layout_constraintEnd_toEndOf="@+id/tv_passingYear"
+        app:layout_constraintStart_toStartOf="@+id/tv_passingYear"
+        app:layout_constraintTop_toBottomOf="@+id/tv_passingYear" />
+
+    <TextView
+        android:id="@+id/tv_marksObtainedValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_marksObtained"
+        app:layout_constraintEnd_toEndOf="@+id/tv_passingYearValue"
+        app:layout_constraintStart_toEndOf="@+id/tv_marksObtained"
+        app:layout_constraintTop_toTopOf="@+id/tv_marksObtained" />
+
+    <TextView
+        android:id="@+id/tv_totalMarks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Total Marks"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_marksObtained"
+        app:layout_constraintStart_toStartOf="@+id/tv_marksObtained"
+        app:layout_constraintTop_toBottomOf="@+id/tv_marksObtained" />
+
+    <TextView
+        android:id="@+id/tv_totalMarksValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_totalMarks"
+        app:layout_constraintEnd_toEndOf="@+id/tv_marksObtainedValue"
+        app:layout_constraintStart_toEndOf="@+id/tv_totalMarks"
+        app:layout_constraintTop_toTopOf="@+id/tv_totalMarks" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

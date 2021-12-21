@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.webdoc.ibcc">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name=" android.permission.INTERNAL_SYSTEM_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="Manifest.permission.CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.IBCC"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".DashBoard.reAssignedCasses.CaseEducationDetailsActivity"></activity>
+        <activity android:name=".DashBoard.reAssignedCasses.ReassignedCaseDetailsActivity" />
+        <activity android:name=".Essentails.heh" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".Payment.PaymentMethods.JsBankAccount.JsAccountActivities.EnterOtpActivityJSAccount" />
+        <activity android:name=".Payment.PaymentMethods.JsBankAccount.JsAccountActivities.JsAccountGenerateOtpActivity" />
+        <activity android:name=".Testing.test" />
+        <activity android:name=".Testing.phpImageActivity" />
+        <activity
+            android:name=".DashBoard.Account.Appointment.EquivalenceAppointment.AppointmentStatusEQActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.Appointment.MainCompletedApptActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyEquivalence.Equivalence_Receipt"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyEquivalence.CallCourier_EQ.CallCourier_EQ"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.EasyPaisaCreditDebit.WebviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.EasyPaisaCreditDebit.EasyPaisaCreditDebitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.JSBankWallet.JsMainActivities.EnterOtpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.JSBankWallet.JsMainActivities.JsBankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.OTCPayment.OtcPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyAttestation.CallCourier.CallCourier"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyEquivalence.EducationDetails.Instructions.Instructions"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyEquivalence.EducationDetails.UpdateQualification.UpdateQualification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.AddQualification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyEquivalence.ApplyEquivalenceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.Appointment.AttestationAppointment.AppointmentStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyAttestation.DocumentCheckList.DocumentChecklisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.JazzCash.JazzCashPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.BankAlfalah.BankAlfalahAccount.BankAlfalahAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.BankAlfalah.BankAlfalahWallet.BankAlfalahWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.BankAlfalah.BankAlfalhCreditDebit.BankAlfalahCreditDebitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.EasyPaisa.EasyPaisaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Payment.PaymentMethods.paymentMethodsList.PaymentMethodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyAttestation.Instructions.FormInstructionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InternetError"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CompleteProfile.SuccessRegistration"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.Verification.PdfView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.Appointment.AttestationAppointment.CompletedAppointment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.ViewProfile.ViewProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.ContactUs.ContactUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.Organization.OrganizationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.AboutUs.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Account.AimsObjective.Aims_ObjectiveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.EventsGallery.GalleryImageShow"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.EventsGallery.EventsGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.VideoGallery.VideoGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyAttestation.AttestationReceipt"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.ApplyAttestation.AttestationApplyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.Downloads.DownloadsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.Verification.VerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.Attestation.AttestationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Dashboard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DashBoard.Home.Equivalence.EquivalenceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CompleteProfile.CompleteProfilePic"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CompleteProfile.CompleteAddressActivity"
+            android:screenOrientation="portrait" /> <!-- android:windowSoftInputMode="adjustNothing" -->
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CompleteProfile.CompleteBasicInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserRegistration.SetPinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserRegistration.MobileVerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserLogin.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserRegistration.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
+    </application>
+
+</manifest>

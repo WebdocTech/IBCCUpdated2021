@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    tools:context=".DashBoard.Home.ApplyEquivalence.ApplyEquivalenceActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hGuideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.01" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hGuideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_User"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_user"
+            app:civ_border_color="@color/light_gray"
+            app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/hGuideline12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hGuideline2"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Personal Information"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_User" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/FirstNameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_heading"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/imageView21"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_firstName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="First Name"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView21"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/LastNameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/FirstNameLayout"
+            app:layout_constraintStart_toStartOf="@id/FirstNameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/FirstNameLayout">
+
+            <ImageView
+                android:id="@+id/imageView22"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_lastName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Last Name"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView22"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--<androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/FatherNameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/LastNameLayout"
+            app:layout_constraintStart_toStartOf="@+id/LastNameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/LastNameLayout">
+
+            <ImageView
+                android:id="@+id/imageView23"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_fatherName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Father Name"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView23"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/EmailLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            android:backgroundTint="#f5f5f5"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/LastNameLayout"
+            app:layout_constraintStart_toStartOf="@+id/LastNameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/LastNameLayout">
+
+            <ImageView
+                android:id="@+id/imageView24"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_email_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView24"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/MobileLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            android:backgroundTint="#f5f5f5"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/EmailLayout"
+            app:layout_constraintStart_toStartOf="@+id/EmailLayout"
+            app:layout_constraintTop_toBottomOf="@+id/EmailLayout">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:padding="0dp"
+                android:visibility="gone"
+                app:defaultNameCode="PK"
+                app:hideNameCode="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/imageView27"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_phone_android_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_MobileNo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:digits="0123456789"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="Mobile Number"
+                android:inputType="phone"
+                android:maxLength="13"
+                android:paddingStart="0dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView27"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TitleLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/MobileLayout"
+            app:layout_constraintStart_toStartOf="@+id/MobileLayout"
+            app:layout_constraintTop_toBottomOf="@+id/MobileLayout"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/title_imageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/letter_t"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/title_spinner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/title_imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/DobLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/TitleLayout"
+            app:layout_constraintStart_toStartOf="@+id/TitleLayout"
+            app:layout_constraintTop_toBottomOf="@+id/TitleLayout">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/calendar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_dob"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:hint="D.O.B"
+                android:paddingStart="10dp"
+                android:paddingEnd="8dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_age"
+                app:layout_constraintStart_toEndOf="@+id/imageView1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill,RtlCompat" />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill,RtlCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CountryLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/DobLayout"
+            app:layout_constraintStart_toStartOf="@+id/DobLayout"
+            app:layout_constraintTop_toBottomOf="@+id/DobLayout">
+
+            <ImageView
+                android:id="@+id/imageView42"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/iconfinder_flag"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_country"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView42"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CnicLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            android:backgroundTint="#f5f5f5"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/CountryLayout"
+            app:layout_constraintStart_toStartOf="@+id/CountryLayout"
+            app:layout_constraintTop_toBottomOf="@+id/CountryLayout">
+
+            <ImageView
+                android:id="@+id/FName_imageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/id_card_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_cnic"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:hint="CNIC"
+                android:inputType="number"
+                android:maxLength="13"
+                android:paddingStart="10dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/FName_imageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/AddressLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintEnd_toEndOf="@+id/CnicLayout"
+            app:layout_constraintStart_toStartOf="@+id/CnicLayout"
+            app:layout_constraintTop_toBottomOf="@+id/CnicLayout"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/addressImageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center|left"
+                android:hint="Current Address"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="8"
+                android:paddingStart="10dp"
+                android:paddingEnd="8dp"
+                android:scrollbars="vertical"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/addressImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CityLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/AddressLayout"
+            app:layout_constraintStart_toStartOf="@+id/AddressLayout"
+            app:layout_constraintTop_toBottomOf="@+id/AddressLayout"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/cityImageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/building"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_city"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                android:hint="Current City"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="8dp"
+                android:scrollbars="vertical"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cityImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/DomicileLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/CityLayout"
+            app:layout_constraintStart_toStartOf="@+id/CityLayout"
+            app:layout_constraintTop_toBottomOf="@+id/CityLayout">
+
+            <ImageView
+                android:id="@+id/certificateImageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/address"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_certificate"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/certificateImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/POBLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/DomicileLayout"
+            app:layout_constraintStart_toStartOf="@+id/DomicileLayout"
+            app:layout_constraintTop_toBottomOf="@+id/DomicileLayout">
+
+            <ImageView
+                android:id="@+id/imageView23"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/building"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_pob"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Place of Birth"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView23"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/NationalityLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            android:visibility="visible"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/POBLayout"
+            app:layout_constraintStart_toStartOf="@+id/POBLayout"
+            app:layout_constraintTop_toBottomOf="@+id/POBLayout">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_nationality"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ProvinceLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/NationalityLayout"
+            app:layout_constraintStart_toStartOf="@+id/NationalityLayout"
+            app:layout_constraintTop_toBottomOf="@+id/NationalityLayout">
+
+            <ImageView
+                android:id="@+id/provinceImageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/county_territory"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_province"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/provinceImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tv_parentsEmployment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Present Employment of Parents"
+            android:textSize="@dimen/textSize_15"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@+id/ProvinceLayout"
+            app:layout_constraintStart_toStartOf="@+id/ProvinceLayout"
+            app:layout_constraintTop_toBottomOf="@+id/ProvinceLayout" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:checkedButton="@+id/radioButton_self"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintDimensionRatio="h,0.12"
+            app:layout_constraintEnd_toEndOf="@+id/NationalityLayout"
+            app:layout_constraintStart_toStartOf="@+id/NationalityLayout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_parentsEmployment">
+
+            <RadioButton
+                android:id="@+id/radioButton_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:text="Govt"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintEnd_toStartOf="@+id/radioButton_family"
+                app:layout_constraintStart_toEndOf="@+id/text_patient"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/radioButton_2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:checked="true"
+                android:text="Private"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/radioButton_self"
+                app:layout_constraintTop_toTopOf="parent" />
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/FatherNameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+            app:layout_constraintStart_toStartOf="@+id/radioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+            <ImageView
+                android:id="@+id/iv_fatherName"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_fatherName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Father Name"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_fatherName"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/FatherCnicLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/FatherNameLayout"
+            app:layout_constraintStart_toStartOf="@+id/FatherNameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/FatherNameLayout">
+
+            <ImageView
+                android:id="@+id/iv_fatherCnic"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/id_card_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_fatherCnic"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Father CNIC No"
+                android:inputType="number"
+                android:maxLength="13"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_fatherCnic"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/NameOfOrganizationLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.55"
+            app:layout_constraintEnd_toEndOf="@+id/FatherCnicLayout"
+            app:layout_constraintStart_toStartOf="@+id/FatherCnicLayout"
+            app:layout_constraintTop_toBottomOf="@+id/FatherCnicLayout">
+
+            <ImageView
+                android:id="@+id/iv_NameOfOrganization"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="5dp"
+                android:src="@drawable/building"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_NameOfOrganization"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Name of Organization"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_NameOfOrganization"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/FatherAddressLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintEnd_toEndOf="@+id/NameOfOrganizationLayout"
+            app:layout_constraintStart_toStartOf="@+id/NameOfOrganizationLayout"
+            app:layout_constraintTop_toBottomOf="@+id/NameOfOrganizationLayout"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/fatherAddressImageView"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_fatherAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center|left"
+                android:hint="Current Address"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="8"
+                android:paddingStart="10dp"
+                android:paddingEnd="8dp"
+                android:scrollbars="vertical"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fatherAddressImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_rectangle"
+            android:backgroundTint="@color/myAppColor"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="16dp"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_11"
+            app:layout_constraintTop_toBottomOf="@+id/FatherAddressLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

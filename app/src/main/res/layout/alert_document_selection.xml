@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/border_rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Document Selection"
+            android:textAlignment="center"
+            android:textColor="@color/myAppColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_head1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Select Certificate Type"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/CertificateLayout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CertificateLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.57"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_head1">
+
+            <ImageView
+                android:id="@+id/iv_certificate"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/certificate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_certificate"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_certificate"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_head2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Select Document Type"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/DocumentLayout"
+            app:layout_constraintTop_toBottomOf="@+id/CertificateLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/DocumentLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.57"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_head2">
+
+            <ImageView
+                android:id="@+id/iv_document"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/profiles"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_document"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_document"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_head3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Only Copies"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_head4"
+            app:layout_constraintTop_toBottomOf="@+id/DocumentLayout" />
+
+        <CheckBox
+            android:id="@+id/checkboxCopies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_head3"
+            app:layout_constraintEnd_toEndOf="@+id/DocumentLayout"
+            app:layout_constraintStart_toStartOf="@+id/DocumentLayout"
+            app:layout_constraintTop_toTopOf="@+id/tv_head3" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/onlyCopiesLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_head3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_head3">
+
+            <EditText
+                android:id="@+id/edt_TicketNo"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/border_rectangle"
+                android:hint="Ticket Number"
+                android:inputType="number"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/edt_Calender"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+            <EditText
+                android:id="@+id/edt_Calender"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:editable="false"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/border_rectangle"
+                android:backgroundTint="@color/gray_btn_bg_color"
+                android:gravity="center"
+                android:hint="Select Date"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_TicketNo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edt_TicketNo"
+                app:layout_constraintTop_toTopOf="@+id/edt_TicketNo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_head4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="No. of Copies"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/NoOfCopiesLayout"
+            app:layout_constraintTop_toBottomOf="@+id/onlyCopiesLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/NoOfCopiesLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.57"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_head4">
+
+            <ImageView
+                android:id="@+id/iv_copies"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_content_copy_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_noOfCopies"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="0"
+                android:inputType="number"
+                android:paddingStart="16dp"
+                android:paddingEnd="4dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_ok"
+                app:layout_constraintStart_toEndOf="@+id/iv_copies"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+
+            <ImageView
+                android:id="@+id/iv_ok"
+                android:layout_width="25dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edt_noOfCopies"
+                app:srcCompat="@drawable/ic_baseline_done_24"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_head5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Amount"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/AmountLayout"
+            app:layout_constraintTop_toBottomOf="@+id/NoOfCopiesLayout" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/AmountLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_oval"
+            app:layout_constraintDimensionRatio="h,4:0.57"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_head5">
+
+            <ImageView
+                android:id="@+id/iv_amount"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:padding="5dp"
+                android:src="@drawable/credit_card"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray"
+                tools:ignore="ContentDescription" />
+
+            <EditText
+                android:id="@+id/edt_Amount"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="Rs.0"
+                android:enabled="false"
+                android:inputType="number"
+                android:paddingStart="16dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_amount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/border_rectangle"
+            android:backgroundTint="@color/myAppColor"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Add"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_11"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AmountLayout" />
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cancel_24"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

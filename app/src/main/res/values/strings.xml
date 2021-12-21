@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">IBCC</string>
+
+
+    <string name="codeHint">*</string>
+    <string name="resendCode">Resend Code</string>
+    <string name="pinText">Remember your password for future login</string>
+    <string name="setPin">Set Pin</string>
+    <string name="confirmPin">Confirm Pin</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="rules">1. Application Form (1-Page) may be obtained from Window/Reception which is available free of cost (attached). Application Form can also be downloaded from Web Site of IBCC (www.ibcc.edu.pk,). Please ensure to fill all the columns. In case any column(s) is left blank, IBCC may not be able to process the case.
+\n2. All the SSCs, HSSCs, Diplomas, Shahadat-ul-Saanviat-ul-Aama, Shahadat-ul-Saanviat-ul-Khasa, Marks Sheets, School Leaving Certificate etc. should be got verified from the issuing authority/Board of Intermediate and Secondary Education/Board of Technical Education concerned before submitting it to IBCC for attestation. IBCC will attest only those certificates which have been verified by the respective issuing authority.Verification should be submitted in sealed envelope of concerned Board along with application for attestation of Certificates .Verification forwarded by every Board shall be valid for a period of six months from the date of issue.</string>
+
+    <string name="courier_details_text">Please book courier appointment.Depoist IBCC fee using Digital Payment
+    (Easy-paisa Wallet or Easy-paisa OTC) or National Bank of Pakistan. Submit your original documents along
+    with IBCC Fee receipt to IBCC Head Office through Courier Service (Call Courier). Your case will be delivered
+    to you through Call Courier once your case is ready/completed.</string>
+
+    <string name="online_details_text">Please fill out all details, attached educational documents
+        (Clear/readable format) and pay IBCC fee using Digital Payment(Easy-paisa Wallet or Easy-paisa OTC).
+    You don\'t need to visit or send your documents to IBCC Office just attached your documents. Your case
+    will be delivered on your given address through Courier Service (Call Courier) once your case is
+        ready/completed</string>
+
+    <string-array name="title_array">
+        <!-- <item>Please Select</item>-->
+        <item>Mr.</item>
+        <item>Ms.</item>
+        <item>Mrs.</item>
+        <item>Miss</item>
+        <item>Sir</item>
+        <item>Madam</item>
+        <item>Dr.</item>
+        <item>Professor</item>
+    </string-array>
+
+    <string-array name="title_certificate">
+        <item>Please Select</item>
+        <item>Certificate</item>
+        <item>Sanad</item>
+    </string-array>
+
+    <string-array name="title_matric">
+        <item>Certificate/Sanad</item>
+        <item>Result/DMC 9th</item>
+        <item>Result/DMC 10th</item>
+    </string-array>
+
+    <string-array name="title_matric_else">
+        <item>Certificate/Sanad</item>
+    </string-array>
+
+
+    <string-array name="title_session">
+        <item>Annual</item>
+        <item>Suplementary</item>
+    </string-array>
+
+
+    <string-array name="title_document">
+        <item>Please Select</item>
+        <item>Original</item>
+        <item>Duplicate</item>
+        <item>Re-attestation</item>
+    </string-array>
+
+    <string-array name="nationality_array">
+        <!-- <item>Please Select Nationality</item>-->
+        <item>Pakistan</item>
+        <item>Afghanistan</item>
+    </string-array>
+
+
+    <string-array name="province_domicile_array">
+        <item>Please Select Center</item>
+        <item>Azad Kashmir</item>
+        <item>Balochistan</item>
+        <item>Fata</item>
+        <item>Gilgit Baltistan</item>
+        <item>ICT</item>
+        <item>Khyber Pakhtonkhwa</item>
+        <item>Punjab</item>
+        <item>Sindh</item>
+    </string-array>
+
+    <string-array name="poe_array">
+        <item>Study</item>
+        <item>Employement</item>
+        <item>Any Other</item>
+    </string-array>
+
+    <string-array name="document_type_array">
+        <item>New/First Time</item>
+        <item>Duplicate</item>
+        <item>1st Revision</item>
+        <item>2nd Revision</item>
+        <item>3rd Revision</item>
+    </string-array>
+
+    <string-array name="examination_system_array">
+        <item>External Evaluation</item>
+        <item>Internal Evaluation</item>
+    </string-array>
+
+</resources>

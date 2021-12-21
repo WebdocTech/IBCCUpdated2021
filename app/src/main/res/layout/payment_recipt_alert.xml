@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/booking_receipt_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/tv_Receipt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="Payment Succesful"
+            android:textColor="#b71c1c"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:srcCompat="@drawable/ic_circle_cross" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/AppointmentDate"
+            app:layout_constraintEnd_toEndOf="@+id/tv_Receipt"
+            app:layout_constraintStart_toStartOf="@+id/tv_Receipt"
+            app:layout_constraintTop_toTopOf="@+id/view1" />
+
+        <TextView
+            android:id="@+id/AppointmentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="PAYMENT DATE"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_12"
+            app:layout_constraintStart_toStartOf="@+id/view_1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Receipt" />
+
+        <TextView
+            android:id="@+id/AppointmentMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="PAYMENT MEDIUM"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_12"
+            app:layout_constraintStart_toStartOf="@+id/AppointmentDate"
+            app:layout_constraintTop_toBottomOf="@+id/AppointmentDate" />
+
+        <View
+            android:id="@+id/view_2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/AppointmentTime"
+            app:layout_constraintEnd_toEndOf="@+id/view_1"
+            app:layout_constraintStart_toStartOf="@+id/view_1"
+            app:layout_constraintTop_toBottomOf="@+id/AppointmentMedium" />
+
+        <TextView
+            android:id="@+id/AppointmentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="REFERENCE NO"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_12"
+            app:layout_constraintStart_toStartOf="@+id/AppointmentMedium"
+            app:layout_constraintTop_toBottomOf="@+id/AppointmentMedium" />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/view_2"
+            app:layout_constraintStart_toStartOf="@+id/view_2"
+            app:layout_constraintTop_toBottomOf="@+id/AppointmentTime" />
+
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_Receipt" />
+
+        <TextView
+            android:id="@+id/tv_payment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/15/2020"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/AppointmentDate"
+            app:layout_constraintEnd_toEndOf="@+id/tv_Receipt"
+            app:layout_constraintTop_toTopOf="@+id/AppointmentDate" />
+
+        <TextView
+            android:id="@+id/tv_payment_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Digital"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/AppointmentMedium"
+            app:layout_constraintEnd_toEndOf="@+id/tv_payment_date"
+            app:layout_constraintTop_toTopOf="@+id/AppointmentMedium" />
+
+        <TextView
+            android:id="@+id/tv_refrence_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11:00AM"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/AppointmentTime"
+            app:layout_constraintEnd_toEndOf="@+id/tv_payment_medium"
+            app:layout_constraintTop_toTopOf="@+id/AppointmentTime" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/blue_button_background"
+            android:text="OK"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

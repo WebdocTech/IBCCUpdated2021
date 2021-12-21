@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashBoard.Home.Downloads.DownloadsActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="#84b44b"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_Downloads"
+        app:layout_constraintEnd_toStartOf="@+id/tv_Downloads"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_Downloads" />
+
+    <TextView
+        android:id="@+id/tv_Downloads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Downloads"
+        android:textAlignment="center"
+        android:textColor="@color/myAppColor"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_12"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/view1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_7" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#84b44b"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_Downloads"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_Downloads"
+        app:layout_constraintTop_toTopOf="@+id/tv_Downloads" />
+
+    <TextView
+        android:id="@+id/tv_EquivalenceForm"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/border_rectangle_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:text="Equivalence Form"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_attestation_form"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_12" />
+
+    <ImageView
+        android:id="@+id/iv_EquivalenceForm"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_EquivalenceForm"
+        app:layout_constraintEnd_toEndOf="@+id/tv_EquivalenceForm"
+        app:layout_constraintTop_toTopOf="@+id/tv_EquivalenceForm"
+        app:srcCompat="@drawable/ic_next"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_attestation_form"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border_rectangle_white"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:text="Attestation Form"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintDimensionRatio="h,0.15"
+        app:layout_constraintEnd_toEndOf="@+id/tv_EquivalenceForm"
+        app:layout_constraintStart_toStartOf="@+id/tv_EquivalenceForm"
+        app:layout_constraintTop_toBottomOf="@+id/tv_EquivalenceForm" />
+
+    <ImageView
+        android:id="@+id/iv_attestation_form"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_attestation_form"
+        app:layout_constraintEnd_toEndOf="@+id/iv_EquivalenceForm"
+        app:layout_constraintTop_toTopOf="@+id/tv_attestation_form"
+        app:srcCompat="@drawable/ic_next"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_conversion_formula"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border_rectangle_gray"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:text="Conversion Formula"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintDimensionRatio="h,0.15"
+        app:layout_constraintEnd_toEndOf="@+id/tv_attestation_form"
+        app:layout_constraintStart_toStartOf="@+id/tv_attestation_form"
+        app:layout_constraintTop_toBottomOf="@+id/tv_attestation_form" />
+
+    <ImageView
+        android:id="@+id/iv_conversion_formula"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_conversion_formula"
+        app:layout_constraintEnd_toEndOf="@+id/iv_attestation_form"
+        app:layout_constraintTop_toTopOf="@+id/tv_conversion_formula"
+        app:srcCompat="@drawable/ic_next"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_important_resolutions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/border_rectangle_white"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:text="Important Resolutions (IBCC)"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintDimensionRatio="h,0.15"
+        app:layout_constraintEnd_toEndOf="@+id/tv_attestation_form"
+        app:layout_constraintStart_toStartOf="@+id/tv_attestation_form"
+        app:layout_constraintTop_toBottomOf="@+id/tv_conversion_formula" />
+
+    <ImageView
+        android:id="@+id/iv_important_resolutions"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_important_resolutions"
+        app:layout_constraintEnd_toEndOf="@+id/iv_conversion_formula"
+        app:layout_constraintTop_toTopOf="@+id/tv_important_resolutions"
+        app:srcCompat="@drawable/ic_next"
+        tools:ignore="ContentDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

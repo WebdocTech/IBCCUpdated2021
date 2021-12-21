@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- TEXT SIZES-->
+    <dimen name="textSize_8">8sp</dimen>
+    <dimen name="textSize_10">10sp</dimen>
+    <dimen name="textSize_11">11sp</dimen>
+    <dimen name="textSize_12">12sp</dimen>
+    <dimen name="textSize_13">13sp</dimen>
+    <dimen name="textSize_15">15sp</dimen>
+    <dimen name="textSize_20">20sp</dimen>
+    <dimen name="textSize_23">23sp</dimen>
+
+    <dimen name="spacing_smaller">4sp</dimen>
+
+</resources>

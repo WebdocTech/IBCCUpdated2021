@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:id="@+id/nav_about_us_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_about_us"
+            android:title="About us" />
+    </group>
+    <group android:id="@+id/nav_aims_objectives_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_aims_objectives"
+            android:title="Aims &amp; Objectives" />
+    </group>
+    <group android:id="@+id/nav_organogram_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_organogram"
+            android:title="Organogram" />
+    </group>
+    <group android:id="@+id/nav_organization_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_organization"
+            android:title="Organization" />
+    </group>
+    <group android:id="@+id/nav_federal_minister_message_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_federal_minister_message"
+            android:title="Federal Minister's Message" />
+    </group>
+    <group android:id="@+id/nav_federal_secretary_message_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_federal_secretary_message"
+            android:title="Federal Secretary's Message" />
+    </group>
+    <group android:id="@+id/nav_secretary_message_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_secretary_message"
+            android:title="Secretary's Message" />
+    </group>
+    <group android:id="@+id/nav_contact_us_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_contact_us"
+            android:title="Contact Us" />
+    </group>
+
+</menu>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightergray">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout6"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivLogo_GetWalletPinFrag_PaymentMethod"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/js_bank_logo" />
+
+                <TextView
+                    android:id="@+id/tvTitle_GetWalletPinFrag"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:maxLines="5"
+                    android:text="Note: Ensure your Js Account is active and has sufficient balance."
+                    android:textColor="@color/myAppColor"
+                    android:textSize="10sp"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivLogo_GetWalletPinFrag_PaymentMethod"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/textView57"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Terms &amp; Conditions apply."
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Enter otp you have recieved"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView57" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/getOTPLayout_GetWalletPinFrag_PaymentMethod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView58">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/pinLayout_GetWalletPinFrag_PaymentMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.553"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/buttonborder"
+                        android:hint="*"
+                        android:inputType="numberPassword"
+                        android:maxLength="1"
+                        android:password="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/myAppColor"
+                        app:layout_constraintEnd_toStartOf="@+id/etPin2_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                    <EditText
+                        android:id="@+id/etPin2_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/buttonborder"
+                        android:hint="*"
+                        android:inputType="numberPassword"
+                        android:maxLength="1"
+                        android:password="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/myAppColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintEnd_toStartOf="@+id/etPin3_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintTop_toTopOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <EditText
+                        android:id="@+id/etPin3_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/buttonborder"
+                        android:hint="*"
+                        android:inputType="numberPassword"
+                        android:maxLength="1"
+                        android:password="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/myAppColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintEnd_toStartOf="@+id/etPin4_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/etPin2_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintTop_toTopOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <EditText
+                        android:id="@+id/etPin4_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/buttonborder"
+                        android:hint="*"
+                        android:inputType="numberPassword"
+                        android:maxLength="1"
+                        android:password="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/myAppColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintEnd_toStartOf="@+id/etPin5_GetWalletPinFrag_PaymentMethod_PaymentMethod5"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@+id/etPin3_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintTop_toTopOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <EditText
+                        android:id="@+id/etPin5_GetWalletPinFrag_PaymentMethod_PaymentMethod5"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/buttonborder"
+                        android:hint="*"
+                        android:inputType="numberPassword"
+                        android:maxLength="1"
+                        android:password="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/myAppColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintEnd_toStartOf="@+id/etPin6_GetWalletPinFrag_PaymentMethod_PaymentMethod6"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@+id/etPin4_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintTop_toTopOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <EditText
+                        android:id="@+id/etPin6_GetWalletPinFrag_PaymentMethod_PaymentMethod6"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/buttonborder"
+                        android:hint="*"
+                        android:inputType="numberPassword"
+                        android:maxLength="1"
+                        android:password="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/myAppColor"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@+id/etPin5_GetWalletPinFrag_PaymentMethod_PaymentMethod5"
+                        app:layout_constraintTop_toTopOf="@+id/etPin1_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTextOTP_GetWalletPinFrag_PaymentMethod_PaymentMethod"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/MyHintAppearanceStyle"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pinLayout_GetWalletPinFrag_PaymentMethod">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_otp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="OTP"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:singleLine="true"
+                        android:textSize="16sp"
+                        android:theme="@style/MyEditTextStyle" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tvPackagePrice_ChoosePaymentMethodFrag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Didn\'t get OTP?"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnResend_GetWalletPinFrag_PaymentMethod"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilTextOTP_GetWalletPinFrag_PaymentMethod_PaymentMethod" />
+
+                <TextView
+                    android:id="@+id/btnResend_GetWalletPinFrag_PaymentMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Resend OTP"
+                    android:textColor="@color/myAppColor"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPackagePrice_ChoosePaymentMethodFrag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvPackagePrice_ChoosePaymentMethodFrag"
+                    app:layout_constraintTop_toTopOf="@+id/tvPackagePrice_ChoosePaymentMethodFrag" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_pay_now"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/circle_light_grey"
+                android:elevation="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="h, 4:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/getOTPLayout_GetWalletPinFrag_PaymentMethod">
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pay Now"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout10"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Total Amount"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPayableAmount_GetWalletPinFrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Rs. 450"
+            android:textColor="@color/myAppColor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

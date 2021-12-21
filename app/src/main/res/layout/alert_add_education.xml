@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Alert_Layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/border_rectangle"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_cancel_24"
+                tools:ignore="ContentDescription" />
+
+
+            <TextView
+                android:id="@+id/tv_educationDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Education Details"
+                android:textAlignment="center"
+                android:textColor="@color/myAppColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_cancel" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Select Certificate*"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/CertificateLayout"
+                app:layout_constraintTop_toBottomOf="@+id/tv_educationDetails" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CertificateLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                <ImageView
+                    android:id="@+id/certificateImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/certificate"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_certificate"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/certificateImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_certificate"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:visibility="gone"
+                    android:textSize="@dimen/textSize_11"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
+                    android:textAlignment="textStart"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:drawableTint="@color/darkGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/certificateImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlCompat" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Program*"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/ProgramLayout"
+                app:layout_constraintTop_toBottomOf="@+id/CertificateLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ProgramLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/CertificateLayout"
+                app:layout_constraintStart_toStartOf="@+id/CertificateLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+                <ImageView
+                    android:id="@+id/programImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/diploma"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_program"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/programImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_program"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:visibility="gone"
+                    android:textSize="@dimen/textSize_11"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
+                    android:textAlignment="textStart"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:drawableTint="@color/darkGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/programImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlCompat" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Group*"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/GroupLayout"
+                app:layout_constraintTop_toBottomOf="@+id/ProgramLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/GroupLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/ProgramLayout"
+                app:layout_constraintStart_toStartOf="@+id/ProgramLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                <ImageView
+                    android:id="@+id/groupImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/learning"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_group"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/groupImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_group"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:drawableTint="@color/darkGray"
+                    android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize_11"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/groupImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlCompat" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Board*"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/BoardLayout"
+                app:layout_constraintTop_toBottomOf="@+id/GroupLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/BoardLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/GroupLayout"
+                app:layout_constraintStart_toStartOf="@+id/GroupLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView13">
+
+                <ImageView
+                    android:id="@+id/boardImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/building"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_board"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/boardImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Passing Year*"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/PassingYearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/BoardLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/PassingYearLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/CertificateLayout"
+                app:layout_constraintStart_toStartOf="@+id/BoardLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+                <ImageView
+                    android:id="@+id/passingYearImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/calendar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_passing_year"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/passingYearImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Select Session*"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/SessionLayout"
+                app:layout_constraintTop_toBottomOf="@+id/PassingYearLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/SessionLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/PassingYearLayout"
+                app:layout_constraintStart_toStartOf="@+id/PassingYearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                <ImageView
+                    android:id="@+id/sessionImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/laptop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <Spinner
+                    android:id="@+id/spinner_session"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/sessionImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/MarksObtainedLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/SessionLayout"
+                app:layout_constraintStart_toStartOf="@+id/SessionLayout"
+                app:layout_constraintTop_toBottomOf="@+id/SessionLayout">
+
+                <ImageView
+                    android:id="@+id/marksObtainedImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/question_circles"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/et_marks_obtained"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Marks Obtained"
+                    android:inputType="number"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/marksObtainedImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/TotalMarksLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/MarksObtainedLayout"
+                app:layout_constraintStart_toStartOf="@+id/MarksObtainedLayout"
+                app:layout_constraintTop_toBottomOf="@+id/MarksObtainedLayout">
+
+                <ImageView
+                    android:id="@+id/totalMarksImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/question_circles"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/et_total_marks"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Total Marks"
+                    android:inputType="number"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/totalMarksImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/RollNoLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_oval"
+                app:layout_constraintDimensionRatio="h,4:0.55"
+                app:layout_constraintEnd_toEndOf="@+id/TotalMarksLayout"
+                app:layout_constraintStart_toStartOf="@+id/TotalMarksLayout"
+                app:layout_constraintTop_toBottomOf="@+id/TotalMarksLayout">
+
+                <ImageView
+                    android:id="@+id/rollNoImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:src="@drawable/question_circles"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/gray"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/et_roll_no"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Roll Number"
+                    android:inputType="number"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rollNoImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="Autofill" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/border_rectangle"
+                android:backgroundTint="@color/myAppColor"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Add"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/RollNoLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

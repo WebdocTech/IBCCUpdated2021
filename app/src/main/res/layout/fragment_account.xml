@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accountFrag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC"
+    android:fillViewport="true"
+    tools:context=".DashBoard.Account.AccountFrag">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".DashBoard.Account.AccountActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hGuideline10Per_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ProfileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/hGuideline10Per_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_user"
+                app:civ_border_color="@android:color/darker_gray"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="#ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="w, 4:4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/UserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:text="user Name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_ViewProfile"
+                app:layout_constraintEnd_toStartOf="@+id/iv_next"
+                app:layout_constraintStart_toEndOf="@+id/user_image"
+                app:layout_constraintTop_toTopOf="@+id/user_image"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tv_ViewProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="View Profile"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="@+id/user_image"
+                app:layout_constraintEnd_toStartOf="@+id/iv_next"
+                app:layout_constraintStart_toStartOf="@+id/UserName"
+                app:layout_constraintTop_toBottomOf="@+id/UserName" />
+
+            <ImageView
+                android:id="@+id/iv_next"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_arrow_right"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Profile_Section1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ProfileLayout">
+
+            <!--android:background="#DCDCDC"
+             android:background="@color/lighterGrey"-->
+
+            <TextView
+                android:id="@+id/textView_Grey_Section3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#DCDCDC"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:text=""
+                android:textAlignment="textStart"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <!--Appointments-->
+            <ImageView
+                android:id="@+id/iv_appointment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/schedule"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_appointment"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_appointment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_appointment"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_appointment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="My Appointments"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_appointment"
+                app:layout_constraintTop_toBottomOf="@+id/textView_Grey_Section3" />
+
+            <!-- another tab-->
+            <!--<View
+                android:id="@+id/view_invite"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_appointment"
+                app:layout_constraintTop_toBottomOf="@+id/iv_appointment" />
+
+            <ImageView
+                android:id="@+id/iv_suggest"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/doctor_suggest"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_suggest"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_suggest"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_suggest"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_suggest"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/suggestApp"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_suggest"
+                app:layout_constraintTop_toBottomOf="@+id/btn_invite" />
+
+            <View
+                android:id="@+id/view_suggest"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_suggest"
+                app:layout_constraintTop_toBottomOf="@+id/iv_suggest" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--About-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Profile_Section3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_Section1">
+
+            <TextView
+                android:id="@+id/textView_About"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#DCDCDC"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:text="About"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <!-- Organization-->
+            <ImageView
+                android:id="@+id/iv_organization"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/people"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_organization"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_organization"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_organization"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_organization"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:text="Organization"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_organization"
+                app:layout_constraintTop_toBottomOf="@+id/textView_About" />
+
+            <View
+                android:id="@+id/view_work"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_organization"
+                app:layout_constraintTop_toBottomOf="@+id/iv_organization" />
+
+            <!--Aims & Objectives-->
+            <ImageView
+                android:id="@+id/iv_aims"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/aims"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_aims"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_aims"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_aims"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_aims"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:text="Aims &amp; Objective"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_aims"
+                app:layout_constraintTop_toBottomOf="@+id/btn_organization" />
+
+            <View
+                android:id="@+id/view_Services"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_aims"
+                app:layout_constraintTop_toBottomOf="@+id/iv_aims" />
+
+            <!--About us-->
+            <ImageView
+                android:id="@+id/iv_aboutUs"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/about"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_aboutUs"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_aboutUs"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_aboutUs"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_aboutUs"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:text="About Us"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_aboutUs"
+                app:layout_constraintTop_toBottomOf="@+id/btn_aims" />
+
+            <View
+                android:id="@+id/view_PrivacyPolicy"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_aboutUs"
+                app:layout_constraintTop_toBottomOf="@+id/iv_aboutUs" />
+
+            <!--Support-->
+            <ImageView
+                android:id="@+id/iv_ReportIssue"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/customer_service"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_ReportIssue"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_ReportIssue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_ReportIssue"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_ReportIssue"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:text="Support"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_ReportIssue"
+                app:layout_constraintTop_toBottomOf="@+id/btn_aboutUs" />
+
+            <View
+                android:id="@+id/view_ReportIssue"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="24dp"
+                android:background="#c0c0c0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_ReportIssue"
+                app:layout_constraintTop_toBottomOf="@+id/iv_ReportIssue" />
+
+            <!--Contact Us-->
+            <ImageView
+                android:id="@+id/iv_contactUs"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:src="@drawable/communicate"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_contactUs"
+                app:layout_constraintDimensionRatio="h, 3:3"
+                app:layout_constraintEnd_toStartOf="@+id/btn_contactUs"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_contactUs"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/btn_contactUs"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:text="Contact Us"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textSize_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="h, 4:0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_contactUs"
+                app:layout_constraintTop_toBottomOf="@+id/btn_ReportIssue" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/SocialLinksLayout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Profile_Section3">
+
+            <ImageView
+                android:id="@+id/iv_fb"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/border_round_two"
+                android:elevation="2dp"
+                android:padding="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_twitter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/facebook"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_twitter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/border_round_two"
+                android:elevation="2dp"
+                android:padding="13dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_fb"
+                app:layout_constraintEnd_toStartOf="@+id/iv_youTube"
+                app:layout_constraintStart_toEndOf="@+id/iv_fb"
+                app:layout_constraintTop_toTopOf="@+id/iv_fb"
+                app:srcCompat="@drawable/twitter"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_youTube"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/border_round_two"
+                android:elevation="2dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_fb"
+                app:layout_constraintEnd_toStartOf="@+id/iv_linkedIn"
+                app:layout_constraintStart_toEndOf="@+id/iv_twitter"
+                app:layout_constraintTop_toTopOf="@+id/iv_fb"
+                app:srcCompat="@drawable/youtube"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_linkedIn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/border_round_two"
+                android:elevation="2dp"
+                android:padding="13dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_fb"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_youTube"
+                app:layout_constraintTop_toTopOf="@+id/iv_fb"
+                app:srcCompat="@drawable/linkedin"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/SignOutLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SocialLinksLayout">
+
+            <TextView
+                android:id="@+id/tv_signOut"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#DCDCDC"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                app:layout_constraintBottom_toTopOf="@+id/btn_logOut"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <Button
+                android:id="@+id/btn_logOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_logout"
+                android:drawablePadding="16dp"
+                android:drawableTint="@android:color/holo_red_dark"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="16dp"
+                android:text="SignOut"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_13"
+                app:layout_constraintBottom_toTopOf="@+id/textView_signout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_signOut"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/textView_signout2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#DCDCDC"
+                android:textSize="@dimen/textSize_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="RtlCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+

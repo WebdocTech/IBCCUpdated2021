@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/border_rectangle">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_eoq"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_eoq"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Equivalence of Qualification"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_group"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_group"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Group"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_examiningBody"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_eoq" />
+
+    <TextView
+        android:id="@+id/tv_examiningBody"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Examining Body"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_eoc_diplomas"
+        app:layout_constraintEnd_toEndOf="@+id/tv_group"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_group"
+        app:layout_constraintTop_toBottomOf="@+id/tv_group" />
+
+    <TextView
+        android:id="@+id/tv_eoc_diplomas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Equivalence of Certificates/Diplomas"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/tv_eoc_diplomas_type"
+        app:layout_constraintEnd_toEndOf="@+id/tv_examiningBody"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_examiningBody"
+        app:layout_constraintTop_toBottomOf="@+id/tv_examiningBody" />
+
+    <TextView
+        android:id="@+id/tv_eoc_diplomas_type"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Equivalence of Certificates/Diplomas Type"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toTopOf="@+id/DocumentTypeLayout"
+        app:layout_constraintEnd_toEndOf="@+id/tv_eoc_diplomas"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_eoc_diplomas"
+        app:layout_constraintTop_toBottomOf="@+id/tv_eoc_diplomas" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/DocumentTypeLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_oval"
+        app:layout_constraintBottom_toTopOf="@+id/cb_urgent"
+        app:layout_constraintDimensionRatio="h,4:0.55"
+        app:layout_constraintEnd_toEndOf="@+id/tv_eoc_diplomas_type"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_eoc_diplomas_type"
+        app:layout_constraintTop_toBottomOf="@+id/tv_eoc_diplomas_type">
+
+        <ImageView
+            android:id="@+id/documentTypeImageView"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:padding="5dp"
+            android:src="@drawable/certificate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/gray"
+            tools:ignore="ContentDescription" />
+
+        <Spinner
+            android:id="@+id/spinner_document_type"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/documentTypeImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <CheckBox
+        android:id="@+id/cb_urgent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Urgent"
+        android:textSize="@dimen/textSize_11"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DocumentTypeLayout" />
+
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/border_rectangle"
+        android:inputType="number"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="0"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cb_urgent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cb_urgent"
+        tools:ignore="Autofill" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

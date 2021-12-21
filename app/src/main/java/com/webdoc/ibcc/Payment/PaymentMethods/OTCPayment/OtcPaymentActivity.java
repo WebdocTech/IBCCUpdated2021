@@ -1,0 +1,307 @@
+package com.webdoc.ibcc.Payment.PaymentMethods.OTCPayment;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.webdoc.ibcc.DashBoard.Home.ApplyAttestation.DocumentCheckList.DocumentChecklisActivity;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.CallCourier_EQ.CallCourier_EQ;
+import com.webdoc.ibcc.Essentails.Global;
+import com.webdoc.ibcc.Payment.PaymentMethods.OTCPayment.ResponseModels.OtcPaymentResponse;
+import com.webdoc.ibcc.Payment.PaymentMethods.OTCPayment.ViewModel.OtcViewModel;
+import com.webdoc.ibcc.R;
+import com.webdoc.ibcc.ResponseModels.SavePaymentInfo.SavePaymentInfo;
+import com.webdoc.ibcc.databinding.ActivityOtcPaymentBinding;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+public class OtcPaymentActivity extends AppCompatActivity {
+    private ActivityOtcPaymentBinding binding;
+    private OtcViewModel viewModel;
+    private String mobileNumber, email;
+    private String case_id,
+            user_id,
+            amount_paid,
+            bank,
+            account_number,
+            mobile_number,
+            transection_type,
+            transaction_reference_number,
+            transaction_datetime,
+            center,
+            IBCC_amount,
+            webdoc_amount,
+            status, userIdEq;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_otc_payment);
+        binding = ActivityOtcPaymentBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        initViews();
+        clickListeneres();
+        observers();
+    }
+
+    public void initViews() {
+        //connecting View Model with activity
+        viewModel = ViewModelProviders.of(this).get(OtcViewModel.class);
+
+        Global.applicationContext = OtcPaymentActivity.this;
+
+        binding.tvPkgPrice.setText(String.valueOf(Global.price));
+    }
+
+    public void clickListeneres() {
+
+        binding.etAccountNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (binding.etAccountNo.getText().length() == 11) {
+                    Global.utils.hideKeyboard(OtcPaymentActivity.this);
+                    binding.ccEnterCnic.setVisibility(View.VISIBLE);
+                } else {
+                    binding.ccEnterCnic.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.etCnic.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (Global.isEmailValid(binding.etCnic.getText().toString())) {
+                    Global.utils.hideKeyboard(OtcPaymentActivity.this);
+                    binding.btnNext.setVisibility(View.VISIBLE);
+                } else {
+                    binding.btnNext.setVisibility(View.GONE);
+                }
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Global.utils.showCustomLoadingDialog(OtcPaymentActivity.this);
+                mobileNumber = binding.etAccountNo.getText().toString();
+                email = binding.etCnic.getText().toString();
+
+                viewModel.otcPAymentApiCalling(mobileNumber, email);
+
+            }
+
+        });
+
+    }
+
+    public void observers() {
+
+        //todo: when next button is click befor easy paisa payment this observer will call====>>>>
+        viewModel.LD_btn_next_click().observe(this, s -> {
+
+            if (s instanceof OtcPaymentResponse) {
+
+                if (s.getResponseCode().equals("0000")) {
+                    //case_id = Global.caseId;
+
+                    if (!TextUtils.isEmpty(Global.caseId)) {
+                        case_id = Global.caseId;
+                    } else {
+                        case_id = Global.incompleteCaseId;
+                    }
+
+                    user_id = Global.userLoginResponse.getResult().getCustomerProfile().getId();
+                    amount_paid = String.valueOf(Global.price);
+                    bank = "EasyPaisa OTC";
+                    account_number = mobileNumber;
+                    mobile_number = Global.userLoginResponse.getResult().getCustomerProfile().getMobile();
+                    transection_type = "OTC";
+                    transaction_reference_number = s.getTransactionId();
+                    transaction_datetime = Global.eqDateTime;
+                    center = Global.center;
+                    IBCC_amount = String.valueOf(Global.ibccAmount);
+                    webdoc_amount = String.valueOf(Global.webdocAmount);
+                    status = "Pending";
+                    String bank_charges = Global.bankChargesForReceiptEQ;
+                    String order_id = Global.order_id;
+                    userIdEq = String.valueOf(Global.userLoginResponse.getResult().getCustomerProfile().getId());
+                    String bankCharges = Global.bankChargesForReceipt;
+                    String platform = "Android";
+                    String courier_amount = "200";
+
+                    if (Global.isFromEquivalence) {
+                        viewModel.callingSavePaymentForEquilance(order_id, case_id, amount_paid, bank, account_number, mobile_number, transection_type, transaction_reference_number, transaction_datetime, userIdEq, status, webdoc_amount, IBCC_amount, bank_charges, courier_amount, platform);
+                    } else {
+                        viewModel.CallingSavePaymentApiOnEasyPaisaSuccess(order_id, IBCC_amount, webdoc_amount, case_id, amount_paid, bank, account_number, mobile_number, transection_type, transaction_reference_number, transaction_datetime, user_id, status, bankCharges, courier_amount, platform);
+                    }
+
+                } else if (s.getResponseCode().equals("0001")) {
+
+                    Global.utils.showErrorSnakeBar(OtcPaymentActivity.this, "System Error");
+                    Global.utils.hideCustomLoadingDialog();
+
+                } else if (s.getResponseCode().equals("0013")) {
+                    Global.utils.showErrorSnakeBar(OtcPaymentActivity.this, "Low account balance");
+                    Global.utils.hideCustomLoadingDialog();
+
+                } else {
+                    Global.utils.showErrorSnakeBar(OtcPaymentActivity.this, "something went wrong");
+                    Global.utils.hideCustomLoadingDialog();
+                }
+            }
+        });
+
+
+        viewModel.LD_savePaymentInfo_from_attestation().observe(this, s -> {
+
+            if (s instanceof SavePaymentInfo) {
+
+                if (s.getResult().getResponseCode().equals("0000")) {
+                    Global.savePaymentInfo = s;
+                    Global.utils.hideCustomLoadingDialog();
+
+                    Global.utils.showSuccessSnakeBar(OtcPaymentActivity.this, "Visit easypaisa shop and pay your bill");
+
+                    new SweetAlertDialog(OtcPaymentActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setContentText("Your Transaction Number " + transaction_reference_number + " is generated. please pay on any near Easypaisa shop against this transection number")
+                            .setConfirmText("Yes")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+
+                                    if (Global.isFromEquivalence) {
+                                        Intent intent = new Intent(OtcPaymentActivity.this, CallCourier_EQ.class);
+                                        intent.putExtra("appointment_method", transection_type);
+                                        intent.putExtra("trx_id", transaction_reference_number);
+                                        intent.putExtra("bank_name", bank);
+                                        intent.putExtra("payment_status", "active");
+                                        finish();
+                                        startActivity(intent);
+
+                                    } else {
+                                        Intent intent = new Intent(OtcPaymentActivity.this, DocumentChecklisActivity.class);
+                                        intent.putExtra("appointment_method", transection_type);
+                                        intent.putExtra("trx_id", transaction_reference_number);
+                                        intent.putExtra("bank_name", bank);
+                                        intent.putExtra("payment_status", "active");
+                                        finish();
+                                        startActivity(intent);
+                                    }
+
+                                }
+                            })
+                            .show();
+
+
+                } else {
+                    Global.utils.hideCustomLoadingDialog();
+                    Toast.makeText(this, "resp fail ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        viewModel.LD_savePaymentInfoEquialance().observe(this, s -> {
+
+            if (s instanceof SavePaymentInfo) {
+
+                if (s.getResult().getResponseCode().equals("0000")) {
+                    Global.savePaymentInfo = s;
+                    Global.utils.hideCustomLoadingDialog();
+
+                    Global.utils.showSuccessSnakeBar(OtcPaymentActivity.this, "Success");
+
+                    new SweetAlertDialog(OtcPaymentActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+
+                            .setContentText("Your Transaction Number " + transaction_reference_number + " is generated. please pay on any near Easypaisa shop against this transection number")
+                            .setConfirmText("Yes")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+
+                                    /*Intent intent = new Intent(OtcPaymentActivity.this, CallCourier.class);
+                                    intent.putExtra("appointment_method", transection_type);
+                                    intent.putExtra("trx_id", transaction_reference_number);
+                                    intent.putExtra("bank_name", bank);
+                                    intent.putExtra("payment_status", "Pending");
+                                    startActivity(intent);*/
+
+
+                                    if (Global.isFromEquivalence) {
+
+                                        if (Global.isIncompleteAppointmentEQ) {
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setIbccAmount(String.valueOf(Global.ibccAmount));
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setWebdocAmount(String.valueOf(Global.webdocAmount));
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setChalanId(String.valueOf(s.getResult().getChallan_id()));
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setTransactionid(String.valueOf(transaction_reference_number));
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setBankname(bank);
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setPaymentstatus("Pending");
+                                            Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setAppointmentMethod(String.valueOf(transection_type));
+                                            if (Global.incompleteDetailsEQResponse.getResult().getStepNumber() != "5")
+                                                if (Global.secuirtyFeeForReceiptEQ.contains("50")) {
+                                                    Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setIsSecurityCheck(true);
+
+                                                } else {
+                                                    Global.incompleteDetailsEQResponse.getResult().getPaymentinfo().setIsSecurityCheck(false);
+                                                }
+                                        }
+                                        Intent intent = new Intent(OtcPaymentActivity.this, CallCourier_EQ.class);
+                                        intent.putExtra("appointment_method", transection_type);
+                                        intent.putExtra("trx_id", transaction_reference_number);
+                                        intent.putExtra("bank_name", bank);
+                                        intent.putExtra("payment_status", "Pending");
+                                        finish();
+                                        startActivity(intent);
+
+                                    } else {
+                                        Intent intent = new Intent(OtcPaymentActivity.this, DocumentChecklisActivity.class);
+                                        intent.putExtra("appointment_method", transection_type);
+                                        intent.putExtra("trx_id", transaction_reference_number);
+                                        intent.putExtra("bank_name", bank);
+                                        intent.putExtra("payment_status", "Pending");
+                                        finish();
+                                        startActivity(intent);
+                                    }
+
+                                }
+                            })
+                            .show();
+
+
+                } else {
+                    Global.utils.hideCustomLoadingDialog();
+                    Toast.makeText(this, "resp fail ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+}
