@@ -30,6 +30,7 @@ public class EasyPaisaActivity extends AppCompatActivity {
             transaction_reference_number, transaction_datetime,
             center, IBCC_amount, webdoc_amount, status, userIdEq;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

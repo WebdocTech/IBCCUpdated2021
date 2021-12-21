@@ -4,12 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.webdoc.ibcc.Adapter.PaymentAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.GenerateApp.EquivalenceGenerateAppFragment;
@@ -42,8 +39,8 @@ public class PaymentFragment_EQ extends Fragment {
 
         Global.paymentTitle.clear();
 
-        final int[] logo = {R.drawable.easypaisa_icon, R.drawable.easypaisa_icon, R.drawable.credit_card, R.drawable.js_bank_logo};
-        final String[] title = {"EasyPaisa Wallet", "OTC Through EasyPaisa", "Credit/Debit", "Js Wallet"};
+        final int[] logo = {R.drawable.easypaisa_icon, R.drawable.easypaisa_icon, R.drawable.credit_card, R.drawable.js_bank_logo, R.drawable.credit_card};
+        final String[] title = {"EasyPaisa Wallet", "OTC Through EasyPaisa", "Credit/Debit", "Js Wallet", "InternationalPayment"};
 
 
         for (int i = 0; i < logo.length; i++) {
