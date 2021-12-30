@@ -4,12 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.webdoc.ibcc.Adapter.PaymentAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyAttestation.GenerateApp.GenerateAppFragment;
@@ -54,8 +51,8 @@ public class PaymentFragment extends Fragment {
        /* final int[] logo = {R.drawable.bank_alfalah_logo, R.drawable.bank_alfalah_logo, R.drawable.jazzcash, R.drawable.easypaisa_icon, R.drawable.js_bank_logo, R.drawable.credit, R.drawable.easypaisa_icon, R.drawable.easypaisa_icon};
         final String[] title = {"Bank Alfalah Account", "Bank Alfalah Wallet", "Jazz Cash Wallet", "Easy Paisa Wallet", "Js Wallet", "Credit/Debit Card", "Easy Paisa OTC payment", "Easy Paisa Credit Debit"};*/
 
-        final int[] logo = {R.drawable.easypaisa_icon, R.drawable.easypaisa_icon, R.drawable.credit_card, R.drawable.js_bank_logo};
-        final String[] title = {"EasyPaisa Wallet", "OTC Through EasyPaisa", "Credit/Debit", "Js Wallet"};
+        final int[] logo = {R.drawable.easypaisa_icon, R.drawable.easypaisa_icon, R.drawable.credit_card, R.drawable.js_bank_logo, R.drawable.credit_card};
+        final String[] title = {"EasyPaisa Wallet", "OTC Through EasyPaisa", "Credit/Debit", "Js Wallet", "InternationalPayment"};
 
         for (int i = 0; i < logo.length; i++) {
             PaymentModel model = new PaymentModel(logo[i], title[i]);

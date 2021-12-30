@@ -23,6 +23,7 @@ import com.webdoc.ibcc.Payment.PaymentMethods.EasyPaisaCreditDebit.EasyPaisaCred
 import com.webdoc.ibcc.Payment.PaymentMethods.JSBankWallet.JsMainActivities.JsBankActivity;
 import com.webdoc.ibcc.Payment.PaymentMethods.JazzCash.JazzCashPaymentActivity;
 import com.webdoc.ibcc.Payment.PaymentMethods.OTCPayment.OtcPaymentActivity;
+import com.webdoc.ibcc.Payment.PaymentMethods.StripePayment.StripeActivity;
 import com.webdoc.ibcc.R;
 
 public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHolder> {
@@ -81,6 +82,9 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
                     context.startActivity(intent);
                 } else if (title.equals("Credit/Debit")) {
                     Intent intent = new Intent(context, EasyPaisaCreditDebitActivity.class); //webview
+                    context.startActivity(intent);
+                } else if (title.equals("InternationalPayment")) {
+                    Intent intent = new Intent(context, StripeActivity.class);
                     context.startActivity(intent);
                 } else if (title.equals("temp")) {
                     Intent intent = new Intent(context, CallCourier_EQ.class);

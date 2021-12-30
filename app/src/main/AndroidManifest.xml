@@ -29,7 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IBCC"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DashBoard.Home.ApplyEquivalenceNew.ApplyEquivalenceNewActivity"></activity>
+        <activity android:name=".Payment.PaymentMethods.StripePayment.StripeActivity" />
         <activity android:name=".DashBoard.reAssignedCasses.CaseEducationDetailsActivity" />
         <activity android:name=".DashBoard.reAssignedCasses.ReassignedCaseDetailsActivity" />
         <activity android:name=".Essentails.heh" />
@@ -185,7 +185,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
