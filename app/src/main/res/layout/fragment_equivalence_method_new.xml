@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".DashBoard.Home.ApplyEquivalenceNew.fragments.EquivalenceMethodNewFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hGuideline2"
+        app:layout_constraintGuide_percent="0.02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.02" />
+        android:orientation="horizontal" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hGuideline20"
+        app:layout_constraintGuide_percent="0.20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
+        android:orientation="horizontal" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/iv_User"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/hGuideline20"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hGuideline2"
         app:lottie_autoPlay="true"
         app:lottie_fileName="38287-scanning-searching-for-data.json"
-        app:lottie_loop="true" />
+        app:lottie_loop="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
     <View
         android:id="@+id/viewTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_User"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:background="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_User" />
-
+        android:background="@color/gray" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/courierCardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/border_rectangle"
-        android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/applyOnlineCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/applyOnlineCardView"
-        app:layout_constraintTop_toTopOf="@+id/applyOnlineCardView">
+        app:layout_constraintTop_toTopOf="@+id/applyOnlineCardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/border_rectangle"
+        android:elevation="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,47 +62,47 @@
 
             <TextView
                 android:id="@+id/tv_courier"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_courier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Courier"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textSize_13"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_courier" />
+                android:textSize="@dimen/textSize_13" />
 
             <ImageView
                 android:id="@+id/iv_courier"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/gray"
-                android:padding="15dp"
                 app:layout_constraintDimensionRatio="h,1.2:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/courier_equivalence" />
+                app:srcCompat="@drawable/courier_equivalence"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/gray"
+                android:padding="15dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/applyOnlineCardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/border_rectangle"
-        android:elevation="5dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_details"
         app:layout_constraintDimensionRatio="h,1:1.2"
         app:layout_constraintEnd_toStartOf="@+id/courierCardView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1">
+        app:layout_constraintTop_toBottomOf="@+id/textView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/border_rectangle"
+        android:elevation="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -110,20 +110,25 @@
 
             <ImageView
                 android:id="@+id/iv_online"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/gray"
-                android:padding="15dp"
                 app:layout_constraintDimensionRatio="h,1.2:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/online_equivalence" />
+                app:srcCompat="@drawable/online_equivalence"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/gray"
+                android:padding="15dp" />
 
             <TextView
                 android:id="@+id/tv_online"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_online"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -131,33 +136,32 @@
                 android:gravity="center"
                 android:text="Online(O/A level case only)"
                 android:textColor="@color/black"
-                android:textSize="@dimen/textSize_13"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_online" />
+                android:textSize="@dimen/textSize_13" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tv_details"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="10sp"
-        android:layout_marginEnd="10sp"
-        android:text="@string/online_details_text"
-        android:textColor="@color/dark_TextColor"
-        android:textSize="@dimen/textSize_15"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/applyOnlineCardView"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
-
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10sp"
+        android:text="@string/online_details_text"
+        android:textColor="@color/dark_TextColor"
+        android:textSize="@dimen/textSize_15" />
 
     <TextView
         android:id="@+id/textView1"
+        app:layout_constraintBottom_toTopOf="@+id/applyOnlineCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hGuideline20"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -165,15 +169,13 @@
         android:textAllCaps="true"
         android:textColor="@color/dark_TextColor"
         android:textSize="@dimen/textSize_15"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/applyOnlineCardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hGuideline20"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginBottom="32dp"
@@ -183,9 +185,6 @@
         android:paddingEnd="20dp"
         android:text="Next"
         android:textColor="@color/white"
-        android:textSize="@dimen/textSize_11"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textSize="@dimen/textSize_11" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

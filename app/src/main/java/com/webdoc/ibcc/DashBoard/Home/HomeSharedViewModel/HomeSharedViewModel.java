@@ -582,6 +582,7 @@ public class HomeSharedViewModel extends ViewModel {
                         RequestBody.create(MediaType.parse(context.getContentResolver().getType(Global.phpfiles.get(i))), file)
                 );
             }
+
             RequestBody requestBody = builder.build();
             jsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(jsonPlaceHolderApi.class);
             Call<PhpfilesResponse> call1 = jsonPlaceHolderApi.callImagesFormDataApi(requestBody);

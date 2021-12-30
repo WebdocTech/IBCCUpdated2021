@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.webdoc.ibcc.Adapter.EditSubjectsAdapter;
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.GradesAdapter;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.QualificationSubjectResponse;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
@@ -33,6 +34,7 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
     Activity context;
     List<EquivalenceSubject> equivalenceSubjectList = null;
     EquivalenceGrade grade;
+    SubjectsGradeModel subjectsGradeModel;
     List<String> newMarksList = new ArrayList<String>();
     ArrayList<QualificationSubjectResponse> arrayList;
 
@@ -72,33 +74,32 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
             holder.mainGradeLayout.setVisibility(View.GONE);
             Global.checkMarks = true;
 
-            String[] marks = Global.addQualificationEQResponse.getResult().getDocumentDetails().get(Global.selectedQualificationIndex).getQualificationSubjectResponse().get(position).getMarksgrades().split("/");
+            /*String[] marks = Global.addQualificationEQResponse.getResult().getDocumentDetails().get(Global.selectedQualificationIndex).getQualificationSubjectResponse().get(position).getMarksgrades().split("/");
 
             holder.et_marks_obtained.setText(marks[0]);
-            holder.et_total_marks.setText(marks[1]);
+            holder.et_total_marks.setText(marks[1]);*/
             holder.btn_add_sub_marks.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     Global.utils.hideKeyboard(context);
 
-
                     String Obtained_Marks = holder.et_marks_obtained.getText().toString();
                     String Total_Marks = holder.et_total_marks.getText().toString();
 
                     if (!Obtained_Marks.equals("") && !Total_Marks.equals("")) {
                         if (Integer.parseInt(Obtained_Marks) > Integer.parseInt(Total_Marks)) {
-                            holder.et_marks_obtained.setError("Obtained Marks must be less than or equalto total marks");
+                            holder.et_marks_obtained.setError("Obtained Marks must be less than or equal to total marks");
                             holder.et_marks_obtained.requestFocus();
                             Global.utils.hideKeyboard(context);
                         } else {
                             String marks = Obtained_Marks + "/" + Total_Marks;
-                            grade = new EquivalenceGrade();
-                            grade.setId(subjectItem.getId());
-                            grade.setName(marks);
-                            Global.selectedGradeList.set(position, grade);
+                            subjectsGradeModel = new SubjectsGradeModel();
+                            subjectsGradeModel.setSubjectId(subjectItem.getId());
+                            subjectsGradeModel.setMarksgrades(marks);
+                            Global.marksList.add(subjectsGradeModel);
 
-                            holder.btn_add_sub_marks.setText("Added Succesfully");
+                            holder.btn_add_sub_marks.setText("Added Successfully");
                             holder.btn_add_sub_marks.setBackground(context.getDrawable(R.drawable.green_button_background));
                         }
 
@@ -109,8 +110,6 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
 
                 }
             });
-
-
         } else {
             holder.marksLayout.setVisibility(View.GONE);
             holder.mainGradeLayout.setVisibility(View.VISIBLE);
@@ -123,12 +122,12 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
         // for each item of spinner
         holder.spinner_grades.setAdapter(gradesAdapter);
 
-        int grade_pos = 0;
         for (int i = 0; i < arrayList.size(); i++) {
             if (subjectItem.getName().equalsIgnoreCase(arrayList.get(i).getSubjectName())) {
                 for (int j = 0; j < Global.equivalenceGradeList.size(); j++) {
-                    if (arrayList.get(position).getMarksgrades().equalsIgnoreCase(Global.equivalenceGradeList.get(j).getName())) {
-                        grade_pos = i;
+                    String apiGrade = arrayList.get(i).getMarksgrades();
+                    String oldListGrade = Global.equivalenceGradeList.get(j).getName();
+                    if (apiGrade.equalsIgnoreCase(oldListGrade)) {
                         holder.spinner_grades.setSelection(j);
                         break;
                     }
@@ -141,6 +140,16 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long id) {
                 grade = Global.equivalenceGradeList.get(pos);
                 Global.selectedGradeList.set(position, grade);
+
+                for (int i = 0; i < Global.subjectReassignGradeList.size(); i++) {
+                    if (Global.subjectReassignGradeList.get(position).getSubjectId().equalsIgnoreCase(arrayList.get(i).getSubjectId())) {
+                        SubjectsGradeModel subjectsGradeModel = new SubjectsGradeModel();
+                        subjectsGradeModel.setSubjectId(arrayList.get(i).getSubjectId());
+                        subjectsGradeModel.setSubjectName(arrayList.get(i).getSubjectName());
+                        subjectsGradeModel.setMarksgrades(grade.getName());
+                        Global.subjectReassignGradeList.set(position, subjectsGradeModel);
+                    }
+                }
             }
 
             @Override

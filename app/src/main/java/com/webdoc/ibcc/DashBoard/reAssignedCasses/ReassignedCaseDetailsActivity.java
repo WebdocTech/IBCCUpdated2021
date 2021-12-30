@@ -45,14 +45,17 @@ import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseEditSubjectsAdapter;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseSelectedFilesAdapter;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseSelectedTravellingDocumentAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.FileImagesModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetail;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedDocumentResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedTravDocumentResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.QualificationSubjectResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.ReassignedCaseDetailsModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseModel;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.editReassignCaseModels.EditReassignCaseModel;
 import com.webdoc.ibcc.Essentails.Constants;
+import com.webdoc.ibcc.Essentails.FileUitls;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Model.EquivalenceFileModel;
 import com.webdoc.ibcc.R;
@@ -63,6 +66,8 @@ import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceSubject;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
+import com.webdoc.ibcc.ResponseModels.phpfilesResponse.PhpfilesResponse;
+import com.webdoc.ibcc.Retrofit.jsonPlaceHolderApi;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 import com.webdoc.ibcc.api.APIClient;
 import com.webdoc.ibcc.api.APIInterface;
@@ -76,11 +81,19 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -128,6 +141,15 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
     private ArrayList<QualificationSubjectResponse> arrayListSubjects;
     private List<CaseUploadedTravDocumentResponse> listTrav;
 
+    //new File List:
+    List<FileImagesModel> fileListNew = new ArrayList<>();
+    List<FileImagesModel> fileListNewAdded = new ArrayList<>();
+    List<FileImagesModel> filesListTravelingNew = new ArrayList<>();
+    List<FileImagesModel> filesListTravelingNewAdded = new ArrayList<>();
+
+    List<String> fileListFinalUpdate = new ArrayList<>();
+    List<String> filesListTravelingUpdate = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,30 +170,17 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
         rv_files = layoutBinding.rvFiles;
         rv_files_trans = layoutBinding.rvFilesTrans;
 
-        /*Global.imagesEducationlList.clear();
-        layoutBinding.etSession.setText(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getSession());
-        Global.selectedFilesList.clear();
-
-        for (int i = 0; i < Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getSelectedFilesList().size(); i++) {
-            tv_uploadHint.setVisibility(View.GONE);
-            Global.selectedFilesList.add(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getSelectedFilesList().get(i));
-        }
-
-        setSubjectsAdapter();
-        setFilesAdapter();
-        setFileTransAdapter();*/
-
         countriesList = new ArrayList<>();
         for (int i = 0; i < Global.getDetailsEquivalence.getResult().getCountries().size(); i++) {
             countriesList.add(Global.getDetailsEquivalence.getResult().getCountries().get(i));
         }
 
-        observers();
+        //observers();
         //clickListeners();
 
     }
 
-    private void observers() {
+    /*private void observers() {
         viewModel.getGetImageDocuments().observe(this, response -> {
             if (response != null) {
                 for (int i = 0; i < response.getImageUploadResult().getData().size(); i++) {
@@ -182,7 +191,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 if (Global.phptravellingFiles.size() > 0) {
                     //callImageTravellingApi(context);
                     viewModel.callImageTravellingApi(ReassignedCaseDetailsActivity.this);
-                } /*else {
+                } *//*else {
                     if (Global.isFromEditQualitifcation == true) {
                         Global.utils.showCustomLoadingDialog(Global.applicationContext);
                         volleyRequestController.equivalenceEditQualification();
@@ -190,7 +199,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                         Global.utils.showCustomLoadingDialog(Global.applicationContext);
                         volleyRequestController.equivalenceAddQualification();
                     }
-                }*/
+                }*//*
             }
         });
 
@@ -202,7 +211,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
 
                     callEquivalenceUpdateQualificationApi();
                 }
-                /*Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
+                *//*Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
                 if (Global.isFromEditQualitifcation == true) {
                     Global.utils.showCustomLoadingDialog(Global.applicationContext);
                     volleyRequestController.equivalenceEditQualification();
@@ -210,10 +219,10 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 } else {
                     Global.utils.showCustomLoadingDialog(Global.applicationContext);
                     volleyRequestController.equivalenceAddQualification();
-                }*/
+                }*//*
             }
         });
-    }
+    }*/
 
     public void callReAssignedCaseDetailsApi(Activity activity, String caseID) {
         if (Constants.isInternetConnected(activity)) {
@@ -251,18 +260,46 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                             for (int i = 0; i < response.body().getResult().getDocument().get(mPosition).getCaseUploadedDocumentResponse().size(); i++) {
                                 layoutBinding.tvUploadHint.setVisibility(View.GONE);
                                 Global.caseSelectedFilesList.add(response.body().getResult().getDocument().get(mPosition).getCaseUploadedDocumentResponse().get(i));
+
+                                FileImagesModel fileImagesModel = new FileImagesModel();
+                                fileImagesModel.setFileName(response.body().getResult().getDocument().get(mPosition).getCaseUploadedDocumentResponse().get(i).getImagename());
+                                fileImagesModel.setFileType(response.body().getResult().getDocument().get(mPosition).getCaseUploadedDocumentResponse().get(i).getIspdf());
+
+                                fileListNew.add(fileImagesModel);
+                                fileListFinalUpdate.add(response.body().getResult().getDocument().get(mPosition).getCaseUploadedDocumentResponse().get(i).getImagename());
                             }
 
                             arrayListSubjects = response.body().getResult().getDocument().get(mPosition).getQualificationSubjectResponse();
-                            //setSubjectsAdapter(response.body().getResult().getDocument().get(mPosition).getQualificationSubjectResponse());
-                            setFilesAdapter(Global.caseSelectedFilesList, null);
+
+                            //adding subjects and grades into model and list for updateApi:
+                            Global.subjectReassignGradeList.clear();
+                            for (int i = 0; i < arrayListSubjects.size(); i++) {
+                                SubjectsGradeModel subjectsGradeModel = new SubjectsGradeModel();
+                                subjectsGradeModel.setSubjectId(arrayListSubjects.get(i).getSubjectId());
+                                subjectsGradeModel.setMarksgrades(arrayListSubjects.get(i).getMarksgrades());
+                                subjectsGradeModel.setSubjectName(arrayListSubjects.get(i).getSubjectName());
+                                Global.subjectReassignGradeList.add(subjectsGradeModel);
+                            }
+
+                            setFilesAdapter(fileListNew);
 
                             listTrav = new ArrayList<>();
+                            listTrav.clear();
+                            filesListTravelingNew.clear();
+                            filesListTravelingUpdate.clear();
                             for (int i = 0; i < response.body().getResult().getDocument().get(mPosition).getCaseUploadedTravellingDocumentResponse().size(); i++) {
-                                layoutBinding.tvUploadHint.setVisibility(View.GONE);
+                                layoutBinding.tvUploadHintTrans.setVisibility(View.GONE);
                                 listTrav.add(response.body().getResult().getDocument().get(mPosition).getCaseUploadedTravellingDocumentResponse().get(i));
+
+                                FileImagesModel fileImagesModel = new FileImagesModel();
+                                fileImagesModel.setFileName(response.body().getResult().getDocument().get(mPosition).getCaseUploadedTravellingDocumentResponse().get(i).getImagename());
+                                fileImagesModel.setFileType(response.body().getResult().getDocument().get(mPosition).getCaseUploadedTravellingDocumentResponse().get(i).getIspdf());
+
+                                filesListTravelingNew.add(fileImagesModel);
+                                filesListTravelingUpdate.add(response.body().getResult().getDocument().get(mPosition).getCaseUploadedTravellingDocumentResponse().get(i).getImagename());
                             }
-                            setFileTransAdapter(listTrav);
+                            //setFileTransAdapter(listTrav);
+                            setFileTransAdapter(filesListTravelingNew);
 
                             clickListeners();
 
@@ -315,9 +352,6 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
 
                 ExaminingBodyAdapter examiningBodyAdapter = new ExaminingBodyAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, examiningBodyList);
                 layoutBinding.spinnerExaminingBody.setAdapter(examiningBodyAdapter);
-
-                //int spinner_examiningBodyPosition = examiningBodyAdapter.getPosition(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getExaminingBody());
-                //layoutBinding.spinnerExaminingBody.setSelection(spinner_examiningBodyPosition);
                 layoutBinding.spinnerExaminingBody.setSelection(mExaminingBodyPos);
 
                 //int mQualificationID = 0;
@@ -396,7 +430,6 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 //int spinner_grading_systemPosition = equivalenceGradingSystemAdapter.getPosition(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getGradingSystem());
                 //layoutBinding.spinnerGradingSystem.setSelection(Integer.parseInt(mGradingSystem));
 
-
                 //EQUIVALENCE GROUP
                 equivalenceGroupList = new ArrayList<>();
                 for (int i = 0; i < qualification.getEquivalenceGroup().size(); i++) {
@@ -473,6 +506,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 for (int i = 0; i < equivalenceGradingSystem.getEquivalenceGrade().size(); i++) {
                     Global.equivalenceGradeList.add(equivalenceGradingSystem.getEquivalenceGrade().get(i));
                 }
+
                 Global.equivalenceGradingSystemName = equivalenceGradingSystem.getName();
                 editSubjectsAdapter.notifyDataSetChanged();
             }
@@ -536,6 +570,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
         layoutBinding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Global.isFromDocument = true;
                 showFileChooser();
             }
         });
@@ -543,7 +578,6 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
         layoutBinding.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 new SweetAlertDialog(ReassignedCaseDetailsActivity.this, SweetAlertDialog.WARNING_TYPE)
                         .setContentText("Do you want to update this record?")
                         .setConfirmText("Yes")
@@ -552,10 +586,14 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                             public void onClick(SweetAlertDialog sDialog) {
                                 sDialog.dismissWithAnimation();
 
-                                callEquivalenceUpdateQualificationApi();
-
-                                //viewModel.callImageDocumentApi(ReassignedCaseDetailsActivity.this);
-                                // viewModel.callImageTravellingApi(ReassignedCaseDetailsActivity.this);
+                                //callEquivalenceUpdateQualificationApi();
+                                if (fileListNewAdded.size() > 0) {
+                                    callImageDocumentApi(ReassignedCaseDetailsActivity.this);
+                                } else if (filesListTravelingNewAdded.size() > 0) {
+                                    callImageTravellingApi(ReassignedCaseDetailsActivity.this);
+                                } else {
+                                    callEquivalenceUpdateQualificationApi();
+                                }
 
                             }
 
@@ -569,19 +607,18 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setFileTransAdapter(List<CaseUploadedTravDocumentResponse> arraylist) {
+    private void setFileTransAdapter(List<FileImagesModel> arraylist) {
         final LinearLayoutManager filesLayoutManager2 = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
         layoutBinding.rvFilesTrans.setLayoutManager(filesLayoutManager2);
         layoutBinding.rvFilesTrans.setHasFixedSize(true);
-        SnapHelper snapHelperFiles2 = new PagerSnapHelper();
-        snapHelperFiles2.attachToRecyclerView(layoutBinding.rvFilesTrans);
+        /*SnapHelper snapHelperFiles2 = new PagerSnapHelper();
+        snapHelperFiles2.attachToRecyclerView(layoutBinding.rvFilesTrans);*/
         travellingDocumentAdapter = new CaseSelectedTravellingDocumentAdapter(this, arraylist);
         layoutBinding.rvFilesTrans.setAdapter(travellingDocumentAdapter);
     }
 
-    private void setFilesAdapter(List<CaseUploadedDocumentResponse> caseSelectedFilesList,
-                                 List<EquivalenceFileModel> selectedFilesList) {
+    private void setFilesAdapter(List<FileImagesModel> list) {
         final LinearLayoutManager filesLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
         layoutBinding.rvFiles.setLayoutManager(filesLayoutManager);
@@ -589,7 +626,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
        /* SnapHelper snapHelperFiles = new PagerSnapHelper();
         snapHelperFiles.attachToRecyclerView(layoutBinding.rvFiles);*/
         Global.widthFromUpdateQualification = true;
-        selectedFilesAdapter = new CaseSelectedFilesAdapter(this, caseSelectedFilesList, selectedFilesList);
+        selectedFilesAdapter = new CaseSelectedFilesAdapter(this, list);
         layoutBinding.rvFiles.setAdapter(selectedFilesAdapter);
     }
 
@@ -714,11 +751,17 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                     equivalenceFileModel.setFileType("pdf");
                     equivalenceFileModel.setFileName(displayName);
 
+                    FileImagesModel fileImagesModel = new FileImagesModel();
+                    fileImagesModel.setFileType(true);
+                    fileImagesModel.setFileName(String.valueOf(pdfUri));
+                    fileListNew.add(fileImagesModel);
+                    fileListNewAdded.add(fileImagesModel);
+
                     Global.phpfiles.add(pdfUri);
                     Global.selectedFilesList.add(equivalenceFileModel);
 
-                    selectedFilesAdapter.notifyDataSetChanged();
-                    setFilesAdapter(Global.caseSelectedFilesList, Global.selectedFilesList);
+                    //selectedFilesAdapter.notifyDataSetChanged();
+                    setFilesAdapter(fileListNew);
                 }
             } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
                 layoutBinding.tvUploadHint.setVisibility(View.GONE);
@@ -741,11 +784,19 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                     equivalenceFileModel.setUri(photos.get(i));
                     equivalenceFileModel.setFileType("png");
                     equivalenceFileModel.setFileName("");
-                    Global.phpfiles.add(photos.get(i));//Global.timestamp + ".png"
+                    Global.phpfiles.add(photos.get(i));
                     Global.selectedFilesList.add(equivalenceFileModel);
+
+                    FileImagesModel fileImagesModel = new FileImagesModel();
+                    fileImagesModel.setFileType(false);
+                    fileImagesModel.setFileName(String.valueOf(photos.get(i)));
+                    fileListNew.add(fileImagesModel);
+                    fileListNewAdded.add(fileImagesModel);
+
                 }
                 //selectedFilesAdapter.notifyDataSetChanged();
-                setFilesAdapter(Global.caseSelectedFilesList, Global.selectedFilesList);
+                //setFilesAdapter(Global.caseSelectedFilesList, Global.selectedFilesList);
+                setFilesAdapter(fileListNew);
             }
         } else {
             if (requestCode == PDF_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -782,7 +833,16 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                     equivalenceFileModel.setFileName(displayName);
                     Global.phptravellingFiles.add(pdfUri);
                     Global.selectedFilesListTraveling.add(equivalenceFileModel);
-                    travellingDocumentAdapter.notifyDataSetChanged();
+
+                    //travellingDocumentAdapter.notifyDataSetChanged();
+
+                    FileImagesModel fileImagesModel = new FileImagesModel();
+                    fileImagesModel.setFileType(true);
+                    fileImagesModel.setFileName(String.valueOf(pdfUri));
+                    filesListTravelingNew.add(fileImagesModel);
+                    filesListTravelingNewAdded.add(fileImagesModel);
+
+                    setFileTransAdapter(filesListTravelingNew);
                 }
             } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
                 layoutBinding.tvUploadHintTrans.setVisibility(View.GONE);
@@ -807,8 +867,15 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                     equivalenceFileModel.setFileName("");
                     Global.phptravellingFiles.add(photos.get(i));
                     Global.selectedFilesListTraveling.add(equivalenceFileModel);
+
+                    FileImagesModel fileImagesModel = new FileImagesModel();
+                    fileImagesModel.setFileType(false);
+                    fileImagesModel.setFileName(String.valueOf(photos.get(i)));
+                    filesListTravelingNew.add(fileImagesModel);
+                    filesListTravelingNewAdded.add(fileImagesModel);
                 }
-                travellingDocumentAdapter.notifyDataSetChanged();
+                setFileTransAdapter(filesListTravelingNew);
+                //travellingDocumentAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -867,31 +934,45 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
 
                 //Education files image....
                 JsonArray documentArray = new JsonArray();
-                for (int i = 0; i < Global.caseSelectedFilesList.size(); i++) {
+                for (int i = 0; i < fileListFinalUpdate.size(); i++) {
                     JsonObject imgItem = new JsonObject();
-                    imgItem.addProperty("imagename", Global.caseSelectedFilesList.get(i).getImagename());
-
+                    if (fileListFinalUpdate.get(i).contains("http://equivalence.ibcc.edu.pk/assets/uploaded_documents/")) {
+                        String[] str = fileListFinalUpdate.get(i).split("http://equivalence.ibcc.edu.pk/assets/uploaded_documents/");
+                        String strName = str[1];
+                        imgItem.addProperty("imagename", strName);
+                    } else {
+                        imgItem.addProperty("imagename", fileListFinalUpdate.get(i));
+                    }
                     documentArray.add(imgItem);
                 }
                 params.add("imageseductaion", documentArray);
 
                 //travelling/other files image....
                 JsonArray documentTravellingArray = new JsonArray();
-                for (int k = 0; k < listTrav.size(); k++) {
+                for (int k = 0; k < filesListTravelingUpdate.size(); k++) {
                     JsonObject imgItem = new JsonObject();
-                    //20210702065122.png
-                    imgItem.addProperty("imagename", listTrav.get(k).getImagename());
+                    if (filesListTravelingUpdate.get(k).contains("http://equivalence.ibcc.edu.pk/assets/documentary_evidence/")) {
+                        String[] str = filesListTravelingUpdate.get(k).split("http://equivalence.ibcc.edu.pk/assets/documentary_evidence/");
+                        String strName = str[1];
+                        imgItem.addProperty("imagename", strName);
+                    } else {
+                        imgItem.addProperty("imagename", filesListTravelingUpdate.get(k));
+                    }
                     documentTravellingArray.add(imgItem);
                 }
                 params.add("imagestravelling", documentTravellingArray);
 
                 //Subjects Grade:
                 JsonArray subjectArray = new JsonArray();
-                for (int j = 0; j < arrayListSubjects.size(); j++) {
+                for (int j = 0; j < Global.subjectReassignGradeList.size(); j++) {
                     JsonObject subjItem = new JsonObject();
-                    subjItem.addProperty("subjectId", arrayListSubjects.get(j).getSubjectId());
-                    subjItem.addProperty("marksgrades", arrayListSubjects.get(j).getMarksgrades());
-
+                    if (Global.equivalenceGradingSystemName.equalsIgnoreCase("Marks")) {
+                        subjItem.addProperty("subjectId", Global.marksList.get(j).getSubjectId());
+                        subjItem.addProperty("marksgrades", Global.marksList.get(j).getMarksgrades());
+                    } else {
+                        subjItem.addProperty("subjectId", Global.subjectReassignGradeList.get(j).getSubjectId());
+                        subjItem.addProperty("marksgrades", Global.subjectReassignGradeList.get(j).getMarksgrades());
+                    }
                     subjectArray.add(subjItem);
                 }
                 params.add("subjecteductaion", subjectArray);
@@ -901,8 +982,6 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
             } catch (Exception e) {
                 System.out.println("Error : Equivalence Add Qualification " + e.toString());
             }
-
-            //postApiResultManager.jsonParse(Constants.EDITQUALIFICATIONEQ, params);
 
             APIInterface apiInterface = APIClient.getClient(Constants.BASE_URL);
             Call<EditReassignCaseModel> call = apiInterface.callReassignedCaseEditApi(params);
@@ -938,5 +1017,144 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
             Toast.makeText(ReassignedCaseDetailsActivity.this, "Please connect internet connection !", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void callImageDocumentApi(Context context) {
+        if (Global.utils.isInternerConnected(context)) {
+
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient();
+            client = new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.MINUTES)
+                    .addInterceptor(interceptor)
+                    .build();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://equivalence.ibcc.edu.pk/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client) // Set HttpClient to be used by Retrofit
+                    .build();
+
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            builder.setType(MultipartBody.FORM);
+
+            for (int i = 0; i < fileListNewAdded.size(); i++) {
+                /*if (fileListNew.get(i).getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
+                    String str;
+                } else {*/
+                    File file = new File(FileUitls.getPath(context, Uri.parse(fileListNewAdded.get(i).getFileName())));
+                    builder.addFormDataPart(
+                            "image[]",
+                            file.getName(),
+                            RequestBody.create(MediaType.parse(context.getContentResolver().getType(Uri.parse(fileListNewAdded.get(i).getFileName()))), file)
+                    );
+                //}
+            }
+
+            RequestBody requestBody = builder.build();
+            jsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(jsonPlaceHolderApi.class);
+            Call<PhpfilesResponse> call1 = jsonPlaceHolderApi.callImagesFormDataApi(requestBody);
+
+            call1.enqueue(new Callback<PhpfilesResponse>() {
+                @Override
+                public void onResponse(Call<PhpfilesResponse> call, retrofit2.Response<PhpfilesResponse> response) {
+                    Global.utils.hideCustomLoadingDialog();
+                    if (response.isSuccessful()) {
+                        String str = response.body().toString();
+                        for (int i = 0; i < response.body().getImageUploadResult().getData().size(); i++) {
+                            fileListFinalUpdate.add(response.body().getImageUploadResult().getData().get(i).getImagename());
+                        }
+
+                        if (filesListTravelingNewAdded.size() > 0) {
+                            callImageTravellingApi(context);
+                        } else {
+                            callEquivalenceUpdateQualificationApi();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PhpfilesResponse> call, Throwable t) {
+                    Toast.makeText(Global.applicationContext, t.getMessage() + "", Toast.LENGTH_SHORT).show();
+                    Global.utils.hideCustomLoadingDialog();
+                    call.cancel();
+                }
+            });
+        } else {
+            Toast.makeText(context, "Please connect internet connection !", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    public void callImageTravellingApi(Context context) {
+
+        if (Global.utils.isInternerConnected(context)) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient();
+            client = new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.MINUTES)
+                    .addInterceptor(interceptor)
+                    .build();
+            String url = Constants.TRAVELLING_URL;
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client) // Set HttpClient to be used by Retrofit
+                    .build();
+
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            builder.setType(MultipartBody.FORM);
+
+            for (int i = 0; i < filesListTravelingNewAdded.size(); i++) {
+                /*if (filesListTravelingNew.get(i).getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
+                    String str;
+                } else {*/
+                    File file = new File(FileUitls.getPath(context, Uri.parse(filesListTravelingNewAdded.get(i).getFileName())));
+                    builder.addFormDataPart(
+                            "image[]",
+                            file.getName(),
+                            RequestBody.create(MediaType.parse(context.getContentResolver().getType(Uri.parse(filesListTravelingNewAdded.get(i).getFileName()))), file)
+                    );
+                //}
+            }
+
+
+            RequestBody requestBody = builder.build();
+            jsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(jsonPlaceHolderApi.class);
+            Call<PhpfilesResponse> call1 = jsonPlaceHolderApi.callImagesTravellingFormDataApi(requestBody);
+
+            call1.enqueue(new Callback<PhpfilesResponse>() {
+                @Override
+                public void onResponse(Call<PhpfilesResponse> call, retrofit2.Response<PhpfilesResponse> response) {
+                    Global.utils.hideCustomLoadingDialog();
+                    if (response.isSuccessful()) {
+                        for (int i = 0; i < response.body().getImageUploadResult().getData().size(); i++) {
+                            filesListTravelingUpdate.add(response.body().getImageUploadResult().getData().get(i).getImagename());
+                        }
+
+                        //call update Api;
+                        callEquivalenceUpdateQualificationApi();
+
+                    } else {
+                        Toast.makeText(context, "something went wrong / Server error !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PhpfilesResponse> call, Throwable t) {
+                    Toast.makeText(Global.applicationContext, "Failure, something went wrong !", Toast.LENGTH_SHORT).show();
+                    Global.utils.hideCustomLoadingDialog();
+                    call.cancel();
+                }
+            });
+        } else {
+            Toast.makeText(context, "Please connect internet connection !", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 }

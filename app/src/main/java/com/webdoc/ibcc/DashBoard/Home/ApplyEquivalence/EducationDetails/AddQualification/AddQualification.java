@@ -177,10 +177,6 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
             qualificationList.add(country.getQualification().get(i));
         }
 
-
-        //check if already added qualification:
-
-
         //COUNTRIES SPINNER
         CountriesAdapter spinnerCountriesAdapter = new CountriesAdapter(this, R.layout.spinner_item, countriesList);
         layoutBinding.spinnerCountry.setAdapter(spinnerCountriesAdapter);

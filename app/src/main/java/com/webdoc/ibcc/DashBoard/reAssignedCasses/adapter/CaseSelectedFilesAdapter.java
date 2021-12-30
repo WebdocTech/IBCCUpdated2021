@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.webdoc.ibcc.Adapter.SelectedFilesAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.AddQualification;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.UpdateQualification.UpdateQualification;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.FileImagesModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedDocumentResponse;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Model.EquivalenceFileModel;
@@ -24,14 +25,13 @@ import java.util.List;
 
 public class CaseSelectedFilesAdapter extends RecyclerView.Adapter<CaseSelectedFilesAdapter.ViewHolder> {
     Activity context;
-    List<CaseUploadedDocumentResponse> caseSelectedFilesList;
-    List<EquivalenceFileModel> selectedFilesList;
+    /*List<CaseUploadedDocumentResponse> caseSelectedFilesList;
+    List<EquivalenceFileModel> selectedFilesList;*/
+    List<FileImagesModel> list;
 
-    public CaseSelectedFilesAdapter(Activity context, List<CaseUploadedDocumentResponse> caseSelectedFilesList,
-                                    List<EquivalenceFileModel> selectedFilesList) {
+    public CaseSelectedFilesAdapter(Activity context, List<FileImagesModel> list) {
         this.context = context;
-        this.caseSelectedFilesList = caseSelectedFilesList;
-        this.selectedFilesList = selectedFilesList;
+        this.list = list;
     }
 
     @NonNull
@@ -56,11 +56,6 @@ public class CaseSelectedFilesAdapter extends RecyclerView.Adapter<CaseSelectedF
     @Override
     public void onBindViewHolder(@NonNull final CaseSelectedFilesAdapter.ViewHolder holder, final int position) {
 
-        EquivalenceFileModel subjectItem = null;
-        if (selectedFilesList != null) {
-            subjectItem = Global.selectedFilesList.get(position);
-        }
-
         holder.iv_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,38 +68,26 @@ public class CaseSelectedFilesAdapter extends RecyclerView.Adapter<CaseSelectedF
             }
         });
 
-        if (selectedFilesList != null) {
-            if (subjectItem.getFileType().equalsIgnoreCase("pdf")) {
-                holder.iv_file.setPadding(30, 30, 30, 30);
-                holder.iv_file.setImageResource(R.drawable.pdf);
-                holder.iv_file.setBackgroundColor(context.getResources().getColor(R.color.lightergrayColor));
-            } else {
-                if (subjectItem.getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
-                    Picasso.get().load(subjectItem.getFileName()).into(holder.iv_file);
-                } else {
-                    holder.iv_file.setImageURI(subjectItem.getUri());
-                }
-            }
-            holder.tv_fileName.setText(subjectItem.getFileName());
+
+        if (list.get(position).isFileType()) {
+            holder.iv_file.setPadding(30, 30, 30, 30);
+            holder.iv_file.setImageResource(R.drawable.pdf);
+            holder.iv_file.setBackgroundColor(context.getResources().getColor(R.color.lightergrayColor));
         } else {
-            if (caseSelectedFilesList.get(position).getIspdf()) {
-                holder.iv_file.setPadding(30, 30, 30, 30);
-                holder.iv_file.setImageResource(R.drawable.pdf);
-                holder.iv_file.setBackgroundColor(context.getResources().getColor(R.color.lightergrayColor));
+            if (list.get(position).getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
+                Picasso.get().load(Global.caseSelectedFilesList.get(position).getImagename()).into(holder.iv_file);
             } else {
-                if (caseSelectedFilesList.get(position).getImagename().contains("http://equivalence.ibcc.edu.pk/")) {
-                    Picasso.get().load(Global.caseSelectedFilesList.get(position).getImagename()).into(holder.iv_file);
-                } else {
-                    holder.iv_file.setImageURI(Uri.parse(caseSelectedFilesList.get(position).getImagename()));
-                }
+                holder.iv_file.setImageURI(Uri.parse(list.get(position).getFileName()));
             }
-            holder.tv_fileName.setText(caseSelectedFilesList.get(position).getImagename());
         }
+
+        holder.tv_fileName.setText(list.get(position).getFileName());
     }
+
 
     @Override
     public int getItemCount() {
-        return caseSelectedFilesList.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

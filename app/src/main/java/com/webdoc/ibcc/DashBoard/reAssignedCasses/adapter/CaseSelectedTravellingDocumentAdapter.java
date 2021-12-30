@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.AddQualification;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.FileImagesModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedDocumentResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedTravDocumentResponse;
 import com.webdoc.ibcc.Essentails.Global;
@@ -23,9 +25,10 @@ import java.util.List;
 
 public class CaseSelectedTravellingDocumentAdapter extends RecyclerView.Adapter<CaseSelectedTravellingDocumentAdapter.ViewHolder> {
     Activity context;
-    List<CaseUploadedTravDocumentResponse> arraylist;
+    // List<CaseUploadedTravDocumentResponse> arraylist;
+    List<FileImagesModel> arraylist;
 
-    public CaseSelectedTravellingDocumentAdapter(Activity context, List<CaseUploadedTravDocumentResponse> arraylist) {
+    public CaseSelectedTravellingDocumentAdapter(Activity context, List<FileImagesModel> arraylist) {
         this.context = context;
         this.arraylist = arraylist;
     }
@@ -53,21 +56,25 @@ public class CaseSelectedTravellingDocumentAdapter extends RecyclerView.Adapter<
                 arraylist.remove(position);
                 notifyDataSetChanged();
 
-                if(arraylist.size() == 0) {
+                if (arraylist.size() == 0) {
                     AddQualification.tv_uploadHint.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        if(arraylist.get(position).getIspdf()) {
-            holder.iv_file.setPadding(30,30,30,30);
+        if (arraylist.get(position).isFileType()) {
+            holder.iv_file.setPadding(30, 30, 30, 30);
             holder.iv_file.setImageResource(R.drawable.pdf);
             holder.iv_file.setBackgroundColor(context.getResources().getColor(R.color.lightergrayColor));
         } else {
-            holder.iv_file.setImageURI(Uri.parse(arraylist.get(position).getImagename()));
+            if (arraylist.get(position).getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
+                Picasso.get().load(arraylist.get(position).getFileName()).into(holder.iv_file);
+            } else {
+                holder.iv_file.setImageURI(Uri.parse(arraylist.get(position).getFileName()));
+            }
         }
 
-        holder.tv_fileName.setText(arraylist.get(position).getImagename());
+        holder.tv_fileName.setText(arraylist.get(position).getFileName());
         //holder.tv_subjectName.setText(subjectItem.getName());
 
     }

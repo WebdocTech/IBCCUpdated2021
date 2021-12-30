@@ -2,9 +2,11 @@ package com.webdoc.ibcc.api;
 
 import com.google.gson.JsonObject;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.DocumentSelection.apimodels.DocumentsModel;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.DetailsEquivalenceNewModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.ReassignedCaseDetailsModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.editReassignCaseModels.EditReassignCaseModel;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.submitReassignCaseModels.SubmitReassignCaseModel;
 import com.webdoc.ibcc.ResponseModels.AddDocumentDetailsResult.AddDocumentDetailsResult;
 import com.webdoc.ibcc.ResponseModels.AddEducationResult.AddEducationResult;
 import com.webdoc.ibcc.ResponseModels.CancelAppointmentResult.CancelAppointmentResult;
@@ -47,6 +49,9 @@ public interface APIInterface {
 
     @POST("Equivalence/GetDetailsEquivalence")
     Call<GetDetailsEquivalence> callDetailsEquivalence(@Body JsonObject mojb);
+
+    @POST("Equivalence/GetDetailsEquivalenceNew")
+    Call<DetailsEquivalenceNewModel> callDetailsEquivalenceNew(@Body JsonObject mojb);
 
     @POST("Login/UserLogin")
     Call<UserLoginResult> callUserLogin(@Body JsonObject mojb);
@@ -120,6 +125,9 @@ public interface APIInterface {
 
     @POST("Equivalence/EditQualificationEQ")
     Call<EditReassignCaseModel> callReassignedCaseEditApi(@Body JsonObject mojb);
+
+    @POST("Equivalence/ReassignedCaseEdit")
+    Call<SubmitReassignCaseModel> callReassignedCaseSubmitApi(@Body JsonObject mojb);
 
     /*CALL COURIER*/
 

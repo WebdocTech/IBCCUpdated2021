@@ -47,7 +47,8 @@ public class ApplyEquivalenceActivity extends AppCompatActivity implements Volle
 
         if (!Global.isIncompleteAppointmentEQ) {
             Fragment fragment = new EquivalenceMethodFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.equivalence_fragment_container, fragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.equivalence_fragment_container,
+                    fragment).addToBackStack(null).commit();
 
         } else {
             switch (Global.stepNumberEQ) {
@@ -76,7 +77,9 @@ public class ApplyEquivalenceActivity extends AppCompatActivity implements Volle
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentById(R.id.equivalence_fragment_container) != null) {
-            String fragment_container = getSupportFragmentManager().findFragmentById(R.id.equivalence_fragment_container).getClass().getSimpleName();
+            String fragment_container = getSupportFragmentManager()
+                    .findFragmentById(R.id.equivalence_fragment_container)
+                    .getClass().getSimpleName();
 
             switch (fragment_container) {
                 case "EquivalenceMethodFragment":
@@ -99,7 +102,10 @@ public class ApplyEquivalenceActivity extends AppCompatActivity implements Volle
                     if (!Global.isIncompleteAppointmentEQ) {
                         super.onBackPressed();
                     } else {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.equivalence_fragment_container, new EquivalenceEducationDetailsFragment()).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.equivalence_fragment_container,
+                                        new EquivalenceEducationDetailsFragment())
+                                .addToBackStack(null).commit();
                     }
                     break;
 
@@ -108,7 +114,10 @@ public class ApplyEquivalenceActivity extends AppCompatActivity implements Volle
                     if (!Global.isIncompleteAppointmentEQ) {
                         super.onBackPressed();
                     } else {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.equivalence_fragment_container, new EquivalenceDocumentSelectionFragment()).addToBackStack(null).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.equivalence_fragment_container,
+                                        new EquivalenceDocumentSelectionFragment())
+                                .addToBackStack(null).commit();
                     }
                     break;
 

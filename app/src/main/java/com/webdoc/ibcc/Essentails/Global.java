@@ -6,7 +6,9 @@ import android.net.Uri;
 
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.DocumentSelection.DocDetailEQ_Model;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.totalMarksModel;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.DetailsEquivalenceNewModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedDocumentResponse;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.DataModel.EducationDetailModel;
 import com.webdoc.ibcc.DataModel.LoginUser;
 import com.webdoc.ibcc.DataModel.RegisterUser;
@@ -26,8 +28,6 @@ import com.webdoc.ibcc.Model.PaymentModel;
 import com.webdoc.ibcc.Model.VideosModel;
 import com.webdoc.ibcc.Payment.PaymentMethods.EasyPaisa.ResoponseModel.easypaisaPAymentResponse.EasypaisaPAymentResponse;
 import com.webdoc.ibcc.Payment.PaymentMethods.JSBankWallet.ResponseModel.JsBankAuthApi;
-import com.webdoc.ibcc.Payment.PaymentMethods.JSBankWallet.ResponseModel.jsDebitInquiryResult.JsDebitInquiryResult;
-import com.webdoc.ibcc.Payment.PaymentMethods.JSBankWallet.ResponseModel.jsDebitPaymentResponse.JsDebitPaymentResponse;
 import com.webdoc.ibcc.Payment.PaymentMethods.JSBankWallet.jsDebitPaymentModel.JsDebitPaymentResponseModel;
 import com.webdoc.ibcc.Payment.PaymentMethods.JSBankWallet.jsbankdebitresponsemodel.JsDebitInqueryResponseModel;
 import com.webdoc.ibcc.Payment.PaymentMethods.JazzCash.ResponseModels.JazzCashResponseNew;
@@ -97,6 +97,9 @@ public class Global {
 
     public static JsDebitPaymentResponseModel jsPaymentFinal = new JsDebitPaymentResponseModel();
     public static List<EquivalenceSubject> equivalenceSubjectList = new ArrayList<>();
+
+    public static List<SubjectsGradeModel> subjectReassignGradeList = new ArrayList<>();
+    public static  ArrayList<SubjectsGradeModel> marksList = new ArrayList<>();
 
 
     public static Detail selectedApptStatus = new Detail();
@@ -210,6 +213,9 @@ public class Global {
     public static GetDetailsEquivalence getDetailsEquivalence = new GetDetailsEquivalence();
     public static boolean equivalenceOnline;
 
+    //NEW Implementation of this equivalence education:
+    public static DetailsEquivalenceNewModel detailsEquivalenceNewModel = new DetailsEquivalenceNewModel();
+
     /*public static List<EquivalenceGrade> equivalenceMarksList = new ArrayList<>();*/
     public static List<totalMarksModel> equivalenceMarksList = new ArrayList<>();
 
@@ -217,6 +223,7 @@ public class Global {
     public static List<EquivalenceFileModel> selectedFilesList = new ArrayList<>();
     public static List<CaseUploadedDocumentResponse> caseSelectedFilesList = new ArrayList<>();
     public static List<EquivalenceGrade> selectedGradeList = new ArrayList<>();
+    public static List<QualificationSubjectResponse> selectedMarksList = new ArrayList<>();
     public static List<EquivalenceGrade> TempselectedGradeList = new ArrayList<>();
     public static List<EquivalenceTravelFileModel> selectedTravelList = new ArrayList<>();
 

@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+//import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Province;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Province;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProvinceAdapter extends ArrayAdapter<Province> {

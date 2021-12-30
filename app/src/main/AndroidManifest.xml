@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IBCC"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DashBoard.reAssignedCasses.CaseEducationDetailsActivity"></activity>
+        <activity android:name=".DashBoard.Home.ApplyEquivalenceNew.ApplyEquivalenceNewActivity"></activity>
+        <activity android:name=".DashBoard.reAssignedCasses.CaseEducationDetailsActivity" />
         <activity android:name=".DashBoard.reAssignedCasses.ReassignedCaseDetailsActivity" />
         <activity android:name=".Essentails.heh" />
 

@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,29 +24,45 @@ import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.Equivale
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.Instructions.Instructions;
 import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseEducationDetailsAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.FileImagesModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.Document;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.ReassignedCaseDetailsModel;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.submitReassignCaseModels.SubmitReassignCaseModel;
 import com.webdoc.ibcc.Essentails.Constants;
+import com.webdoc.ibcc.Essentails.FileUitls;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.RemoveQualificationEQ.RemoveQualificationEQ;
+import com.webdoc.ibcc.ResponseModels.phpfilesResponse.PhpfilesResponse;
+import com.webdoc.ibcc.Retrofit.jsonPlaceHolderApi;
 import com.webdoc.ibcc.api.APIClient;
 import com.webdoc.ibcc.api.APIInterface;
 import com.webdoc.ibcc.databinding.ActivityCaseEducationDetailsBinding;
 import com.webdoc.ibcc.databinding.FragmentEquivalenceEducationDetailsBinding;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CaseEducationDetailsActivity extends AppCompatActivity implements ItemClickListeners {
     public CaseEducationDetailsAdapter caseEducationDetailsAdapter;
     public static ConstraintLayout No_EducationRecord;
     private ActivityCaseEducationDetailsBinding layoutBinding;
     private HomeSharedViewModel viewModel;
+    private String caseID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +75,8 @@ public class CaseEducationDetailsActivity extends AppCompatActivity implements I
         No_EducationRecord = layoutBinding.NoEducationRecord;
 
         Intent intent = getIntent();
-        String caseID = intent.getStringExtra("mCaseID");
+        //caseID = intent.getStringExtra("mCaseID");
+        caseID = "13481";
         callReAssignedCaseDetailsApi(this, caseID);
 
         observers();
@@ -153,19 +172,10 @@ public class CaseEducationDetailsActivity extends AppCompatActivity implements I
             }
         });
 
-        layoutBinding.btnNext.setOnClickListener(new View.OnClickListener() {
+        layoutBinding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Global.equivalenceQualificationList.size() > 0) {
-                    ApplyEquivalenceActivity.stepIndicator.setCurrentStepPosition(3);
-
-                    CaseEducationDetailsActivity.this.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.equivalence_fragment_container, new EquivalenceDocumentSelectionFragment()).addToBackStack(null).commit();
-
-                } else {
-                    Global.utils.showErrorSnakeBar(CaseEducationDetailsActivity.this, "Please add qualification to proceed");
-                }
-
+                callSubmitCaseApi(CaseEducationDetailsActivity.this, caseID);
             }
         });
 
@@ -218,39 +228,30 @@ public class CaseEducationDetailsActivity extends AppCompatActivity implements I
         }
     }
 
-    public void callRemoveQualificationApi(Activity activity, int docId, int caseId) {
+    public void callSubmitCaseApi(Activity activity, String caseID) {
         if (Constants.isInternetConnected(activity)) {
             Global.utils.showCustomLoadingDialog(activity);
 
             JsonObject params = new JsonObject();
-            params.addProperty("docId", docId);
-            params.addProperty("caseId", caseId);
+            params.addProperty("case_id", caseID);
 
             APIInterface apiInterface = APIClient.getClient(Constants.BASE_URL);
-            Call<RemoveQualificationEQ> call = apiInterface.callRemoveQualification(params);
+            Call<SubmitReassignCaseModel> call = apiInterface.callReassignedCaseSubmitApi(params);
 
-            call.enqueue(new Callback<RemoveQualificationEQ>() {
+            call.enqueue(new Callback<SubmitReassignCaseModel>() {
                 @Override
-                public void onResponse(Call<RemoveQualificationEQ> call, Response<RemoveQualificationEQ> response) {
+                public void onResponse(Call<SubmitReassignCaseModel> call, Response<SubmitReassignCaseModel> response) {
                     Global.utils.hideCustomLoadingDialog();
 
                     if (response.isSuccessful()) {
-                        if (response.body().getResult().getResponseCode().equals(Constants.IBCC_SUCCESS_CODE)) {
-                            Global.removeQualificationEQResponse = response.body();
-
-                            Global.addQualificationEQResponse.getResult().getDocumentDetails().remove(Global.deleteEquQualificationPosition);
-                            Global.equivalenceQualificationList.remove(Global.deleteEquQualificationPosition);
-                            caseEducationDetailsAdapter.notifyDataSetChanged();
-
-                            if (Global.equivalenceQualificationList.size() > 0) {
-                                No_EducationRecord.setVisibility(View.GONE);
-                            } else {
-                                No_EducationRecord.setVisibility(View.VISIBLE);
-                            }
-
-                            Global.utils.showSuccessSnakeBar(CaseEducationDetailsActivity.this, "Deleted Successfully");
+                        assert response.body() != null;
+                        if (response.body().getResult().getResponseCode()
+                                .equals(Constants.IBCC_SUCCESS_CODE)) {
+                            Toast.makeText(CaseEducationDetailsActivity.this, "Reassign Case Edited Successfully :)", Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
-                            Global.utils.showErrorSnakeBar(CaseEducationDetailsActivity.this, response.body().getResult().getResponseMessage());
+                            Global.utils.showErrorSnakeBar(CaseEducationDetailsActivity.this,
+                                    response.body().getResult().getResponseMessage());
                         }
                     } else {
                         Toast.makeText(activity, "Oopps! something went wrong / Server Error", Toast.LENGTH_SHORT).show();
@@ -258,7 +259,7 @@ public class CaseEducationDetailsActivity extends AppCompatActivity implements I
                 }
 
                 @Override
-                public void onFailure(Call<RemoveQualificationEQ> call, Throwable t) {
+                public void onFailure(Call<SubmitReassignCaseModel> call, Throwable t) {
                     Global.utils.hideCustomLoadingDialog();
                     Log.i("dsd", t.getMessage());
                     Toast.makeText(activity, "Oopps something went wrong !", Toast.LENGTH_SHORT).show();

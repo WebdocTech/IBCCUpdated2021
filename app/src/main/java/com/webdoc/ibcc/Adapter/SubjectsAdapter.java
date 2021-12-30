@@ -70,7 +70,6 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
 
                     Global.utils.hideKeyboard(context);
 
-
                     String Obtained_Marks = holder.et_marks_obtained.getText().toString();
                     String Total_Marks = holder.et_total_marks.getText().toString();
 

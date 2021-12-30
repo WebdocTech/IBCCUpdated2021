@@ -158,9 +158,6 @@ public class EquivalencePersonalInfoFragment extends Fragment {
                 Global.equivalenceInitiateCase.setIncomAppLink(incomAppLink);
                 Global.equivalenceInitiateCase.setThirdParty(Global.eqType);
 
-                //Global.utils.showCustomLoadingDialog(getActivity());
-                //volleyRequestController.equivalenceInitiateCase();
-                //callEquivalenceInitiateCaseApi(getActivity());
                 viewModel.callEquivalenceInitiateCaseApi(getActivity());
             }
         });
@@ -326,7 +323,8 @@ public class EquivalencePersonalInfoFragment extends Fragment {
                     ApplyEquivalenceActivity.stepIndicator.setCurrentStepPosition(2);
 
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.equivalence_fragment_container, new EquivalenceEducationDetailsFragment()).addToBackStack(null).commit();
+                            .replace(R.id.equivalence_fragment_container, new EquivalenceEducationDetailsFragment())
+                            .addToBackStack(null).commit();
 
                 } else {
                     Global.utils.showErrorSnakeBar(getActivity(), response.getResult().getResponseMessage());

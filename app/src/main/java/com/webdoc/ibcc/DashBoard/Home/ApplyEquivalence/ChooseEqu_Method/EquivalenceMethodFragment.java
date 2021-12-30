@@ -25,7 +25,6 @@ public class EquivalenceMethodFragment extends Fragment {
         layoutBinding = FragmentEquivalenceMethodBinding.inflate(inflater, container, false);
 
         clickListeners();
-
         return layoutBinding.getRoot();
     }
 
@@ -60,7 +59,8 @@ public class EquivalenceMethodFragment extends Fragment {
                 ApplyEquivalenceActivity.stepIndicator.setCurrentStepPosition(1);
 
                 Fragment fragment = new EquivalencePersonalInfoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.equivalence_fragment_container,
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.equivalence_fragment_container,
                         fragment).addToBackStack(null).commit();
             }
         });

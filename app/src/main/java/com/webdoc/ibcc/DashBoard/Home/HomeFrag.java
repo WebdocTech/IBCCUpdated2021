@@ -242,8 +242,7 @@ public class HomeFrag extends Fragment {
         });
 
         selectProcessAlertDialog.show();
-    }//alert
-
+    }
 
     private void ApplyOnlineAttestation() {
         Global.isFromEquivalence = false;
@@ -257,7 +256,6 @@ public class HomeFrag extends Fragment {
         Global.selectedCerti.clear();
         for (int i = 0; i < Global.pdfResponse.getResult().getCerftificates().size(); i++) {
             Global.selectedCerti.add(Global.pdfResponse.getResult().getCerftificates().get(i));
-
 
             Global.addEducationResponse.setResult(null);
             Global.DMList.clear();
@@ -274,9 +272,8 @@ public class HomeFrag extends Fragment {
         Global.equivalenceOnline = true;
         Global.equivalenceQualificationList.clear();
         Intent intent = new Intent(getActivity(), ApplyEquivalenceActivity.class);
+        //Intent intent = new Intent(getActivity(), ApplyEquivalenceNewActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
-
-
 }
