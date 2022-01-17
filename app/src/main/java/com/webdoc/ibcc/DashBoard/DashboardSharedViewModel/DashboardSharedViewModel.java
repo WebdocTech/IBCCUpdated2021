@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.gson.JsonObject;
 import com.webdoc.ibcc.DashBoard.Dashboard;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.DetailsEquivalenceNewModel;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.GetDetailsEquivalence;
@@ -27,6 +28,8 @@ public class DashboardSharedViewModel extends ViewModel {
     private final MutableLiveData<GetDetailsEquivalence> MLD_DETAILS_EQUIVALENCE = new MutableLiveData<>();
     //private final MutableLiveData<UserRegisterResult> MLD_USER_REGISTERATION = new MutableLiveData<>();
 
+    private MutableLiveData<DetailsEquivalenceNewModel> MLD_DETAILS_EQUIVALENCE_NEW = new MutableLiveData<>();
+
     //LiveData:
     public LiveData<PdfResult> getPdfResultLiveData() {
         return MLD_PDF_RESULT;
@@ -35,6 +38,11 @@ public class DashboardSharedViewModel extends ViewModel {
     public LiveData<GetDetailsEquivalence> getDetailsEquivalenceLiveData() {
         return MLD_DETAILS_EQUIVALENCE;
     }
+
+    public LiveData<DetailsEquivalenceNewModel> getDetailsEQNew() {
+        return MLD_DETAILS_EQUIVALENCE_NEW;
+    }
+
 
     //Calling Apis:
     public void callPDFApi(Activity activity) {
@@ -91,6 +99,41 @@ public class DashboardSharedViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<GetDetailsEquivalence> call, Throwable t) {
+                    Global.utils.hideCustomLoadingDialog();
+                    Log.i("dsd", t.getMessage());
+                    Toast.makeText(activity, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(activity, "Please connect internet connection !", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //New Details APi:
+    public void callDetailsEquivalenceNewApi(Activity activity) {
+        if (Constants.isInternetConnected(activity)) {
+            Global.utils.showCustomLoadingDialog(activity);
+
+            JsonObject mobj = new JsonObject();
+
+            APIInterface apiInterface = APIClient.getClient(Constants.BASE_URL);
+            Call<DetailsEquivalenceNewModel> call = apiInterface.callDetailsEquivalenceNew(mobj);
+
+            call.enqueue(new Callback<DetailsEquivalenceNewModel>() {
+                @Override
+                public void onResponse(Call<DetailsEquivalenceNewModel> call
+                        , Response<DetailsEquivalenceNewModel> response) {
+                    Global.utils.hideCustomLoadingDialog();
+
+                    if (response.isSuccessful()) {
+                        MLD_DETAILS_EQUIVALENCE_NEW.postValue(response.body());
+                    } else {
+                        Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DetailsEquivalenceNewModel> call, Throwable t) {
                     Global.utils.hideCustomLoadingDialog();
                     Log.i("dsd", t.getMessage());
                     Toast.makeText(activity, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();

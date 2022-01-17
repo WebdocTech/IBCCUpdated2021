@@ -1,8 +1,13 @@
 package com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel;
 
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -26,6 +31,8 @@ import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.DocumentSelection.apimode
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.EquivalenceEducationDetailsFragment;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.Equivalence_Receipt;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.GenerateApp.EquivalenceGenerateAppFragment;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.DetailsEquivalenceNewModel;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.editReassignCaseModels.EditReassignCaseModel;
 import com.webdoc.ibcc.DataModel.EducationDetailModel;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.FileUitls;
@@ -35,6 +42,7 @@ import com.webdoc.ibcc.Model.DocumentSelectionModel;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.AddDocumentDetailsResult.AddDocumentDetailsResult;
 import com.webdoc.ibcc.ResponseModels.AddEducationResult.AddEducationResult;
+import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.AddQualificationEQ;
 import com.webdoc.ibcc.ResponseModels.DeleteEducationResult.DeleteEducationResult;
 import com.webdoc.ibcc.ResponseModels.EditEducationResult.EditEducationResult;
 import com.webdoc.ibcc.ResponseModels.IntiateCase.IntiateCase;
@@ -58,6 +66,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import in.gauriinfotech.commons.Commons;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -83,6 +92,9 @@ public class HomeSharedViewModel extends ViewModel {
     private MutableLiveData<PhpfilesResponse> MLD_IMAGE_TRAVELLING = new MutableLiveData<>();
     private MutableLiveData<SaveCourierDetials> MLD_SAVE_COURIER_DETAILS = new MutableLiveData<>();
     private MutableLiveData<SaveCourierDetialsEQ> MLD_SAVE_COURIER_DETAILS_EQ = new MutableLiveData<>();
+
+    private MutableLiveData<DetailsEquivalenceNewModel> MLD_DETAILS_EQUIVALENCE_NEW = new MutableLiveData<>();
+    private MutableLiveData<AddQualificationEQ> MLD_EQUIVALENCE_ADD_QUALIFICATION = new MutableLiveData<>();
 
     //LiveData:
     public LiveData<AddDocumentDetailsResult> getAddDocumentDetails() {
@@ -131,6 +143,14 @@ public class HomeSharedViewModel extends ViewModel {
 
     public LiveData<SaveCourierDetialsEQ> getSaveCourierDetailsEQ() {
         return MLD_SAVE_COURIER_DETAILS_EQ;
+    }
+
+    public LiveData<DetailsEquivalenceNewModel> getDetailsEQNew() {
+        return MLD_DETAILS_EQUIVALENCE_NEW;
+    }
+
+    public LiveData<AddQualificationEQ> getEquivalenveAddQualification() {
+        return MLD_EQUIVALENCE_ADD_QUALIFICATION;
     }
 
     //Calling Apis:
@@ -401,11 +421,10 @@ public class HomeSharedViewModel extends ViewModel {
             //try {
             //params.put("caseId", dataModel.get(0).getCaseID());
             //JSONArray docArray = new JSONArray();
-            SaveDocumentDetails saveDocumentDetails = new SaveDocumentDetails();
-            List<SaveDocumentDetails> list = new ArrayList<>();
-            ;
-            for (int j = 0; j < Global.equivalenceQualificationList.size(); j++) {
 
+            List<SaveDocumentDetails> list = new ArrayList<>();
+            for (int j = 0; j < Global.equivalenceQualificationList.size(); j++) {
+                SaveDocumentDetails saveDocumentDetails = new SaveDocumentDetails();
                 saveDocumentDetails.setDocId(dataModel.get(j).getDocId());
                 saveDocumentDetails.setAmount(dataModel.get(j).getAmount());
                 saveDocumentDetails.setAverageMarks(0);
@@ -553,7 +572,8 @@ public class HomeSharedViewModel extends ViewModel {
         }
     }
 
-    public void callImageDocumentApi(Context context) {
+    public void
+    callImageDocumentApi(Context context) {
         if (Global.utils.isInternerConnected(context)) {
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -575,7 +595,10 @@ public class HomeSharedViewModel extends ViewModel {
             builder.setType(MultipartBody.FORM);
 
             for (int i = 0; i < Global.phpfiles.size(); i++) {
+                //String fullPath = Commons.getPath(Global.phpfiles.get(i), context);
                 File file = new File(FileUitls.getPath(context, Global.phpfiles.get(i)));
+                //File file = new File(fullPath);
+
                 builder.addFormDataPart(
                         "image[]",
                         file.getName(),
@@ -623,7 +646,7 @@ public class HomeSharedViewModel extends ViewModel {
                     .build();
             String url = Constants.TRAVELLING_URL;
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
+                    .baseUrl("https://equivalence.ibcc.edu.pk/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client) // Set HttpClient to be used by Retrofit
                     .build();
@@ -650,7 +673,7 @@ public class HomeSharedViewModel extends ViewModel {
                 public void onResponse(Call<PhpfilesResponse> call, retrofit2.Response<PhpfilesResponse> response) {
                     Global.utils.hideCustomLoadingDialog();
                     if (response.isSuccessful()) {
-                       MLD_IMAGE_TRAVELLING.postValue(response.body());
+                        MLD_IMAGE_TRAVELLING.postValue(response.body());
                     } else {
                         Toast.makeText(context, "something went wrong / Server error !", Toast.LENGTH_SHORT).show();
                     }
@@ -658,6 +681,36 @@ public class HomeSharedViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<PhpfilesResponse> call, Throwable t) {
+                    Toast.makeText(Global.applicationContext, "Failure, something went wrong !", Toast.LENGTH_SHORT).show();
+                    Global.utils.hideCustomLoadingDialog();
+                    call.cancel();
+                }
+            });
+        } else {
+            Toast.makeText(context, "Please connect internet connection !", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    public void callEquivalenceAddQualificationApi(Context context, JsonObject params) {
+        if (Global.utils.isInternerConnected(context)) {
+
+            APIInterface apiInterface = APIClient.getClient(Constants.BASE_URL);
+            Call<AddQualificationEQ> call1 = apiInterface.callEquivalenceAddQualificationApi(params);
+
+            call1.enqueue(new Callback<AddQualificationEQ>() {
+                @Override
+                public void onResponse(Call<AddQualificationEQ> call, retrofit2.Response<AddQualificationEQ> response) {
+                    Global.utils.hideCustomLoadingDialog();
+                    if (response.isSuccessful()) {
+                        MLD_EQUIVALENCE_ADD_QUALIFICATION.postValue(response.body());
+                    } else {
+                        Toast.makeText(context, "something went wrong / Server error !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddQualificationEQ> call, Throwable t) {
                     Toast.makeText(Global.applicationContext, "Failure, something went wrong !", Toast.LENGTH_SHORT).show();
                     Global.utils.hideCustomLoadingDialog();
                     call.cancel();
@@ -733,6 +786,41 @@ public class HomeSharedViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<SaveCourierDetialsEQ> call, Throwable t) {
+                    Global.utils.hideCustomLoadingDialog();
+                    Log.i("dsd", t.getMessage());
+                    Toast.makeText(activity, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(activity, "Please connect internet connection !", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //New Details APi:
+    public void callDetailsEquivalenceNewApi(Activity activity) {
+        if (Constants.isInternetConnected(activity)) {
+            Global.utils.showCustomLoadingDialog(activity);
+
+            JsonObject mobj = new JsonObject();
+
+            APIInterface apiInterface = APIClient.getClient(Constants.BASE_URL);
+            Call<DetailsEquivalenceNewModel> call = apiInterface.callDetailsEquivalenceNew(mobj);
+
+            call.enqueue(new Callback<DetailsEquivalenceNewModel>() {
+                @Override
+                public void onResponse(Call<DetailsEquivalenceNewModel> call
+                        , Response<DetailsEquivalenceNewModel> response) {
+                    Global.utils.hideCustomLoadingDialog();
+
+                    if (response.isSuccessful()) {
+                        MLD_DETAILS_EQUIVALENCE_NEW.postValue(response.body());
+                    } else {
+                        Toast.makeText(activity, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DetailsEquivalenceNewModel> call, Throwable t) {
                     Global.utils.hideCustomLoadingDialog();
                     Log.i("dsd", t.getMessage());
                     Toast.makeText(activity, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();

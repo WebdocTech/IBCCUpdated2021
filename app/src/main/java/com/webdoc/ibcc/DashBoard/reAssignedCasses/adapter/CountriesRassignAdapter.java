@@ -1,4 +1,4 @@
-package com.webdoc.ibcc.Adapter.Spinner.Equivalence;
+package com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,18 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GroupEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
 import com.webdoc.ibcc.R;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
 
 import java.util.List;
 
-public class GroupAdapter extends ArrayAdapter<GroupEQNew> {
-    private Activity context;
-    List<GroupEQNew> data = null;
 
-    public GroupAdapter(Activity context, int resource, List<GroupEQNew> data) {
+public class CountriesRassignAdapter extends ArrayAdapter<Country> {
+    private Activity context;
+    List<Country> data = null;
+
+    public CountriesRassignAdapter(Activity context, int resource, List<Country> data) {
         super(context, resource, data);
         this.context = context;
         this.data = data;
@@ -41,14 +40,14 @@ public class GroupAdapter extends ArrayAdapter<GroupEQNew> {
             row = inflater.inflate(R.layout.spinner_item, parent, false);
         }
 
-        GroupEQNew item = data.get(position);
-        String Id = String.valueOf(item.getId());
-        String Name = item.getName();
+        Country item = data.get(position);
+        String countryId = String.valueOf(item.getId());
+        String countryName = item.getName();
 
         if (item != null) {
             TextView text = (TextView) row.findViewById(R.id.item_value);
             if (text != null) {
-                text.setText(Name);
+                text.setText(countryName);
             }
         }
 

@@ -115,15 +115,15 @@ public class EquivalenceEducationDetailsFragment extends Fragment implements Ite
                     ApplyEquivalenceActivity.stepIndicator.setCurrentStepPosition(3);
 
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.equivalence_fragment_container, new EquivalenceDocumentSelectionFragment()).addToBackStack(null).commit();
+                            .replace(R.id.equivalence_fragment_container,
+                                    new EquivalenceDocumentSelectionFragment())
+                            .addToBackStack(null).commit();
 
                 } else {
                     Global.utils.showErrorSnakeBar(getActivity(), "Please add qualification to proceed");
                 }
-
             }
         });
-
     }
 
     private void setAdapter() {

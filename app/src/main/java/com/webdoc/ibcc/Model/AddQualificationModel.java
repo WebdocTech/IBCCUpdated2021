@@ -1,13 +1,16 @@
 package com.webdoc.ibcc.Model;
 
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceGradingSystemEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.ExaminingBody;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GroupEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Qualification;
 import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.QualificationSubjectResponse;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGradingSystem;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceSubject;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
 
 import java.util.List;
 
@@ -16,12 +19,12 @@ public class AddQualificationModel {
     String examinationSystem;
     ExaminingBody examiningBody;
     Qualification qualification;
-    EquivalenceGroup group;
+    GroupEQNew group;
     String session;
     String purposeOfEquivalence;
-    EquivalenceGradingSystem gradingSystem;
-    List<EquivalenceSubject> subjectList;
-    List<EquivalenceGrade> gradeList;
+    EquivalenceGradingSystemEQNew gradingSystem;
+    List<EquivalenceSubjectEQNew> subjectList;
+    List<GradesEQNew> gradeList;
     List<EquivalenceFileModel> selectedFilesList;
     List<EquivalenceTravelFileModel> selectedTravelFilesList;
     List<QualificationSubjectResponse> qualificationSubjectResponseList;
@@ -66,11 +69,11 @@ public class AddQualificationModel {
         this.qualification = qualification;
     }
 
-    public EquivalenceGroup getGroup() {
+    public GroupEQNew getGroup() {
         return group;
     }
 
-    public void setGroup(EquivalenceGroup group) {
+    public void setGroup(GroupEQNew group) {
         this.group = group;
     }
 
@@ -90,27 +93,27 @@ public class AddQualificationModel {
         this.purposeOfEquivalence = purposeOfEquivalence;
     }
 
-    public EquivalenceGradingSystem getGradingSystem() {
+    public EquivalenceGradingSystemEQNew getGradingSystem() {
         return gradingSystem;
     }
 
-    public void setGradingSystem(EquivalenceGradingSystem gradingSystem) {
+    public void setGradingSystem(EquivalenceGradingSystemEQNew gradingSystem) {
         this.gradingSystem = gradingSystem;
     }
 
-    public List<EquivalenceSubject> getSubjectList() {
+    public List<EquivalenceSubjectEQNew> getSubjectList() {
         return subjectList;
     }
 
-    public void setSubjectList(List<EquivalenceSubject> subjectList) {
+    public void setSubjectList(List<EquivalenceSubjectEQNew> subjectList) {
         this.subjectList = subjectList;
     }
 
-    public List<EquivalenceGrade> getGradeList() {
+    public List<GradesEQNew> getGradeList() {
         return gradeList;
     }
 
-    public void setGradeList(List<EquivalenceGrade> gradeList) {
+    public void setGradeList(List<GradesEQNew> gradeList) {
         this.gradeList = gradeList;
     }
 

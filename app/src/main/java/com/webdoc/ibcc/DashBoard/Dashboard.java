@@ -20,6 +20,7 @@ import com.webdoc.ibcc.DashBoard.Faq.FaqsFrag;
 import com.webdoc.ibcc.DashBoard.Home.ApplyAttestation.DocumentSelection.DocumentSelectionFragment;
 import com.webdoc.ibcc.DashBoard.Home.ApplyAttestation.EducationDetails.EducationDetailsFragment;
 import com.webdoc.ibcc.DashBoard.Home.HomeFrag;
+import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.CaseEducationDetailsActivity;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.ReAssignedFragment;
 import com.webdoc.ibcc.Essentails.Constants;
@@ -39,11 +40,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
-    private VolleyRequestController volleyRequestController;
+public class Dashboard extends AppCompatActivity {
     public static ConstraintLayout BottomLayout;
     private ActivityDashboardBinding layoutBinding;
     private DashboardSharedViewModel viewModel;
+    private String mType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
             if (response != null) {
                 if (response.getMessage().equalsIgnoreCase(Constants.IBCC_SUCCESS_MESSAGE)) {
                     Global.pdfResponse = response;
-                    viewModel.callDetailsEquivalenceApi(this);
+                    //viewModel.callDetailsEquivalenceApi(this);
                 } else {
                     Global.utils.showErrorSnakeBar(this, response.getMessage());
                 }
@@ -90,6 +91,26 @@ public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
                 }
             }
         });
+
+        viewModel.getDetailsEQNew().observe(this, response -> {
+            if (response != null) {
+                if (response.getResult().getResponseCode().equalsIgnoreCase("0000")) {
+                    Global.detailsEquivalenceNewModel = response;
+
+                    //calling Fragment:
+                    if (mType.equalsIgnoreCase("ReassignCase")) {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.dashboard_fragment_container,
+                                        new ReAssignedFragment()).commit();
+                    } else if (mType.equalsIgnoreCase("InCompleteCase")) {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.dashboard_fragment_container,
+                                        new IncompleteAppointmentFrag()).commit();
+                    }
+                }
+            }
+        });
+
     }
 
     private void clickListeners() {
@@ -104,12 +125,15 @@ public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
         layoutBinding.ivHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.dashboard_fragment_container,
-                                new IncompleteAppointmentFrag()).commit();
 
-                //Global.utils.showCustomLoadingDialog(Dashboard.this);
-                //volleyRequestController.ViewIncomplete();
+                if (Global.detailsEquivalenceNewModel.getResult() != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.dashboard_fragment_container,
+                                    new IncompleteAppointmentFrag()).commit();
+                } else {
+                    mType = "InCompleteCase";
+                    viewModel.callDetailsEquivalenceNewApi(Dashboard.this);
+                }
             }
         });
 
@@ -125,9 +149,14 @@ public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
         layoutBinding.ivFaq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.dashboard_fragment_container,
-                        new ReAssignedFragment()).commit();
+                if (Global.detailsEquivalenceNewModel.getResult() != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.dashboard_fragment_container,
+                                    new ReAssignedFragment()).commit();
+                } else {
+                    mType = "ReassignCase";
+                    viewModel.callDetailsEquivalenceNewApi(Dashboard.this);
+                }
             }
         });
 
@@ -136,7 +165,7 @@ public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
             public void onClick(View view) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.dashboard_fragment_container,
-                        new AccountFrag()).commit();
+                                new AccountFrag()).commit();
             }
         });
 
@@ -180,6 +209,4 @@ public class Dashboard extends AppCompatActivity /*implements VolleyListener*/ {
         super.onResume();
         BottomLayout.setVisibility(View.VISIBLE);
     }
-
-
 }

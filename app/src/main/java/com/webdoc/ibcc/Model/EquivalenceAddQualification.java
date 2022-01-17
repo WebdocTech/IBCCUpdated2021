@@ -1,5 +1,6 @@
 package com.webdoc.ibcc.Model;
 
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.QualificationSubjectResponse;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
 
@@ -28,7 +29,7 @@ public class EquivalenceAddQualification {
     String parentsPermanentAddress;
     String parentsNameOfTheOrganization;
     List<String> imagesEductaionList;
-    List<EquivalenceGrade> subjectEducationList;
+    List<GradesEQNew> subjectEducationList;
     List<String> imagesTravellingList;
     List<QualificationSubjectResponse> qualificationSubjectResponseList;
 
@@ -208,11 +209,11 @@ public class EquivalenceAddQualification {
         this.imagesEductaionList = imagesEductaionList;
     }
 
-    public List<EquivalenceGrade> getSubjectEducationList() {
+    public List<GradesEQNew> getSubjectEducationList() {
         return subjectEducationList;
     }
 
-    public void setSubjectEducationList(List<EquivalenceGrade> subjectEducationList) {
+    public void setSubjectEducationList(List<GradesEQNew> subjectEducationList) {
         this.subjectEducationList = subjectEducationList;
     }
 

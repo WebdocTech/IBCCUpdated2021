@@ -68,8 +68,8 @@ public class EasyPaisaViewModel extends AndroidViewModel {
         String orderId = getRandomNumberString();
         Global.order_id = orderId;
         String storeId = "86961";
-        //String transactionAmount = String.valueOf(Global.price);
-        String transactionAmount = String.valueOf(1);
+        String transactionAmount = String.valueOf(Global.price);
+        //String transactionAmount = String.valueOf(1);
         String transactionType = "MA";
         String mobileAccountNo = mobilenumber;
         String emailAddress = email;

@@ -21,15 +21,19 @@ import com.webdoc.ibcc.Payment.PaymentMethods.JsBankAccount.ResponseModels.Secon
 import com.webdoc.ibcc.Payment.PaymentMethods.OTCPayment.RequestModel.OtcRequestModel;
 import com.webdoc.ibcc.Payment.PaymentMethods.OTCPayment.ResponseModels.OtcPaymentResponse;
 import com.webdoc.ibcc.Payment.RequestModel.savePaymentInfoRequestModel;
+import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.AddQualificationEQ;
 import com.webdoc.ibcc.ResponseModels.SavePaymentInfo.SavePaymentInfo;
 import com.webdoc.ibcc.ResponseModels.inquiryResult.InquiryResult;
 import com.webdoc.ibcc.ResponseModels.phpfilesResponse.PhpfilesResponse;
 import com.webdoc.ibcc.ResponseModels.updatePAymentInfoResult.UpdatePAymentInfoResult;
 
+import org.json.JSONObject;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;

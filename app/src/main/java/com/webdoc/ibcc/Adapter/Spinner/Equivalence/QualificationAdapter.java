@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Qualification;
 import com.webdoc.ibcc.R;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
 
 import java.util.List;
 

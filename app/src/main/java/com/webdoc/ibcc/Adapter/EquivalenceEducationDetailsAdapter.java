@@ -12,14 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.webdoc.ItemClickListeners;
-import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.EquivalenceEducationDetailsFragment;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.UpdateQualification.UpdateQualification;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Model.AddQualificationModel;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class EquivalenceEducationDetailsAdapter extends RecyclerView.Adapter<EquivalenceEducationDetailsAdapter.ViewHolder> {
     Activity context;
@@ -34,7 +31,8 @@ public class EquivalenceEducationDetailsAdapter extends RecyclerView.Adapter<Equ
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.equivalence_education_details_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.equivalence_education_details_item,
+                parent, false);
         return new EquivalenceEducationDetailsAdapter.ViewHolder(view);
     }
 

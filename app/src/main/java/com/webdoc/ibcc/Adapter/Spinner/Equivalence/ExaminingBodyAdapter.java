@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.ExaminingBody;
 import com.webdoc.ibcc.R;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
 
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class ExaminingBodyAdapter extends ArrayAdapter<ExaminingBody> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) { // Ordinary view in Spinner, we use android.R.layout.simple_spinner_item
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Ordinary view in Spinner, we use android.R.layout.simple_spinner_item
         return initView(position, convertView, parent);
     }
 

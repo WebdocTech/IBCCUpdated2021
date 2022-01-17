@@ -90,7 +90,7 @@ public class EquivalenceGenerateAppFragment extends Fragment {
         layoutBinding.switchSecurityFee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b == false) {   //false
+                if (!b) {   //false
                     No_documentSecureDialog(0);
                     securityFee = 0;
                     Global.webdocAmount = 0;
@@ -190,5 +190,7 @@ public class EquivalenceGenerateAppFragment extends Fragment {
         layoutBinding.tvProcessingFee.setText("Rs." + String.valueOf(bankCharges));
         Global.bankChargeEQ = bankCharges;
     }
+
+
 
 }

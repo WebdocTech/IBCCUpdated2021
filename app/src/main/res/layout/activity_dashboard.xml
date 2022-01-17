@@ -168,7 +168,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/iv_call"
                 app:layout_constraintTop_toTopOf="@+id/iv_account"
-                app:srcCompat="@drawable/dashboard_faq"
+                app:srcCompat="@drawable/reassigned"
                 tools:ignore="ContentDescription" />
 
             <ImageView

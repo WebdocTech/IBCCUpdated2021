@@ -31,27 +31,25 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.webdoc.ibcc.Adapter.EditSubjectsAdapter;
-import com.webdoc.ibcc.Adapter.SelectedFilesAdapter;
-import com.webdoc.ibcc.Adapter.SelectedTravellingDocumentAdapter;
-import com.webdoc.ibcc.Adapter.Spinner.Equivalence.CountriesAdapter;
-import com.webdoc.ibcc.Adapter.Spinner.Equivalence.EquivalenceGradingSystemAdapter;
-import com.webdoc.ibcc.Adapter.Spinner.Equivalence.ExaminingBodyAdapter;
-import com.webdoc.ibcc.Adapter.Spinner.Equivalence.GroupAdapter;
-import com.webdoc.ibcc.Adapter.Spinner.Equivalence.QualificationAdapter;
-import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.AddQualification;
-import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.UpdateQualification.UpdateQualification;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceGradingSystemEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GroupEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Qualification;
 import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseEditSubjectsAdapter;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseSelectedFilesAdapter;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CaseSelectedTravellingDocumentAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.CountriesRassignAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.EquivalenceGradingSystemReassignAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.ExaminingBodyReassignAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.GroupReassignAdapter;
+import com.webdoc.ibcc.DashBoard.reAssignedCasses.adapter.QualificationReassignAdapter;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.FileImagesModel;
-import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetail;
-import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedDocumentResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedTravDocumentResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.QualificationSubjectResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.ReassignedCaseDetailsModel;
-import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.editReassignCaseModels.EditReassignCaseModel;
 import com.webdoc.ibcc.Essentails.Constants;
@@ -59,24 +57,16 @@ import com.webdoc.ibcc.Essentails.FileUitls;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Model.EquivalenceFileModel;
 import com.webdoc.ibcc.R;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGradingSystem;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceSubject;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.ExaminingBody;
 import com.webdoc.ibcc.ResponseModels.phpfilesResponse.PhpfilesResponse;
 import com.webdoc.ibcc.Retrofit.jsonPlaceHolderApi;
-import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 import com.webdoc.ibcc.api.APIClient;
 import com.webdoc.ibcc.api.APIInterface;
 import com.webdoc.ibcc.databinding.ActivityReassignedCaseDetailsBinding;
-import com.webdoc.ibcc.databinding.ActivityUpdateQualificationBinding;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,15 +102,15 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
     Country country;
     ExaminingBody examiningBody;
     Qualification qualification;
-    EquivalenceGroup equivalenceGroup;
-    EquivalenceGradingSystem equivalenceGradingSystem;
+    GroupEQNew equivalenceGroup;
+    EquivalenceGradingSystemEQNew equivalenceGradingSystem;
 
     List<Country> countriesList;
     List<ExaminingBody> examiningBodyList;
     List<Qualification> qualificationList;
-    List<EquivalenceGradingSystem> equivalenceGradingSystemList;
-    List<EquivalenceGroup> equivalenceGroupList;
-    List<EquivalenceSubject> equivalenceSubjectList;
+    List<EquivalenceGradingSystemEQNew> equivalenceGradingSystemList;
+    List<GroupEQNew> equivalenceGroupList;
+    List<EquivalenceSubjectEQNew> equivalenceSubjectList;
 
     AlertDialog fileChooserAlertDialog;
     String purpose_of_equivalence, examination_system;
@@ -171,8 +161,8 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
         rv_files_trans = layoutBinding.rvFilesTrans;
 
         countriesList = new ArrayList<>();
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getCountries().size(); i++) {
-            countriesList.add(Global.getDetailsEquivalence.getResult().getCountries().get(i));
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); i++) {
+            countriesList.add(Global.detailsEquivalenceNewModel.getResult().getCountries().get(i));
         }
 
         //observers();
@@ -328,7 +318,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
 
     private void clickListeners() {
         //COUNTRIES SPINNER
-        CountriesAdapter spinnerCountriesAdapter = new CountriesAdapter(this,
+        CountriesRassignAdapter spinnerCountriesAdapter = new CountriesRassignAdapter(this,
                 R.layout.spinner_item, countriesList);
         layoutBinding.spinnerCountry.setAdapter(spinnerCountriesAdapter);
         //int spinner_countryPosition = spinnerCountriesAdapter.getPosition(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getCountry());
@@ -342,25 +332,48 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
 
                 int mExaminingBodyPos = 0;
                 //EXAMINING BODY
-                examiningBodyList = new ArrayList<>();
+                /*examiningBodyList = new ArrayList<>();
                 for (int i = 0; i < country.getExaminingBody().size(); i++) {
                     examiningBodyList.add(country.getExaminingBody().get(i));
                     if (country.getExaminingBody().get(i).getName().equalsIgnoreCase(mExaminingBody)) {
                         mExaminingBodyPos = i;
                     }
+                }*/
+
+                examiningBodyList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getExaminingBody().size(); i++) {
+                    int str1 = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().get(i).getCountryId();
+                    int str2 = country.getId();
+                    if (str1 == str2) {
+                        examiningBodyList.add(Global.detailsEquivalenceNewModel.getResult().getExaminingBody().get(i));
+                        //examiningBodyList.add(country.getExaminingBody().get(i));
+                        if (Global.detailsEquivalenceNewModel.getResult().getExaminingBody().get(i).getName().equalsIgnoreCase(mExaminingBody)) {
+                            mExaminingBodyPos = i;
+                        }
+                    }
                 }
 
-                ExaminingBodyAdapter examiningBodyAdapter = new ExaminingBodyAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, examiningBodyList);
+                ExaminingBodyReassignAdapter examiningBodyAdapter = new ExaminingBodyReassignAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, examiningBodyList);
                 layoutBinding.spinnerExaminingBody.setAdapter(examiningBodyAdapter);
                 layoutBinding.spinnerExaminingBody.setSelection(mExaminingBodyPos);
 
                 //int mQualificationID = 0;
                 //QUALIFICATION
-                qualificationList = new ArrayList<>();
+                /*qualificationList = new ArrayList<>();
                 for (int i = 0; i < country.getQualification().size(); i++) {
                     qualificationList.add(country.getQualification().get(i));
+                }*/
+
+                qualificationList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getQualification().size(); i++) {
+                    int str1 = Global.detailsEquivalenceNewModel.getResult().getQualification().get(i).getCountryId();
+                    int str2 = country.getId();
+                    if (str1 == str2) {
+                        qualificationList.add(Global.detailsEquivalenceNewModel.getResult().getQualification().get(i));
+                    }
                 }
-                QualificationAdapter qualificationAdapter = new QualificationAdapter(ReassignedCaseDetailsActivity.this,
+
+                QualificationReassignAdapter qualificationAdapter = new QualificationReassignAdapter(ReassignedCaseDetailsActivity.this,
                         R.layout.spinner_item, qualificationList);
                 layoutBinding.spinnerQualification.setAdapter(qualificationAdapter);
 
@@ -420,22 +433,42 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 }
 
                 //GRADING SYSTEM
-                equivalenceGradingSystemList = new ArrayList<>();
+                /*equivalenceGradingSystemList = new ArrayList<>();
                 for (int i = 0; i < qualification.getEquivalenceGradingSystem().size(); i++) {
                     equivalenceGradingSystemList.add(qualification.getEquivalenceGradingSystem().get(i));
+                }*/
+
+                equivalenceGradingSystemList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().size(); i++) {
+                    int gradingSystemEQID = Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().get(i).getQualificationId();
+                    int qualificationID = qualificationList.get(position).getId();
+                    if (gradingSystemEQID == qualificationID) {
+                        equivalenceGradingSystemList.add(Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().get(i));
+                    }
                 }
-                EquivalenceGradingSystemAdapter equivalenceGradingSystemAdapter = new EquivalenceGradingSystemAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, equivalenceGradingSystemList);
+
+                EquivalenceGradingSystemReassignAdapter equivalenceGradingSystemAdapter = new EquivalenceGradingSystemReassignAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, equivalenceGradingSystemList);
                 layoutBinding.spinnerGradingSystem.setAdapter(equivalenceGradingSystemAdapter);
 
                 //int spinner_grading_systemPosition = equivalenceGradingSystemAdapter.getPosition(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getGradingSystem());
                 //layoutBinding.spinnerGradingSystem.setSelection(Integer.parseInt(mGradingSystem));
 
                 //EQUIVALENCE GROUP
-                equivalenceGroupList = new ArrayList<>();
+                /*equivalenceGroupList = new ArrayList<>();
                 for (int i = 0; i < qualification.getEquivalenceGroup().size(); i++) {
                     equivalenceGroupList.add(qualification.getEquivalenceGroup().get(i));
+                }*/
+
+                equivalenceGroupList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().size(); i++) {
+                    int gradingSystemEQID = Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().get(i).getQualificationId();
+                    int qualificationID = qualificationList.get(position).getId();
+                    if (gradingSystemEQID == qualificationID) {
+                        equivalenceGroupList.add(Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().get(i));
+                    }
                 }
-                GroupAdapter groupAdapter = new GroupAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, equivalenceGroupList);
+
+                GroupReassignAdapter groupAdapter = new GroupReassignAdapter(ReassignedCaseDetailsActivity.this, R.layout.spinner_item, equivalenceGroupList);
                 layoutBinding.spinnerGroup.setAdapter(groupAdapter);
 
                 /*Examination System Spinner Visibility*/
@@ -502,9 +535,23 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
                 equivalenceGradingSystem = equivalenceGradingSystemList.get(position);
 
-                Global.equivalenceGradeList.clear();
+                /*Global.equivalenceGradeList.clear();
                 for (int i = 0; i < equivalenceGradingSystem.getEquivalenceGrade().size(); i++) {
-                    Global.equivalenceGradeList.add(equivalenceGradingSystem.getEquivalenceGrade().get(i));
+                    Global.equivalenceGradeListReassign.add(equivalenceGradingSystem.getEquivalenceGrade().get(i));
+                }*/
+
+                Global.equivalenceGradeList.clear();
+                GradesEQNew gradesEQNew = new GradesEQNew();
+                gradesEQNew.setEquivalenceGradingSystemId(-1);
+                gradesEQNew.setId(-1);
+                gradesEQNew.setName("Please Select *");
+                Global.equivalenceGradeList.add(gradesEQNew);
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().size(); i++) {
+                    int strGradingSystemID = equivalenceGradingSystemList.get(position).getId();
+                    int GradeID = Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().get(i).getEquivalenceGradingSystemId();
+                    if (GradeID == strGradingSystemID) {
+                        Global.equivalenceGradeList.add(Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().get(i));
+                    }
                 }
 
                 Global.equivalenceGradingSystemName = equivalenceGradingSystem.getName();
@@ -524,20 +571,31 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
                 equivalenceGroup = equivalenceGroupList.get(position);
 
-                equivalenceSubjectList = new ArrayList<>();
-
+                /*equivalenceSubjectList = new ArrayList<>();
                 Global.selectedGradeList.clear();
                 for (int i = 0; i < equivalenceGroup.getEquivalenceSubject().size(); i++) {
                     equivalenceSubjectList.add(equivalenceGroup.getEquivalenceSubject().get(i));
-
                     EquivalenceGrade equivalenceGrade = new EquivalenceGrade();
-                    Global.selectedGradeList.add(equivalenceGrade);
+                    Global.equivalenceGradeListReassign.add(equivalenceGrade);
+                }*/
+
+                equivalenceSubjectList = new ArrayList<>();
+                Global.selectedGradeList.clear();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().size(); i++) {
+                    int str2 = Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().get(i).getGroupId();
+                    int str1 = equivalenceGroupList.get(position).getId();
+                    if (str1 == str2) {
+                        equivalenceSubjectList.add(Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().get(i));
+                        GradesEQNew equivalenceGrade = new GradesEQNew();
+                        Global.equivalenceGradeListReassign.add(equivalenceGrade);
+                        //Global.selectedGradeList.add(equivalenceGrade);
+                    }
                 }
 
                 editSubjectsAdapter = new CaseEditSubjectsAdapter(ReassignedCaseDetailsActivity.this,
                         equivalenceSubjectList, arrayListSubjects);
                 layoutBinding.rvSubjects.setAdapter(editSubjectsAdapter);
-                Global.equivalenceSubjectList = equivalenceSubjectList;
+                Global.equivalenceSubjectListReassign = equivalenceSubjectList;
             }
 
             @Override
@@ -898,7 +956,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
             JsonObject params = new JsonObject();
             try {
                 params.addProperty("docId", mDocID);
-                params.addProperty("countryId", Integer.parseInt(country.getId()));
+                params.addProperty("countryId", country.getId());
                 params.addProperty("session", layoutBinding.etSession.getText().toString());
 
                 params.addProperty("fatherCnic", "");
@@ -906,12 +964,12 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 //
                 params.addProperty("email", mEmail);
                 //
-                params.addProperty("titleOfQualification", country.getQualification().get(mPosition).getName());
+                params.addProperty("titleOfQualification", Global.detailsEquivalenceNewModel.getResult().getQualification().get(mPosition).getName());
                 params.addProperty("mailingAddress", "");
                 //
-                params.addProperty("gradingSystemId", Integer.parseInt(equivalenceGradingSystem.getId()));
+                params.addProperty("gradingSystemId", equivalenceGradingSystem.getId());
                 //
-                params.addProperty("groupId", Integer.parseInt(equivalenceGroup.getId()));
+                params.addProperty("groupId", equivalenceGroup.getId());
 
                 params.addProperty("presentEmploymentOfParents", "");
                 //
@@ -919,7 +977,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
 
                 params.addProperty("parentsnameoftheorganization", "");
                 //
-                params.addProperty("qualificationId", Integer.parseInt(qualification.getId()));
+                params.addProperty("qualificationId", qualification.getId());
 
                 params.addProperty("otherexaminingbody", "");
                 params.addProperty("examinationsystem", "");
@@ -1044,12 +1102,12 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                 /*if (fileListNew.get(i).getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
                     String str;
                 } else {*/
-                    File file = new File(FileUitls.getPath(context, Uri.parse(fileListNewAdded.get(i).getFileName())));
-                    builder.addFormDataPart(
-                            "image[]",
-                            file.getName(),
-                            RequestBody.create(MediaType.parse(context.getContentResolver().getType(Uri.parse(fileListNewAdded.get(i).getFileName()))), file)
-                    );
+                File file = new File(FileUitls.getPath(context, Uri.parse(fileListNewAdded.get(i).getFileName())));
+                builder.addFormDataPart(
+                        "image[]",
+                        file.getName(),
+                        RequestBody.create(MediaType.parse(context.getContentResolver().getType(Uri.parse(fileListNewAdded.get(i).getFileName()))), file)
+                );
                 //}
             }
 
@@ -1102,7 +1160,7 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
                     .build();
             String url = Constants.TRAVELLING_URL;
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
+                    .baseUrl("https://equivalence.ibcc.edu.pk/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client) // Set HttpClient to be used by Retrofit
                     .build();
@@ -1111,18 +1169,13 @@ public class ReassignedCaseDetailsActivity extends AppCompatActivity {
             builder.setType(MultipartBody.FORM);
 
             for (int i = 0; i < filesListTravelingNewAdded.size(); i++) {
-                /*if (filesListTravelingNew.get(i).getFileName().contains("http://equivalence.ibcc.edu.pk/")) {
-                    String str;
-                } else {*/
-                    File file = new File(FileUitls.getPath(context, Uri.parse(filesListTravelingNewAdded.get(i).getFileName())));
-                    builder.addFormDataPart(
-                            "image[]",
-                            file.getName(),
-                            RequestBody.create(MediaType.parse(context.getContentResolver().getType(Uri.parse(filesListTravelingNewAdded.get(i).getFileName()))), file)
-                    );
-                //}
+                File file = new File(FileUitls.getPath(context, Uri.parse(filesListTravelingNewAdded.get(i).getFileName())));
+                builder.addFormDataPart(
+                        "image[]",
+                        file.getName(),
+                        RequestBody.create(MediaType.parse(context.getContentResolver().getType(Uri.parse(filesListTravelingNewAdded.get(i).getFileName()))), file)
+                );
             }
-
 
             RequestBody requestBody = builder.build();
             jsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(jsonPlaceHolderApi.class);

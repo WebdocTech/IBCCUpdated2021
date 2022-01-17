@@ -7,8 +7,10 @@ import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDet
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.editReassignCaseModels.EditReassignCaseModel;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.submitReassignCaseModels.SubmitReassignCaseModel;
+import com.webdoc.ibcc.Payment.PaymentMethods.StripePayment.responseModel.DollerRateResponseModel;
 import com.webdoc.ibcc.ResponseModels.AddDocumentDetailsResult.AddDocumentDetailsResult;
 import com.webdoc.ibcc.ResponseModels.AddEducationResult.AddEducationResult;
+import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.AddQualificationEQ;
 import com.webdoc.ibcc.ResponseModels.CancelAppointmentResult.CancelAppointmentResult;
 import com.webdoc.ibcc.ResponseModels.CheckRegistrationResult.CheckRegistrationResult;
 import com.webdoc.ibcc.ResponseModels.DeleteEducationResult.DeleteEducationResult;
@@ -46,6 +48,9 @@ public interface APIInterface {
 
     @GET("Pdf")
     Call<PdfResult> callPDF();
+
+    @POST("api/latest.json?app_id=fb516545580f47859cadb37203688a08")
+    Call<DollerRateResponseModel> callDollorRate();
 
     @POST("Equivalence/GetDetailsEquivalence")
     Call<GetDetailsEquivalence> callDetailsEquivalence(@Body JsonObject mojb);
@@ -128,6 +133,9 @@ public interface APIInterface {
 
     @POST("Equivalence/ReassignedCaseEdit")
     Call<SubmitReassignCaseModel> callReassignedCaseSubmitApi(@Body JsonObject mojb);
+
+    @POST("Equivalence/AddQualificationEQ")
+    Call<AddQualificationEQ> callEquivalenceAddQualificationApi(@Body JsonObject jsonObject);
 
     /*CALL COURIER*/
 

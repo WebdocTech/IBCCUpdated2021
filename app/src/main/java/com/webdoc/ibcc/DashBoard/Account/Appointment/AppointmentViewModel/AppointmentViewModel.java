@@ -144,7 +144,7 @@ public class AppointmentViewModel extends ViewModel {
 
                 @Override
                 public void onFailure(Call<ViewDetailsResult> call, Throwable t) {
-                    //Global.utils.hideCustomLoadingDialog();
+                    Global.utils.hideCustomLoadingDialog();
                     Log.i("dsd", t.getMessage());
                     Toast.makeText(activity, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();
                 }

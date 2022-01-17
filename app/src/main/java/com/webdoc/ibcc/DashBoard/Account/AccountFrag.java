@@ -34,16 +34,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.hasnat.sweettoast.SweetToast;
 
 public class AccountFrag extends Fragment {
-    Button btn_aims;
+    //Button btn_aims;
     public static TextView UserName;
     private FragmentAccountBinding layoutBinding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
         layoutBinding = FragmentAccountBinding.inflate(inflater, container, false);
-
-        btn_aims = view.findViewById(R.id.btn_aims);
 
         UserName = layoutBinding.UserName;
         UserName.setText(Global.userLoginResponse.getResult().getCustomerProfile().getFirstName() + " " + Global.userLoginResponse.getResult().getCustomerProfile().getLastName());
@@ -86,7 +83,7 @@ public class AccountFrag extends Fragment {
             }
         });
 
-        btn_aims.setOnClickListener(new View.OnClickListener() {
+        layoutBinding.btnAims.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Global.utils.HaveNetwork(getActivity())) {

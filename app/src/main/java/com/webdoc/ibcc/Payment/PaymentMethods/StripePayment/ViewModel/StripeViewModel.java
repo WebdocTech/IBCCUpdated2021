@@ -1,5 +1,6 @@
 package com.webdoc.ibcc.Payment.PaymentMethods.StripePayment.ViewModel;
 
+import android.app.Activity;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,9 +12,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.Pyament.RequestModel.EquilanceRequestModel;
+import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
+import com.webdoc.ibcc.Payment.PaymentMethods.StripePayment.responseModel.DollerRateResponseModel;
+import com.webdoc.ibcc.ResponseModels.PdfResult.PdfResult;
 import com.webdoc.ibcc.ResponseModels.SavePaymentInfo.SavePaymentInfo;
 import com.webdoc.ibcc.Retrofit.jsonPlaceHolderApi;
+import com.webdoc.ibcc.api.APIClient;
+import com.webdoc.ibcc.api.APIInterface;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,16 +40,23 @@ public class StripeViewModel extends AndroidViewModel {
 
     private final MutableLiveData<SavePaymentInfo> MLD_save_payment_info_from_equivalance = new MutableLiveData<>();
 
+    private final MutableLiveData<DollerRateResponseModel> MLD_dollor_response_model = new MutableLiveData<>();
+
     //todo: Live Data
     public LiveData<SavePaymentInfo> LD_savePaymentInfoEquialance() {
         return MLD_save_payment_info_from_equivalance;
+    }
+
+    public LiveData<DollerRateResponseModel> LD_getDollorRate() {
+        return MLD_dollor_response_model;
     }
 
     public StripeViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void callSavePaymentEQApi(String keyUserPhone) {
+    public void callSavePaymentEQApi(String keyUserPhone, double priceInDollors, double priceInPKR,
+                                     double sevenDollor, double fivePercentAmount) {
 
         if (!TextUtils.isEmpty(Global.caseId)) {
             case_id = Global.caseId;
@@ -52,7 +65,7 @@ public class StripeViewModel extends AndroidViewModel {
         }
 
         user_id = Global.userLoginResponse.getResult().getCustomerProfile().getId();
-        amount_paid = String.valueOf(Global.price);
+        amount_paid = String.valueOf(priceInPKR);
         bank = "Stripe Payment";
         account_number = Global.userLoginResponse.getResult().getCustomerProfile().getMobile();
         mobile_number = Global.userLoginResponse.getResult().getCustomerProfile().getMobile();
@@ -61,9 +74,9 @@ public class StripeViewModel extends AndroidViewModel {
         transaction_datetime = "";
         center = Global.center;
         IBCC_amount = String.valueOf(Global.ibccAmount);
-        webdoc_amount = String.valueOf(Global.webdocAmount);
+        webdoc_amount = String.valueOf(sevenDollor);
         status = "Success";
-        String bank_charges = Global.bankChargesForReceiptEQ;
+        String bank_charges = String.valueOf(fivePercentAmount);
         String courier_amount = "200";
         String order_id = "";
         userIdEq = Global.userLoginResponse.getResult().getCustomerProfile().getId();
@@ -148,4 +161,36 @@ public class StripeViewModel extends AndroidViewModel {
 
 
     }
+
+    public void callDollorRateApi(Activity activity) {
+        if (Constants.isInternetConnected(activity)) {
+            Global.utils.showCustomLoadingDialog(activity);
+
+            APIInterface apiInterface = APIClient.getClient("https://openexchangerates.org/");
+            Call<DollerRateResponseModel> call = apiInterface.callDollorRate();
+
+            call.enqueue(new Callback<DollerRateResponseModel>() {
+                @Override
+                public void onResponse(Call<DollerRateResponseModel> call, Response<DollerRateResponseModel> response) {
+                    Global.utils.hideCustomLoadingDialog();
+
+                    if (response.isSuccessful()) {
+                        MLD_dollor_response_model.postValue(response.body());
+                    } else {
+                        Toast.makeText(activity, "something went wrong !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DollerRateResponseModel> call, Throwable t) {
+                    Global.utils.hideCustomLoadingDialog();
+                    Log.i("dsd", t.getMessage());
+                    Toast.makeText(activity, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(activity, "Please connect internet connection !", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

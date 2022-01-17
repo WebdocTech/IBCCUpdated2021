@@ -7,6 +7,8 @@ import android.net.Uri;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.DocumentSelection.DocDetailEQ_Model;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.totalMarksModel;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.DetailsEquivalenceNewModel;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.CaseUploadedDocumentResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.DataModel.EducationDetailModel;
@@ -96,7 +98,8 @@ public class Global {
     public static SecondApiJSAccountResponse secondApiJSAccountResponse = new SecondApiJSAccountResponse();
 
     public static JsDebitPaymentResponseModel jsPaymentFinal = new JsDebitPaymentResponseModel();
-    public static List<EquivalenceSubject> equivalenceSubjectList = new ArrayList<>();
+    public static List<EquivalenceSubjectEQNew> equivalenceSubjectList = new ArrayList<>();
+    public static List<EquivalenceSubjectEQNew> equivalenceSubjectListReassign = new ArrayList<>();
 
     public static List<SubjectsGradeModel> subjectReassignGradeList = new ArrayList<>();
     public static  ArrayList<SubjectsGradeModel> marksList = new ArrayList<>();
@@ -219,10 +222,12 @@ public class Global {
     /*public static List<EquivalenceGrade> equivalenceMarksList = new ArrayList<>();*/
     public static List<totalMarksModel> equivalenceMarksList = new ArrayList<>();
 
-    public static List<EquivalenceGrade> equivalenceGradeList = new ArrayList<>();
+    public static List<GradesEQNew> equivalenceGradeList = new ArrayList<>();
+    public static List<GradesEQNew> equivalenceGradeListReassign = new ArrayList<>();
+    public static List<EquivalenceGrade> equivalenceGradeListold = new ArrayList<>();
     public static List<EquivalenceFileModel> selectedFilesList = new ArrayList<>();
     public static List<CaseUploadedDocumentResponse> caseSelectedFilesList = new ArrayList<>();
-    public static List<EquivalenceGrade> selectedGradeList = new ArrayList<>();
+    public static List<GradesEQNew> selectedGradeList = new ArrayList<>();
     public static List<QualificationSubjectResponse> selectedMarksList = new ArrayList<>();
     public static List<EquivalenceGrade> TempselectedGradeList = new ArrayList<>();
     public static List<EquivalenceTravelFileModel> selectedTravelList = new ArrayList<>();

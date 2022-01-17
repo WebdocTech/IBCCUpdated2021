@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -40,6 +42,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.webdoc.ibcc.Adapter.SelectedFilesAdapter;
 import com.webdoc.ibcc.Adapter.SelectedTravellingDocumentAdapter;
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.CountriesAdapter;
@@ -50,6 +54,13 @@ import com.webdoc.ibcc.Adapter.Spinner.Equivalence.QualificationAdapter;
 import com.webdoc.ibcc.Adapter.SubjectsAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.EquivalenceEducationDetailsFragment;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.UpdateQualification.UpdateQualification;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceGradingSystemEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.ExaminingBody;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GroupEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Qualification;
 import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
@@ -58,13 +69,6 @@ import com.webdoc.ibcc.Model.DeleteParams;
 import com.webdoc.ibcc.Model.EquivalenceFileModel;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.AddQualificationEQ;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGradingSystem;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceSubject;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
 import com.webdoc.ibcc.ServerManager.VolleyListener;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 import com.webdoc.ibcc.databinding.ActivityAddQualificationBinding;
@@ -76,6 +80,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.os.Build.VERSION.SDK_INT;
 
 public class AddQualification extends AppCompatActivity implements VolleyListener {
@@ -91,21 +97,26 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
     private Country country;
     private ExaminingBody examiningBody;
     private Qualification qualification;
-    private EquivalenceGroup equivalenceGroup;
-    private EquivalenceGradingSystem equivalenceGradingSystem;
+    private GroupEQNew equivalenceGroup;
+    private EquivalenceGradingSystemEQNew equivalenceGradingSystem;
     private List<Country> countriesList;
     private List<ExaminingBody> examiningBodyList;
     private List<Qualification> qualificationList;
-    private List<EquivalenceGradingSystem> equivalenceGradingSystemList;
-    private List<EquivalenceGroup> equivalenceGroupList;
-    private List<EquivalenceSubject> equivalenceSubjectList;
+    private List<EquivalenceGradingSystemEQNew> equivalenceGradingSystemList;
+    private List<GroupEQNew> equivalenceGroupList;
+    private List<EquivalenceSubjectEQNew> equivalenceSubjectList;
     private AlertDialog fileChooserAlertDialog;
     public static final int PDF_REQUEST_CODE = 100;
     public static final int GALLERY_REQUEST_CODE = 200;
     private VolleyRequestController volleyRequestController;
     private ActivityAddQualificationBinding layoutBinding;
     private Spinner spinnerQualification;
+    private boolean isMarksAdded = false;
     private HomeSharedViewModel viewModel;
+
+    private static final int RESULT_LOAD_DOCUMENT = 1;
+    private static final int WRITE_PERMISSION = 2;
+    private static final int RESULT_LOAD_IMAGE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +124,6 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         layoutBinding = ActivityAddQualificationBinding.inflate(getLayoutInflater());
         setContentView(layoutBinding.getRoot());
         viewModel = ViewModelProviders.of(this).get(HomeSharedViewModel.class);
-
 
         Global.phptravellingFiles.clear();
         Global.phpfiles.clear();
@@ -128,16 +138,20 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         rv_files_trans = layoutBinding.rvFilesTrans;
         tv_uploadHint = layoutBinding.tvUploadHint;
 
-        /*SUBJECTS RECYCLERVIEW*/
+        //setUp Adapters:
         setSubjectsAdapter();
-        /*SELECTED FILES RECYCLERVIEW*/
         setFilesAdapter();
         setFilesTransAdapter();
 
+        clickListeners();
+        setUpSpinners();
+        observers();
+    }
+
+    private void clickListeners() {
         layoutBinding.btnSelectSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 layoutBinding.ccAddMarks.setVisibility(View.VISIBLE);
                 layoutBinding.ccAllitems.setVisibility(View.GONE);
             }
@@ -146,36 +160,180 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         layoutBinding.btnAddMarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Global.utils.hideKeyboard(AddQualification.this);
-
                 Boolean flag = true;
                 for (int i = 0; i < Global.selectedGradeList.size(); i++) {
-                    if (Global.selectedGradeList.get(i).getId() == null) {
+                    // id -1 for "Please Select*"
+                    if (Global.selectedGradeList.get(i).getId() == -1) {
                         flag = false;
                     }
                 }
                 if (flag) {
+                    isMarksAdded = true;
                     layoutBinding.ccAddMarks.setVisibility(View.GONE);
                     layoutBinding.ccAllitems.setVisibility(View.VISIBLE);
                     layoutBinding.btnSelectSubject.setBackground(getDrawable(R.drawable.green_button_background));
                     layoutBinding.btnSelectSubject.setText("Added Successfully");
                 } else {
-                    Global.utils.showErrorSnakeBar(AddQualification.this, "Please Enter all requirments");
+                    isMarksAdded = false;
+                    Global.utils.showErrorSnakeBar(AddQualification.this, "Please Fill all Fields");
                 }
             }
         });
 
-        countriesList = new ArrayList<>();
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getCountries().size(); i++) {
-            countriesList.add(Global.getDetailsEquivalence.getResult().getCountries().get(i));
+        layoutBinding.btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Global.isFromDocument = true;
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, WRITE_PERMISSION);
+                } else {
+                    showFileChooser();
+                }
+            }
+        });
+
+        layoutBinding.btnUploadTransport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Global.isFromDocument = false;
+                //verifyStoragePermissions(AddQualification.this);
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, WRITE_PERMISSION);
+
+                } else {
+                    showFileChooser();
+                }
+            }
+        });
+
+        layoutBinding.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isExist = false;
+                for (int i = 0; i < Global.qualificationIdArray.size(); i++) {
+                    isExist = false;
+                    if (Global.qualificationIdArray.get(i).equals(qualification.getId())) {
+                        isExist = true;
+                        break;
+                    } else {
+                        isExist = false;
+                    }
+                }
+
+                if (isExist) {
+                    layoutBinding.spinnerQualification.requestFocus();
+                    TextView errorText = (TextView) spinnerQualification.getSelectedView();
+                    errorText.setError("");
+                    errorText.setTextColor(Color.RED);
+                    errorText.setText("* Select another qualification !");
+                    Global.utils.showErrorSnakeBar(AddQualification.this, "Please select another qualification !");
+
+                } else {
+                    if (isValid() && isMarksAdded) {
+
+                        /*TODO: For API calling*/
+                        if (!Global.isIncompleteAppointmentEQ) {
+                            Global.equivalenceAddQualification.setEmail(Global.equivalenceInitiateCase.getEmail());
+                            Global.equivalenceAddQualification.setMailingAddress(Global.equivalenceInitiateCase.getEmail());
+                            Global.equivalenceAddQualification.setTelNo(Global.equivalenceInitiateCase.getPhone());
+                            Global.equivalenceAddQualification.setFatherCnic(Global.equivalenceInitiateCase.getFatherCnic());
+                            Global.equivalenceAddQualification.setPresentEmploymentOfParents(Global.equivalenceInitiateCase.getParentsEmployment());
+                            Global.equivalenceAddQualification.setFatherName(Global.equivalenceInitiateCase.getFatherName());
+                            Global.equivalenceAddQualification.setParentsPermanentAddress(Global.equivalenceInitiateCase.getFatherAddress());
+                            Global.equivalenceAddQualification.setParentsNameOfTheOrganization(Global.equivalenceInitiateCase.getNameOfOrganization());
+
+                            Global.equivalenceAddQualification.setCaseId(Global.equivalenceInitiateCaseResponse.getResult().getIntiateCaseResponseDetails().getCaseId().toString());
+                        } else {
+                            Global.equivalenceAddQualification.setEmail("");
+                            Global.equivalenceAddQualification.setMailingAddress("");
+                            Global.equivalenceAddQualification.setTelNo("");
+                            Global.equivalenceAddQualification.setFatherCnic("");
+                            Global.equivalenceAddQualification.setPresentEmploymentOfParents("");
+                            Global.equivalenceAddQualification.setFatherName("");
+                            Global.equivalenceAddQualification.setParentsPermanentAddress("");
+                            Global.equivalenceAddQualification.setParentsNameOfTheOrganization("");
+                            Global.equivalenceAddQualification.setCaseId(Global.caseIdQualificationEQ);
+                        }
+
+                        Global.equivalenceAddQualification.setCountryId(String.valueOf(country.getId()));
+
+                        Global.equivalenceAddQualification.setExaminationSystem(examination_system);
+                        Global.equivalenceAddQualification.setExaminingBody(examiningBody.getName());
+                        Global.equivalenceAddQualification.setPurposeOfEquivalence(purpose_of_equivalence);
+                        Global.equivalenceAddQualification.setNameOfTheInstitution("");
+                        Global.equivalenceAddQualification.setOtherExaminingBody("");
+                        Global.equivalenceAddQualification.setGradingSystemId(String.valueOf(equivalenceGradingSystem.getId()));
+                        Global.equivalenceAddQualification.setGroupId(String.valueOf(equivalenceGroup.getId()));
+                        Global.equivalenceAddQualification.setSession(layoutBinding.etSession.getText().toString());
+                        Global.equivalenceAddQualification.setQualificationId(String.valueOf(qualification.getId()));
+                        Global.equivalenceAddQualification.setTitleOfQualification(qualification.getName());
+                        Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
+
+                        Global.qualificationId = String.valueOf(qualification.getId());
+                        Global.qualificationIdArray.add(String.valueOf(qualification.getId()));
+
+                        //Todo: SubjectList
+                        List<GradesEQNew> subjectEducationList = new ArrayList<>();
+                        subjectEducationList.addAll(Global.selectedGradeList);
+                        Global.equivalenceAddQualification.setSubjectEducationList(subjectEducationList);
+
+                        //Todo: imageList for document
+                        Global.Count = 1;
+
+                        Global.equivalenceAddQualification.setImagesEductaionList(Global.imagesEducationlList);
+                        Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
+
+                        Global.utils.showCustomLoadingDialog(AddQualification.this);
+                        viewModel.callImageDocumentApi(AddQualification.this);
+                    } else {
+                        if (!isMarksAdded) {
+                            Global.utils.showErrorSnakeBar(AddQualification.this, "Please add subjects Marks !");
+                        }
+                    }
+
+                }
+            }
+        });
+    }
+
+    public boolean isValid() {
+        if (TextUtils.isEmpty(country.getName()) || TextUtils.isEmpty(examiningBody.getName()) || TextUtils.isEmpty(qualification.getName())
+                || TextUtils.isEmpty(equivalenceGroup.getName()) || TextUtils.isEmpty(layoutBinding.etSession.getText().toString()) || TextUtils.isEmpty(purpose_of_equivalence)
+                || TextUtils.isEmpty(equivalenceGradingSystem.getName()) || equivalenceSubjectList.size() == 0 || Global.selectedGradeList.size() == 0) {
+            Global.utils.showErrorSnakeBar(AddQualification.this, "Please fill all fields");
+            return false;
+        } else if (Global.equivalenceOnline) {
+            if (Global.selectedFilesList.size() == 0) {
+                Global.utils.showErrorSnakeBar(AddQualification.this, "Please select files to upload");
+                return false;
+            }
         }
 
-        qualificationList = new ArrayList<>();
-        country = countriesList.get(0);
-        for (int i = 0; i < country.getQualification().size(); i++) {
-            qualificationList.add(country.getQualification().get(i));
+        return true;
+    }
+
+    private void setUpSpinners() {
+        countriesList = new ArrayList<>();
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); i++) {
+            countriesList.add(Global.detailsEquivalenceNewModel.getResult().getCountries().get(i));
         }
+
+        /*country = countriesList.get(0);
+        for (int i = 0; i < countriesList.size(); i++) {
+            qualificationList.add(countriesList.get(i));
+        }*/
+
+        qualificationList = new ArrayList<>();
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getQualification().size(); i++) {
+            int str1 = Global.detailsEquivalenceNewModel.getResult().getQualification().get(i).getCountryId();
+            int str2 = countriesList.get(0).getId();
+            if (str1 == str2) {
+                qualificationList.add(Global.detailsEquivalenceNewModel.getResult().getQualification().get(i));
+            }
+        }
+        //qualificationList = Global.detailsEquivalenceNewModel.getResult().getQualification();
 
         //COUNTRIES SPINNER
         CountriesAdapter spinnerCountriesAdapter = new CountriesAdapter(this, R.layout.spinner_item, countriesList);
@@ -187,18 +345,37 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                 country = countriesList.get(position);
 
                 //EXAMINING BODY
-                examiningBodyList = new ArrayList<>();
+                /*examiningBodyList = new ArrayList<>();
                 for (int i = 0; i < country.getExaminingBody().size(); i++) {
                     examiningBodyList.add(country.getExaminingBody().get(i));
+                }*/
+
+                examiningBodyList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getExaminingBody().size(); i++) {
+                    int str1 = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().get(i).getCountryId();
+                    int str2 = country.getId();
+                    if (str1 == str2) {
+                        examiningBodyList.add(Global.detailsEquivalenceNewModel.getResult().getExaminingBody().get(i));
+                    }
                 }
+
                 ExaminingBodyAdapter examiningBodyAdapter = new ExaminingBodyAdapter(
                         AddQualification.this, R.layout.spinner_item, examiningBodyList);
                 layoutBinding.spinnerExaminingBody.setAdapter(examiningBodyAdapter);
 
                 //QUALIFICATION
-                qualificationList = new ArrayList<>();
+                /*qualificationList = new ArrayList<>();
                 for (int i = 0; i < country.getQualification().size(); i++) {
                     qualificationList.add(country.getQualification().get(i));
+                }*/
+
+                qualificationList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getQualification().size(); i++) {
+                    int str1 = Global.detailsEquivalenceNewModel.getResult().getQualification().get(i).getCountryId();
+                    int str2 = country.getId();
+                    if (str1 == str2) {
+                        qualificationList.add(Global.detailsEquivalenceNewModel.getResult().getQualification().get(i));
+                    }
                 }
 
                 QualificationAdapter qualificationAdapter = new QualificationAdapter(AddQualification.this,
@@ -220,13 +397,14 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         });
 
 
-        qualificationList = new ArrayList<>();
+        /*qualificationList = new ArrayList<>();
         for (int i = 0; i < country.getQualification().size(); i++) {
             qualificationList.add(country.getQualification().get(i));
-        }
+        }*/
 
         QualificationAdapter qualificationAdapter = new QualificationAdapter(AddQualification.this,
-                R.layout.spinner_item, qualificationList);
+                R.layout.spinner_item,
+                Global.detailsEquivalenceNewModel.getResult().getQualification());
         layoutBinding.spinnerQualification.setAdapter(qualificationAdapter);
 
 
@@ -279,19 +457,50 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
 
                 //GRADING SYSTEM
                 equivalenceGradingSystemList = new ArrayList<>();
-                for (int i = 0; i < qualification.getEquivalenceGradingSystem().size(); i++) {
-                    equivalenceGradingSystemList.add(qualification.getEquivalenceGradingSystem().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().size(); i++) {
+                    int gradingSystemEQID = Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().get(i).getQualificationId();
+                    int qualificationID = qualificationList.get(position).getId();
+                    if (gradingSystemEQID == qualificationID) {
+                        equivalenceGradingSystemList.add(Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().get(i));
+                    }
                 }
-                EquivalenceGradingSystemAdapter equivalenceGradingSystemAdapter = new EquivalenceGradingSystemAdapter(AddQualification.this, R.layout.spinner_item, equivalenceGradingSystemList);
+
+                EquivalenceGradingSystemEQNew temp = new EquivalenceGradingSystemEQNew();
+                temp.setId(0);
+                temp.setName("Marks");
+                temp.setQualificationId(qualificationList.get(position).getId());
+                // Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().add(temp);
+                equivalenceGradingSystemList.add(temp);
+
+
+                EquivalenceGradingSystemAdapter equivalenceGradingSystemAdapter = new EquivalenceGradingSystemAdapter(AddQualification.this,
+                        R.layout.spinner_item, equivalenceGradingSystemList);
                 layoutBinding.spinnerGradingSystem.setAdapter(equivalenceGradingSystemAdapter);
+
+                //change subject Button:
+                isMarksAdded = false;
+                layoutBinding.btnSelectSubject.setBackground(getDrawable(R.drawable.red_button_background));
+                layoutBinding.btnSelectSubject.setText("Select Subject Grades/Marks");
 
 
                 //EQUIVALENCE GROUP
-                equivalenceGroupList = new ArrayList<>();
+                /*equivalenceGroupList = new ArrayList<>();
                 for (int i = 0; i < qualification.getEquivalenceGroup().size(); i++) {
                     equivalenceGroupList.add(qualification.getEquivalenceGroup().get(i));
+                }*/
+
+                //List<GroupEQNew> groupList = new ArrayList<>();
+                equivalenceGroupList = new ArrayList<>();
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().size(); i++) {
+                    int gradingSystemEQID = Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().get(i).getQualificationId();
+                    int qualificationID = qualificationList.get(position).getId();
+                    if (gradingSystemEQID == qualificationID) {
+                        equivalenceGroupList.add(Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().get(i));
+                    }
                 }
-                GroupAdapter groupAdapter = new GroupAdapter(AddQualification.this, R.layout.spinner_item, equivalenceGroupList);
+
+                GroupAdapter groupAdapter = new GroupAdapter(AddQualification.this,
+                        R.layout.spinner_item, equivalenceGroupList);
                 layoutBinding.spinnerGroup.setAdapter(groupAdapter);
 
                 /*Examination System Spinner Visibility*/
@@ -300,7 +509,8 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                     layoutBinding.ExaminationSystemLayout.setVisibility(View.VISIBLE);
 
                     //SPINNER EXAMINATION SYSTEM
-                    spinner_examination_system_adapter = ArrayAdapter.createFromResource(AddQualification.this, R.array.examination_system_array, R.layout.spinner_item);
+                    spinner_examination_system_adapter = ArrayAdapter.createFromResource(AddQualification.this,
+                            R.array.examination_system_array, R.layout.spinner_item);
                     layoutBinding.spinnerExaminationSystem.setAdapter(spinner_examination_system_adapter);
 
                     layoutBinding.spinnerExaminationSystem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -331,13 +541,26 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         layoutBinding.spinnerGradingSystem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-
                 equivalenceGradingSystem = equivalenceGradingSystemList.get(position);
 
+               /* if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    Global.equivalenceGradeList.add(Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().stream().filter(y -> y.getId().equals(String.valueOf(position))).findFirst().get());
+                }*/
+
                 Global.equivalenceGradeList.clear();
-                for (int i = 0; i < equivalenceGradingSystem.getEquivalenceGrade().size(); i++) {
-                    Global.equivalenceGradeList.add(equivalenceGradingSystem.getEquivalenceGrade().get(i));
+                GradesEQNew gradesEQNew = new GradesEQNew();
+                gradesEQNew.setEquivalenceGradingSystemId(-1);
+                gradesEQNew.setId(-1);
+                gradesEQNew.setName("Please Select *");
+                Global.equivalenceGradeList.add(gradesEQNew);
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().size(); i++) {
+                    int strGradingSystemID = equivalenceGradingSystemList.get(position).getId();
+                    int GradeID = Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().get(i).getEquivalenceGradingSystemId();
+                    if (GradeID == strGradingSystemID) {
+                        Global.equivalenceGradeList.add(Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().get(i));
+                    }
                 }
+
                 Global.equivalenceGradingSystemName = equivalenceGradingSystem.getName();
 
                 /*if(equivalenceGradingSystem.getName().equalsIgnoreCase("Marks")) {
@@ -345,7 +568,13 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
 
                 } else{
                 }*/
+
                 subjectsAdapter.notifyDataSetChanged();
+
+                //change subject Button:
+                isMarksAdded = false;
+                layoutBinding.btnSelectSubject.setBackground(getDrawable(R.drawable.red_button_background));
+                layoutBinding.btnSelectSubject.setText("Select Subject Grades/Marks");
             }
 
             @Override
@@ -363,16 +592,24 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
 
                 equivalenceSubjectList = new ArrayList<>();
                 Global.selectedGradeList.clear();
-                for (int i = 0; i < equivalenceGroup.getEquivalenceSubject().size(); i++) {
-                    equivalenceSubjectList.add(equivalenceGroup.getEquivalenceSubject().get(i));
-                    EquivalenceGrade equivalenceGrade = new EquivalenceGrade();
-                    Global.selectedGradeList.add(equivalenceGrade);
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().size(); i++) {
+                    int str2 = Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().get(i).getGroupId();
+                    int str1 = equivalenceGroupList.get(position).getId();
+                    if (str1 == str2) {
+                        equivalenceSubjectList.add(Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().get(i));
+                        GradesEQNew equivalenceGrade = new GradesEQNew();
+                        Global.selectedGradeList.add(equivalenceGrade);
+                    }
                 }
-
 
                 subjectsAdapter = new SubjectsAdapter(AddQualification.this, equivalenceSubjectList);
                 layoutBinding.rvSubjects.setAdapter(subjectsAdapter);
                 Global.equivalenceSubjectList = equivalenceSubjectList;
+
+                //change subject Button:
+                isMarksAdded = false;
+                layoutBinding.btnSelectSubject.setBackground(getDrawable(R.drawable.red_button_background));
+                layoutBinding.btnSelectSubject.setText("Select Subject Grades/Marks");
             }
 
             @Override
@@ -395,126 +632,6 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                 // TODO Auto-generated method stub;
             }
         });
-
-        layoutBinding.btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Global.isFromDocument = true;
-                verifyStoragePermissions(AddQualification.this);
-                showFileChooser();
-            }
-        });
-
-        layoutBinding.btnUploadTransport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Global.isFromDocument = false;
-                verifyStoragePermissions(AddQualification.this);
-                showFileChooser();
-            }
-        });
-
-        layoutBinding.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isExist = false;
-                for (int i = 0; i < Global.qualificationIdArray.size(); i++) {
-                    isExist = false;
-                    if (Global.qualificationIdArray.get(i).equals(qualification.getId())) {
-                        isExist = true;
-                        break;
-                    } else {
-                        isExist = false;
-                    }
-                }
-
-                if (isExist) {
-                    layoutBinding.spinnerQualification.requestFocus();
-                    TextView errorText = (TextView) spinnerQualification.getSelectedView();
-                    errorText.setError("");
-                    errorText.setTextColor(Color.RED);
-                    errorText.setText("* Select another qualification !");
-                    Global.utils.showErrorSnakeBar(AddQualification.this, "Please select another qualification !");
-                } else {
-                    Global.utils.showCustomLoadingDialog(AddQualification.this);
-
-                    if (TextUtils.isEmpty(country.getName()) || TextUtils.isEmpty(examiningBody.getName()) || TextUtils.isEmpty(qualification.getName())
-                            || TextUtils.isEmpty(equivalenceGroup.getName()) || TextUtils.isEmpty(layoutBinding.etSession.getText().toString()) || TextUtils.isEmpty(purpose_of_equivalence)
-                            || TextUtils.isEmpty(equivalenceGradingSystem.getName()) || equivalenceSubjectList.size() == 0 || Global.selectedGradeList.size() == 0) {
-                        Global.utils.showErrorSnakeBar(AddQualification.this, "Please fill all fields");
-                        return;
-                    }
-
-                    if (Global.equivalenceOnline) {
-                        if (Global.selectedFilesList.size() == 0) {
-                            Global.utils.showErrorSnakeBar(AddQualification.this, "Please select files to upload");
-                            return;
-                        }
-                    }
-
-
-                    /*TODO: For API calling*/
-                    if (!Global.isIncompleteAppointmentEQ) {
-                        Global.equivalenceAddQualification.setEmail(Global.equivalenceInitiateCase.getEmail());
-                        Global.equivalenceAddQualification.setMailingAddress(Global.equivalenceInitiateCase.getEmail());
-                        Global.equivalenceAddQualification.setTelNo(Global.equivalenceInitiateCase.getPhone());
-                        Global.equivalenceAddQualification.setFatherCnic(Global.equivalenceInitiateCase.getFatherCnic());
-                        Global.equivalenceAddQualification.setPresentEmploymentOfParents(Global.equivalenceInitiateCase.getParentsEmployment());
-                        Global.equivalenceAddQualification.setFatherName(Global.equivalenceInitiateCase.getFatherName());
-                        Global.equivalenceAddQualification.setParentsPermanentAddress(Global.equivalenceInitiateCase.getFatherAddress());
-                        Global.equivalenceAddQualification.setParentsNameOfTheOrganization(Global.equivalenceInitiateCase.getNameOfOrganization());
-
-                        Global.equivalenceAddQualification.setCaseId(Global.equivalenceInitiateCaseResponse.getResult().getIntiateCaseResponseDetails().getCaseId().toString());
-                    } else {
-                        Global.equivalenceAddQualification.setEmail("");
-                        Global.equivalenceAddQualification.setMailingAddress("");
-                        Global.equivalenceAddQualification.setTelNo("");
-                        Global.equivalenceAddQualification.setFatherCnic("");
-                        Global.equivalenceAddQualification.setPresentEmploymentOfParents("");
-                        Global.equivalenceAddQualification.setFatherName("");
-                        Global.equivalenceAddQualification.setParentsPermanentAddress("");
-                        Global.equivalenceAddQualification.setParentsNameOfTheOrganization("");
-                        Global.equivalenceAddQualification.setCaseId(Global.caseIdQualificationEQ);
-                    }
-
-                    Global.equivalenceAddQualification.setCountryId(String.valueOf(country.getId()));
-
-                    Global.equivalenceAddQualification.setExaminationSystem(examination_system);
-                    Global.equivalenceAddQualification.setExaminingBody(examiningBody.getName());
-                    Global.equivalenceAddQualification.setPurposeOfEquivalence(purpose_of_equivalence);
-                    Global.equivalenceAddQualification.setNameOfTheInstitution("");
-                    Global.equivalenceAddQualification.setOtherExaminingBody("");
-                    Global.equivalenceAddQualification.setGradingSystemId(equivalenceGradingSystem.getId());
-                    Global.equivalenceAddQualification.setGroupId(equivalenceGroup.getId());
-                    Global.equivalenceAddQualification.setSession(layoutBinding.etSession.getText().toString());
-                    Global.equivalenceAddQualification.setQualificationId(qualification.getId());
-                    Global.equivalenceAddQualification.setTitleOfQualification(qualification.getName());
-                    Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
-
-                    Global.qualificationId = qualification.getId();
-                    Global.qualificationIdArray.add(qualification.getId());
-
-                    //Todo: SubjectList
-                    List<EquivalenceGrade> subjectEducationList = new ArrayList<>();
-                    subjectEducationList.addAll(Global.selectedGradeList);
-                    Global.equivalenceAddQualification.setSubjectEducationList(subjectEducationList);
-
-                    //Todo: imageList for document
-                    Global.Count = 1;
-
-                    //php.callImageDocumentApi(AddQualification.this);
-                    viewModel.callImageDocumentApi(AddQualification.this);
-                    // php.callImageTravellingApi(AddQualification.this);
-
-                    Global.equivalenceAddQualification.setImagesEductaionList(Global.imagesEducationlList);
-                    Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
-                }
-            }
-        });
-
-        observers();
     }
 
     private void observers() {
@@ -529,12 +646,13 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                     //callImageTravellingApi(context);
                     viewModel.callImageTravellingApi(AddQualification.this);
                 } else {
-                    if (Global.isFromEditQualitifcation == true) {
+                    if (Global.isFromEditQualitifcation) {
                         Global.utils.showCustomLoadingDialog(Global.applicationContext);
-                        volleyRequestController.equivalenceEditQualification();
+                        equivalenceAddQualificationApi();
+
                     } else {
                         Global.utils.showCustomLoadingDialog(Global.applicationContext);
-                        volleyRequestController.equivalenceAddQualification();
+                        equivalenceAddQualificationApi();
                     }
                 }
             }
@@ -550,10 +668,63 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                 Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
                 if (Global.isFromEditQualitifcation) {
                     Global.utils.showCustomLoadingDialog(Global.applicationContext);
-                    volleyRequestController.equivalenceEditQualification();
+                    equivalenceAddQualificationApi();
                 } else {
                     Global.utils.showCustomLoadingDialog(Global.applicationContext);
-                    volleyRequestController.equivalenceAddQualification();
+                    equivalenceAddQualificationApi();
+                }
+            }
+        });
+
+        viewModel.getEquivalenveAddQualification().observe(this, response -> {
+            if (response != null) {
+
+                if (response.getResult().getResponseCode().equals(Constants.IBCC_SUCCESS_CODE)) {
+
+                    Global.addQualificationEQResponse = response;
+                    /*TODO: For adding items in recyclerview list*/
+                    AddQualificationModel addQualificationModel = new AddQualificationModel();
+                    addQualificationModel.setCountry(country);
+                    addQualificationModel.setExaminationSystem(examination_system);
+                    addQualificationModel.setExaminingBody(examiningBody);
+                    addQualificationModel.setQualification(qualification);
+                    addQualificationModel.setGroup(equivalenceGroup);
+                    addQualificationModel.setSession(layoutBinding.etSession.getText().toString());
+                    addQualificationModel.setPurposeOfEquivalence(purpose_of_equivalence);
+                    addQualificationModel.setGradingSystem(equivalenceGradingSystem);
+                    addQualificationModel.setSubjectList(equivalenceSubjectList);
+
+                    //TODO: subjects and grade list
+                    List<GradesEQNew> equivalenceGradeList = new ArrayList<>();
+                    equivalenceGradeList.addAll(Global.selectedGradeList);
+                    addQualificationModel.setGradeList(equivalenceGradeList);
+
+                    //TODO; images and file
+                    List<EquivalenceFileModel> equivalenceFileModelList = new ArrayList<>();
+                    equivalenceFileModelList.addAll(Global.selectedFilesList);
+                    addQualificationModel.setSelectedFilesList(equivalenceFileModelList);
+
+                    Global.equivalenceQualificationList.add(addQualificationModel);
+                    EquivalenceEducationDetailsFragment.equivalenceEducationDetailsAdapter.notifyDataSetChanged();
+
+                    Global.deleteParams.clear();
+                    for (int i = 0; i < response.getResult().getDocumentDetails().size(); i++) {
+                        Global.caseId_Equ = response.getResult().getDocumentDetails().get(i).getCaseId();
+                        Global.docId_Equ = response.getResult().getDocumentDetails().get(i).getDocId();
+                        DeleteParams deleteParams = new DeleteParams();
+                        deleteParams.setCaseId(response.getResult().getDocumentDetails().get(i).getCaseId());
+                        deleteParams.setDocId(response.getResult().getDocumentDetails().get(i).getDocId());
+                        Global.deleteParams.add(deleteParams);
+                    }
+
+                    //Clear Data:
+                    Global.imagesEducationlList.clear();
+                    Global.imagesTravellinglList.clear();
+                    Global.selectedGradeList.clear();
+
+                    finish();
+                } else {
+                    Global.utils.showErrorSnakeBar(this, response.getResult().getResponseMessage());
                 }
             }
         });
@@ -611,30 +782,30 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
             @Override
             public void onClick(View view) {
                 //android 11 permissions:
-                if (SDK_INT >= Build.VERSION_CODES.R) {
+                /*if (SDK_INT >= Build.VERSION_CODES.R) {
                     if (checkPermission()) {
                         selectPDF();
                         fileChooserAlertDialog.dismiss();
                     } else {
                         requestPermission();
                     }
-                } else {
-                    selectPDF();
-                    fileChooserAlertDialog.dismiss();
-                }
+                } else {*/
+                selectPDF();
+                fileChooserAlertDialog.dismiss();
+                //}
             }
         });
 
         tv_pdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SDK_INT >= 30) {
+                /*if (SDK_INT >= 30) {
                     //only api 30 above
                     Toast.makeText(AddQualification.this, "Unable to select files in Android version 11", Toast.LENGTH_SHORT).show();
-                } else {
-                    selectPDF();
-                    fileChooserAlertDialog.dismiss();
-                }
+                } else {*/
+                selectPDF();
+                fileChooserAlertDialog.dismiss();
+                //}
             }
         });
 
@@ -642,17 +813,17 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
             @Override
             public void onClick(View view) {
                 //android 11 permissions:
-                if (SDK_INT >= Build.VERSION_CODES.R) {
-                    if (checkPermission()) {
-                        selectGalleryImages();
-                        fileChooserAlertDialog.dismiss();
-                    } else {
+                /*if (SDK_INT >= Build.VERSION_CODES.R) {
+                    if (checkPermission()) {*/
+                selectGalleryImages();
+                fileChooserAlertDialog.dismiss();
+                    /*} else {
                         requestPermission();
                     }
                 } else {
                     selectGalleryImages();
                     fileChooserAlertDialog.dismiss();
-                }
+                }*/
             }
         });
 
@@ -672,8 +843,8 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         if (SDK_INT >= Build.VERSION_CODES.R) {
             return Environment.isExternalStorageManager();
         } else {
-            int result = ContextCompat.checkSelfPermission(AddQualification.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-            int result1 = ContextCompat.checkSelfPermission(AddQualification.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int result = ContextCompat.checkSelfPermission(AddQualification.this, READ_EXTERNAL_STORAGE);
+            int result1 = ContextCompat.checkSelfPermission(AddQualification.this, WRITE_EXTERNAL_STORAGE);
             return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
         }
     }
@@ -698,34 +869,54 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
     }
 
     public void selectPDF() {
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF(s)"), PDF_REQUEST_CODE);
+        startActivityForResult(Intent.createChooser(intent, "Select PDF(s)"), PDF_REQUEST_CODE);*/
+
+        // scope storage work for PDF file
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, WRITE_PERMISSION);
+            } else {
+                Intent i = new Intent(
+                        Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                i.setType("application/pdf");
+                i.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivityForResult(i, PDF_REQUEST_CODE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void selectGalleryImages() {
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(Intent.createChooser(intent, "Select Image(s)"), GALLERY_REQUEST_CODE);
+        startActivityForResult(Intent.createChooser(intent, "Select Image(s)"), GALLERY_REQUEST_CODE);*/
+
+        // scope storage permission for gallery...
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, WRITE_PERMISSION);
+            } else {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                i.setType("image/*");
+                i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(i, GALLERY_REQUEST_CODE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 2296) {
-            if (SDK_INT >= Build.VERSION_CODES.R) {
-                if (Environment.isExternalStorageManager()) {
-                    // perform action when allow permission success
-                } else {
-                    Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
 
         if (Global.isFromDocument) {
             if (requestCode == PDF_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -785,7 +976,7 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                     equivalenceFileModel.setUri(photos.get(i));
                     equivalenceFileModel.setFileType("png");
                     equivalenceFileModel.setFileName("");
-                    Global.phpfiles.add(photos.get(i));//Global.timestamp + ".png"
+                    Global.phpfiles.add(photos.get(i)); //Global.timestamp + ".png"
                     Global.selectedFilesList.add(equivalenceFileModel);
                 }
                 selectedFilesAdapter.notifyDataSetChanged();
@@ -856,6 +1047,18 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            showFileChooser();
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     private int getfilesize(Uri pdfUri) {
         Cursor returnCursor =
                 getContentResolver().query(pdfUri, null, null, null, null);
@@ -890,7 +1093,7 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                 addQualificationModel.setSubjectList(equivalenceSubjectList);
 
                 //TODO: subjects and grade list
-                List<EquivalenceGrade> equivalenceGradeList = new ArrayList<>();
+                List<GradesEQNew> equivalenceGradeList = new ArrayList<>();
                 equivalenceGradeList.addAll(Global.selectedGradeList);
                 addQualificationModel.setGradeList(equivalenceGradeList);
 
@@ -920,13 +1123,13 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
     }
 
     private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            READ_EXTERNAL_STORAGE,
+            WRITE_EXTERNAL_STORAGE
     };
 
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permission = ActivityCompat.checkSelfPermission(activity, WRITE_EXTERNAL_STORAGE);
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
@@ -947,7 +1150,74 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
             selectedTextView.setTextColor(Color.RED); //text color in which you want your error message to be displayed
             selectedTextView.setText(error); // actual error message
             spinner.performClick(); // to open the spinner list if error is found.
+        }
+    }
 
+    public void equivalenceAddQualificationApi() {
+        JsonObject params = new JsonObject();
+
+        params.addProperty("countryId", Integer.parseInt(Global.equivalenceAddQualification.getCountryId()));
+        params.addProperty("session", Global.equivalenceAddQualification.getSession());
+        params.addProperty("fatherCnic", Global.equivalenceAddQualification.getFatherCnic());
+        params.addProperty("fatherName", Global.equivalenceAddQualification.getFatherName());
+        params.addProperty("email", Global.equivalenceAddQualification.getEmail());
+        params.addProperty("titleOfQualification", Global.equivalenceAddQualification.getTitleOfQualification());
+        params.addProperty("mailingAddress", Global.equivalenceAddQualification.getMailingAddress());
+        params.addProperty("gradingSystemId", Integer.parseInt(Global.equivalenceAddQualification.getGradingSystemId()));
+        params.addProperty("groupId", Integer.parseInt(Global.equivalenceAddQualification.getGroupId()));
+        params.addProperty("presentEmploymentOfParents", Global.equivalenceAddQualification.getPresentEmploymentOfParents());
+        params.addProperty("purposeOfEquivalence", Global.equivalenceAddQualification.getPurposeOfEquivalence());
+        params.addProperty("parentsNameOfTheOrganization", Global.equivalenceAddQualification.getParentsNameOfTheOrganization());
+        params.addProperty("qualificationId", Integer.parseInt(Global.equivalenceAddQualification.getQualificationId()));
+        params.addProperty("otherExaminingBody", Global.equivalenceAddQualification.getOtherExaminingBody());
+        params.addProperty("examinationSystem", Global.equivalenceAddQualification.getExaminationSystem());
+        params.addProperty("caseId", Integer.parseInt(Global.equivalenceAddQualification.getCaseId()));
+        params.addProperty("parentsPermanentAddress", Global.equivalenceAddQualification.getPresentEmploymentOfParents());
+        params.addProperty("nameOfTheInstitution", Global.equivalenceAddQualification.getNameOfTheInstitution());
+        params.addProperty("telNo", Global.equivalenceAddQualification.getTelNo());
+        params.addProperty("examiningBody", Global.equivalenceAddQualification.getExaminingBody());
+
+        JsonArray documentArray = new JsonArray();
+        for (int i = 0; i < Global.equivalenceAddQualification.getImagesEductaionList().size(); i++) {
+            JsonObject imgItem = new JsonObject();
+            imgItem.addProperty("imagename", Global.imagesEducationlList.get(i));
+            documentArray.add(imgItem);
+        }
+        params.add("imagesEductaion", documentArray);
+
+        //working on this travelling part....
+        JsonArray documentTravellingArray = new JsonArray();
+        for (int k = 0; k < Global.equivalenceAddQualification.getImagesTravellingList().size(); k++) {
+            JsonObject imgItem = new JsonObject();
+            //20210702065122.png
+            imgItem.addProperty("imagename", Global.imagesTravellinglList.get(k));
+            documentTravellingArray.add(imgItem);
+        }
+        params.add("imagestravelling", documentTravellingArray);
+
+        JsonArray subjectArray = new JsonArray();
+        for (int j = 0; j < Global.equivalenceAddQualification.getSubjectEducationList().size(); j++) {
+            JsonObject subjItem = new JsonObject();
+            subjItem.addProperty("subjectId", String.valueOf(Global.selectedGradeList.get(j).getId()));
+            subjItem.addProperty("marksgrades", Global.selectedGradeList.get(j).getName());
+            subjectArray.add(subjItem);
+        }
+
+        params.add("subjectEductaion", subjectArray);
+
+        System.out.println("AddQualification Params: " + params);
+
+        viewModel.callEquivalenceAddQualificationApi(this, params);
+        //postApiResultManager.jsonParse(Constants.ADDQUALIFICATIONEQ, params);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (layoutBinding.ccAddMarks.getVisibility() == View.VISIBLE) {
+            layoutBinding.ccAddMarks.setVisibility(View.GONE);
+            layoutBinding.ccAllitems.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
         }
     }
 }

@@ -13,14 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.airbnb.lottie.LottieAnimationView;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
-import com.webdoc.ibcc.Adapter.CategoriesAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyAttestation.Instructions.FormInstructionActivity;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.ApplyEquivalenceActivity;
 import com.webdoc.ibcc.DashBoard.Home.Attestation.AttestationActivity;

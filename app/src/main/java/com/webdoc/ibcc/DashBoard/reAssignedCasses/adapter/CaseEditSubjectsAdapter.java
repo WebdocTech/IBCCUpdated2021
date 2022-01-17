@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.webdoc.ibcc.Adapter.EditSubjectsAdapter;
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.GradesAdapter;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.QualificationSubjectResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.Essentails.Global;
@@ -32,13 +34,13 @@ import java.util.List;
 
 public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjectsAdapter.ViewHolder> {
     Activity context;
-    List<EquivalenceSubject> equivalenceSubjectList = null;
-    EquivalenceGrade grade;
+    List<EquivalenceSubjectEQNew> equivalenceSubjectList = null;
+    GradesEQNew grade;
     SubjectsGradeModel subjectsGradeModel;
     List<String> newMarksList = new ArrayList<String>();
     ArrayList<QualificationSubjectResponse> arrayList;
 
-    public CaseEditSubjectsAdapter(Activity context, List<EquivalenceSubject> equivalenceSubjectList,
+    public CaseEditSubjectsAdapter(Activity context, List<EquivalenceSubjectEQNew> equivalenceSubjectList,
                                    ArrayList<QualificationSubjectResponse> arrayList) {
         this.context = context;
         this.equivalenceSubjectList = equivalenceSubjectList;
@@ -62,7 +64,7 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
     @Override
     public void onBindViewHolder(@NonNull final CaseEditSubjectsAdapter.ViewHolder holder, final int position) {
 
-        EquivalenceSubject subjectItem = equivalenceSubjectList.get(position);
+        EquivalenceSubjectEQNew subjectItem = equivalenceSubjectList.get(position);
 
         holder.tv_subjectName.setText(subjectItem.getName());
         holder.tv_subj_name_grades.setText(subjectItem.getName());
@@ -95,7 +97,7 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
                         } else {
                             String marks = Obtained_Marks + "/" + Total_Marks;
                             subjectsGradeModel = new SubjectsGradeModel();
-                            subjectsGradeModel.setSubjectId(subjectItem.getId());
+                            subjectsGradeModel.setSubjectId(String.valueOf(subjectItem.getId()));
                             subjectsGradeModel.setMarksgrades(marks);
                             Global.marksList.add(subjectsGradeModel);
 
@@ -106,8 +108,6 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
                     } else {
                         Toast.makeText(context, "enter both values", Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
             });
         } else {
@@ -139,7 +139,7 @@ public class CaseEditSubjectsAdapter extends RecyclerView.Adapter<CaseEditSubjec
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long id) {
                 grade = Global.equivalenceGradeList.get(pos);
-                Global.selectedGradeList.set(position, grade);
+                //Global.selectedGradeList.set(position, grade);
 
                 for (int i = 0; i < Global.subjectReassignGradeList.size(); i++) {
                     if (Global.subjectReassignGradeList.get(position).getSubjectId().equalsIgnoreCase(arrayList.get(i).getSubjectId())) {

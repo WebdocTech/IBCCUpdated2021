@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.GradesAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.AddQualification.AddQualification;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
@@ -27,11 +29,10 @@ import java.util.List;
 
 public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHolder> {
     Activity context;
-    List<EquivalenceSubject> equivalenceSubjectList = null;
-    EquivalenceGrade grade;
-    List<String> newMarksList = new ArrayList<String>();
+    List<EquivalenceSubjectEQNew> equivalenceSubjectList = null;
+    GradesEQNew grade;
 
-    public SubjectsAdapter(Activity context, List<EquivalenceSubject> equivalenceSubjectList) {
+    public SubjectsAdapter(Activity context, List<EquivalenceSubjectEQNew> equivalenceSubjectList) {
         this.context = context;
         this.equivalenceSubjectList = equivalenceSubjectList;
     }
@@ -52,10 +53,10 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final SubjectsAdapter.ViewHolder holder, final int position) {
 
-        EquivalenceSubject subjectItem = equivalenceSubjectList.get(position);
+        //EquivalenceSubject subjectItem = equivalenceSubjectList.get(position);
 
-        holder.tv_subjectName.setText(subjectItem.getName());
-        holder.tv_subj_name_grades.setText(subjectItem.getName());
+        holder.tv_subjectName.setText(equivalenceSubjectList.get(position).getName());
+        holder.tv_subj_name_grades.setText(equivalenceSubjectList.get(position).getName());
 
         if (Global.equivalenceGradingSystemName.equalsIgnoreCase("Marks")) {
 
@@ -80,8 +81,8 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
                             Global.utils.hideKeyboard(context);
                         } else {
                             String marks = Obtained_Marks + "/" + Total_Marks;
-                            grade = new EquivalenceGrade();
-                            grade.setId(subjectItem.getId());
+                            grade = new GradesEQNew();
+                            grade.setId(equivalenceSubjectList.get(position).getId());
                             grade.setName(marks);
                             Global.selectedGradeList.set(position, grade);
                             holder.btn_add_sub_marks.setText("Added Succesfully");
@@ -91,8 +92,6 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
                     } else {
                         Toast.makeText(context, "enter both values", Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
             });
 
@@ -107,6 +106,8 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
         //SPINNER GRADE
         GradesAdapter gradesAdapter = new GradesAdapter(context, R.layout.spinner_item, Global.equivalenceGradeList);
         holder.spinner_grades.setAdapter(gradesAdapter);
+        holder.spinner_grades.setSelection(0);
+
         holder.spinner_grades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long id) {

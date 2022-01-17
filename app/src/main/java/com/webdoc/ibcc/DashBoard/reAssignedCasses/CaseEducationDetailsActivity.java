@@ -75,8 +75,8 @@ public class CaseEducationDetailsActivity extends AppCompatActivity implements I
         No_EducationRecord = layoutBinding.NoEducationRecord;
 
         Intent intent = getIntent();
-        //caseID = intent.getStringExtra("mCaseID");
-        caseID = "13481";
+        caseID = intent.getStringExtra("mCaseID");
+        //caseID = "13481";
         callReAssignedCaseDetailsApi(this, caseID);
 
         observers();

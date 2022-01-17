@@ -3,6 +3,7 @@ package com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.DocumentSelection.Equival
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.EquivalenceEducationDetailsFragment;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.ChooseEqu_Method.EquivalenceMethodFragment;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.GenerateApp.EquivalenceGenerateAppFragment;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.DetailsEquivalenceNewModel;
+import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
@@ -24,6 +27,7 @@ import com.webdoc.ibcc.ResponseModels.RemoveQualificationEQ.RemoveQualificationE
 import com.webdoc.ibcc.ResponseModels.SaveDocumentDetailsEQ.SaveDocumentDetailsEQ;
 import com.webdoc.ibcc.ServerManager.VolleyListener;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
+import com.webdoc.ibcc.api.APIInterface;
 import com.webdoc.ibcc.databinding.ActivityApplyEquivalenceBinding;
 
 import org.json.JSONException;
@@ -31,8 +35,8 @@ import org.json.JSONObject;
 
 public class ApplyEquivalenceActivity extends AppCompatActivity implements VolleyListener {
     public static StepIndicator stepIndicator;
-    VolleyRequestController volleyRequestController;
     private ActivityApplyEquivalenceBinding layoutBinding;
+    private HomeSharedViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,9 @@ public class ApplyEquivalenceActivity extends AppCompatActivity implements Volle
         layoutBinding = ActivityApplyEquivalenceBinding.inflate(getLayoutInflater());
         setContentView(layoutBinding.getRoot());
 
-        volleyRequestController = new VolleyRequestController(this);
+        viewModel = ViewModelProviders.of(this).get(HomeSharedViewModel.class);
+        //calling New Details Api:
+        viewModel.callDetailsEquivalenceNewApi(this);
 
         stepIndicator = findViewById(R.id.stepIndicator);
         stepIndicator.setClickable(false);
@@ -72,6 +78,18 @@ public class ApplyEquivalenceActivity extends AppCompatActivity implements Volle
             }
         }
 
+        observers();
+
+    }
+
+    private void observers() {
+        viewModel.getDetailsEQNew().observe(this, response -> {
+            if (response != null) {
+                if (response.getResult().getResponseCode().equalsIgnoreCase("0000")) {
+                    Global.detailsEquivalenceNewModel = response;
+                }
+            }
+        });
     }
 
     @Override

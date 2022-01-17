@@ -34,6 +34,13 @@ import com.webdoc.ibcc.Adapter.Spinner.Equivalence.ExaminingBodyAdapter;
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.GroupAdapter;
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.QualificationAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.EquivalenceEducationDetailsFragment;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceGradingSystemEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.ExaminingBody;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GroupEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Qualification;
 import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
@@ -41,13 +48,7 @@ import com.webdoc.ibcc.Model.AddQualificationModel;
 import com.webdoc.ibcc.Model.EquivalenceFileModel;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.EditQualificationEQ.EditQualificationEQ;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGradingSystem;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceSubject;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
 import com.webdoc.ibcc.ServerManager.VolleyListener;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 import com.webdoc.ibcc.databinding.ActivityUpdateQualificationBinding;
@@ -74,15 +75,15 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
     Country country;
     ExaminingBody examiningBody;
     Qualification qualification;
-    EquivalenceGroup equivalenceGroup;
-    EquivalenceGradingSystem equivalenceGradingSystem;
+    GroupEQNew equivalenceGroup;
+    EquivalenceGradingSystemEQNew equivalenceGradingSystem;
 
     List<Country> countriesList;
     List<ExaminingBody> examiningBodyList;
     List<Qualification> qualificationList;
-    List<EquivalenceGradingSystem> equivalenceGradingSystemList;
-    List<EquivalenceGroup> equivalenceGroupList;
-    List<EquivalenceSubject> equivalenceSubjectList;
+    List<EquivalenceGradingSystemEQNew> equivalenceGradingSystemList;
+    List<GroupEQNew> equivalenceGroupList;
+    List<EquivalenceSubjectEQNew> equivalenceSubjectList;
 
     AlertDialog fileChooserAlertDialog;
     String purpose_of_equivalence, examination_system;
@@ -120,8 +121,8 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
         setFileTransAdapter();
 
         countriesList = new ArrayList<>();
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getCountries().size(); i++) {
-            countriesList.add(Global.getDetailsEquivalence.getResult().getCountries().get(i));
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); i++) {
+            countriesList.add(Global.detailsEquivalenceNewModel.getResult().getCountries().get(i));
         }
 
         observers();
@@ -183,12 +184,12 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
         layoutBinding.spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-                country = countriesList.get(position);
+                //country = countriesList.get(position);
 
                 //EXAMINING BODY
                 examiningBodyList = new ArrayList<>();
-                for (int i = 0; i < country.getExaminingBody().size(); i++) {
-                    examiningBodyList.add(country.getExaminingBody().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getExaminingBody().size(); i++) {
+                    examiningBodyList.add(Global.detailsEquivalenceNewModel.getResult().getExaminingBody().get(i));
                 }
                 ExaminingBodyAdapter examiningBodyAdapter = new ExaminingBodyAdapter(UpdateQualification.this, R.layout.spinner_item, examiningBodyList);
                 layoutBinding.spinnerExaminingBody.setAdapter(examiningBodyAdapter);
@@ -199,8 +200,8 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
 
                 //QUALIFICATION
                 qualificationList = new ArrayList<>();
-                for (int i = 0; i < country.getQualification().size(); i++) {
-                    qualificationList.add(country.getQualification().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getQualification().size(); i++) {
+                    qualificationList.add(Global.detailsEquivalenceNewModel.getResult().getQualification().get(i));
                 }
                 QualificationAdapter qualificationAdapter = new QualificationAdapter(UpdateQualification.this,
                         R.layout.spinner_item, qualificationList);
@@ -263,8 +264,8 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
 
                 //GRADING SYSTEM
                 equivalenceGradingSystemList = new ArrayList<>();
-                for (int i = 0; i < qualification.getEquivalenceGradingSystem().size(); i++) {
-                    equivalenceGradingSystemList.add(qualification.getEquivalenceGradingSystem().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().size(); i++) {
+                    equivalenceGradingSystemList.add(Global.detailsEquivalenceNewModel.getResult().getEquivalenceGradingSystemEQNew().get(i));
                 }
                 EquivalenceGradingSystemAdapter equivalenceGradingSystemAdapter = new EquivalenceGradingSystemAdapter(UpdateQualification.this, R.layout.spinner_item, equivalenceGradingSystemList);
                 layoutBinding.spinnerGradingSystem.setAdapter(equivalenceGradingSystemAdapter);
@@ -275,8 +276,8 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
 
                 //EQUIVALENCE GROUP
                 equivalenceGroupList = new ArrayList<>();
-                for (int i = 0; i < qualification.getEquivalenceGroup().size(); i++) {
-                    equivalenceGroupList.add(qualification.getEquivalenceGroup().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().size(); i++) {
+                    equivalenceGroupList.add(Global.detailsEquivalenceNewModel.getResult().getGroupEQNew().get(i));
                 }
                 GroupAdapter groupAdapter = new GroupAdapter(UpdateQualification.this, R.layout.spinner_item, equivalenceGroupList);
                 layoutBinding.spinnerGroup.setAdapter(groupAdapter);
@@ -346,8 +347,8 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
                 equivalenceGradingSystem = equivalenceGradingSystemList.get(position);
 
                 Global.equivalenceGradeList.clear();
-                for (int i = 0; i < equivalenceGradingSystem.getEquivalenceGrade().size(); i++) {
-                    Global.equivalenceGradeList.add(equivalenceGradingSystem.getEquivalenceGrade().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().size(); i++) {
+                    Global.equivalenceGradeList.add(Global.detailsEquivalenceNewModel.getResult().getGradesEQNew().get(i));
                 }
                 Global.equivalenceGradingSystemName = equivalenceGradingSystem.getName();
                 editSubjectsAdapter.notifyDataSetChanged();
@@ -368,11 +369,11 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
 
                 equivalenceSubjectList = new ArrayList<>();
                 Global.selectedGradeList.clear();
-                for (int i = 0; i < equivalenceGroup.getEquivalenceSubject().size(); i++) {
-                    equivalenceSubjectList.add(equivalenceGroup.getEquivalenceSubject().get(i));
+                for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().size(); i++) {
+                    equivalenceSubjectList.add(Global.detailsEquivalenceNewModel.getResult().getEquivalenceSubjectEQNew().get(i));
                     // Global.selectedGradeList.add(Global.equivalenceQualificationList.get(Global.selectedQualificationIndex).getGradeList().get(i));
 
-                    EquivalenceGrade equivalenceGrade = new EquivalenceGrade();
+                    GradesEQNew equivalenceGrade = new GradesEQNew();
                     Global.selectedGradeList.add(equivalenceGrade);
 
                 }
@@ -456,10 +457,10 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
                                 Global.equivalenceAddQualification.setMailingAddress(Global.equivalenceInitiateCase.getEmail());
                                 Global.equivalenceAddQualification.setTelNo(Global.equivalenceInitiateCase.getPhone());
                                 Global.equivalenceAddQualification.setOtherExaminingBody("");
-                                Global.equivalenceAddQualification.setGradingSystemId(equivalenceGradingSystem.getId());
-                                Global.equivalenceAddQualification.setGroupId(equivalenceGroup.getId());
+                                Global.equivalenceAddQualification.setGradingSystemId(String.valueOf(equivalenceGradingSystem.getId()));
+                                Global.equivalenceAddQualification.setGroupId(String.valueOf(equivalenceGroup.getId()));
                                 Global.equivalenceAddQualification.setSession(layoutBinding.etSession.getText().toString());
-                                Global.equivalenceAddQualification.setQualificationId(qualification.getId());
+                                Global.equivalenceAddQualification.setQualificationId(String.valueOf(qualification.getId()));
                                 Global.equivalenceAddQualification.setTitleOfQualification(qualification.getName());
                                 Global.equivalenceAddQualification.setFatherCnic(Global.equivalenceInitiateCase.getFatherCnic());
                                 Global.equivalenceAddQualification.setPresentEmploymentOfParents(Global.equivalenceInitiateCase.getParentsEmployment());
@@ -469,7 +470,7 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
                                 Global.equivalenceAddQualification.setImagesTravellingList(Global.imagesTravellinglList);
 
                                 //Todo: SubjectList
-                                List<EquivalenceGrade> subjectEducationList = new ArrayList<>();
+                                List<GradesEQNew> subjectEducationList = new ArrayList<>();
                                 subjectEducationList.addAll(Global.selectedGradeList);
                                 Global.equivalenceAddQualification.setSubjectEducationList(subjectEducationList);
 
@@ -748,7 +749,7 @@ public class UpdateQualification extends AppCompatActivity implements VolleyList
                 addQualificationModel.setSubjectList(equivalenceSubjectList);
 
                 //TODO: subjects and grade list
-                List<EquivalenceGrade> equivalenceGradeList = new ArrayList<>();
+                List<GradesEQNew> equivalenceGradeList = new ArrayList<>();
                 equivalenceGradeList.addAll(Global.selectedGradeList);
                 addQualificationModel.setGradeList(equivalenceGradeList);
 

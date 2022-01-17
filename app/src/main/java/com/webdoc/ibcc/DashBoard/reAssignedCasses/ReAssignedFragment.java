@@ -54,13 +54,13 @@ public class ReAssignedFragment extends Fragment implements ItemClickListeners {
         // Inflate the layout for this fragment
         layoutBinding = FragmentReAssignedBinding.inflate(getLayoutInflater(), container, false);
 
-        /*callReAssignedCassesApi(getActivity(),
-                "faiza12@gmail.com",
-                "3740594999501");*/
+        callReAssignedCassesApi(getActivity(),
+                Global.equivalenceInitiateCase.getEmail(),
+                Global.equivalenceInitiateCase.getCnic());
 
-        Intent intent = new Intent(getActivity(), CaseEducationDetailsActivity.class);
+        /*Intent intent = new Intent(getActivity(), CaseEducationDetailsActivity.class);
         intent.putExtra("mCaseID", "12978");
-        startActivity(intent);
+        startActivity(intent);*/
 
         return layoutBinding.getRoot();
     }
@@ -92,10 +92,12 @@ public class ReAssignedFragment extends Fragment implements ItemClickListeners {
 
                     if (response.isSuccessful()) {
                         if (response.body().getResult().getResponseCode().equals(Constants.IBCC_SUCCESS_CODE)) {
+                            layoutBinding.llNoCaseFound.setVisibility(View.GONE);
                             arrayList = response.body().getResult().getReassignedCaseDetails();
                             setAdapter(arrayList);
                         } else {
-                            Global.utils.showErrorSnakeBar(getActivity(), response.body().getResult().getResponseMessage());
+                            layoutBinding.llNoCaseFound.setVisibility(View.VISIBLE);
+                            //Global.utils.showErrorSnakeBar(getActivity(), response.body().getResult().getResponseMessage());
                         }
                     } else {
                         Toast.makeText(activity, "Oopps! something went wrong / Server Error", Toast.LENGTH_SHORT).show();

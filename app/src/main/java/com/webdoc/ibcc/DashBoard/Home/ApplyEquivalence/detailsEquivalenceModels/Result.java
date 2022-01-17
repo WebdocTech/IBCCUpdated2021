@@ -25,7 +25,7 @@ public class Result {
     private ArrayList<ExaminingBody> examiningBody = null;
     @SerializedName("qualification")
     @Expose
-    private ArrayList<Qualification> qualification = null;
+    private List<Qualification> qualification = null;
     @SerializedName("groupEQNew")
     @Expose
     private ArrayList<GroupEQNew> groupEQNew = null;
@@ -79,11 +79,11 @@ public class Result {
         this.examiningBody = examiningBody;
     }
 
-    public ArrayList<Qualification> getQualification() {
+    public List<Qualification> getQualification() {
         return qualification;
     }
 
-    public void setQualification(ArrayList<Qualification> qualification) {
+    public void setQualification(List<Qualification> qualification) {
         this.qualification = qualification;
     }
 

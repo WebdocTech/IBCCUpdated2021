@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.ReassignedCaseDetailsModels.QualificationSubjectResponse;
 import com.webdoc.ibcc.DashBoard.reAssignedCasses.modelclasses.SubjectsGradeModel;
 import com.webdoc.ibcc.Essentails.Global;
@@ -16,12 +17,12 @@ import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RessignCaseGradesAdapter extends ArrayAdapter<EquivalenceGrade> {
+public class RessignCaseGradesAdapter extends ArrayAdapter<GradesEQNew> {
     private Activity context;
-    List<EquivalenceGrade> data = null;
+    List<GradesEQNew> data = null;
     ArrayList<QualificationSubjectResponse> arrayList;
 
-    public RessignCaseGradesAdapter(Activity context, int resource, List<EquivalenceGrade> data) {
+    public RessignCaseGradesAdapter(Activity context, int resource, List<GradesEQNew> data) {
         super(context, resource, data);
         this.context = context;
         this.data = data;
@@ -51,7 +52,7 @@ public class RessignCaseGradesAdapter extends ArrayAdapter<EquivalenceGrade> {
             row = inflater.inflate(R.layout.spinner_item, parent, false);
         }
 
-        EquivalenceGrade item = data.get(position);
+        GradesEQNew item = data.get(position);
         String Id = String.valueOf(item.getId());
         String Name = item.getName();
 

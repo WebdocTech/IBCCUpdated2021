@@ -24,6 +24,12 @@ import com.webdoc.ibcc.Adapter.IncompleteAppointmentAdapterEQ;
 import com.webdoc.ibcc.DashBoard.Account.Appointment.AppointmentViewModel.AppointmentViewModel;
 import com.webdoc.ibcc.DashBoard.Dashboard;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.ApplyEquivalenceActivity;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceGradingSystemEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.ExaminingBody;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GroupEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Qualification;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Model.AddQualificationModel;
@@ -33,12 +39,9 @@ import com.webdoc.ibcc.Model.EquivalenceInitiateCase;
 import com.webdoc.ibcc.Model.EquivalenceTravelFileModel;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.AddQualificationEQ.QualificationSubjectResponse;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGradingSystem;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGroup;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.ExaminingBody;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
 import com.webdoc.ibcc.ResponseModels.IncompleteDetailsEQ.Document_EQ;
 import com.webdoc.ibcc.ResponseModels.IncompleteDetailsEQ.IncompleteDetailsEQ;
 import com.webdoc.ibcc.ResponseModels.IncompleteDetailsEQ.Paymentinfo;
@@ -118,11 +121,11 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             Document_EQ item = response.getResult().getDocument().get(i);
 
                             AddQualificationModel addModel = new AddQualificationModel();
-                            EquivalenceGradingSystem equivalenceGradingSystem = new EquivalenceGradingSystem();
-                            equivalenceGradingSystem.setId(item.getGradingSystemId());
+                            EquivalenceGradingSystemEQNew equivalenceGradingSystem = new EquivalenceGradingSystemEQNew();
+                            equivalenceGradingSystem.setId(Integer.parseInt(item.getGradingSystemId()));
                             equivalenceGradingSystem.setName(item.getGradingSystemName());
-                            List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
-                            equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+                            //List<GradesEQNew> equivalenceGrades = new ArrayList<>();
+                            //equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
 
                             //todo : adding images without travelling
                             List<EquivalenceFileModel> imagesModelList = new ArrayList<>();
@@ -157,34 +160,43 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             }
                             addModel.setQualificationSubjectResponseList(gradesEntered);
 
-
                             Country countryTemp = new Country();
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                countryTemp = Global.getDetailsEquivalence.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                            /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                            }*/
+                            for (int j = 0; j < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); j++) {
+                                countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().get(j);
                             }
 
                             Qualification qualification = new Qualification();
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                qualification = countryTemp.getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                            /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                            }*/
 
-                            }
+                            /*for (int k = 0; k < Global.detailsEquivalenceNewModel.getResult().getQualification().size(); k++) {
+                                int str1 = Global.detailsEquivalenceNewModel.getResult().getQualification().get(k).getCountryId();
+                                int str2 = Integer.parseInt(item.getQualificationId());
+                                if (str1 == str2) {*/
+                            qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().get(Integer.parseInt(item.getQualificationId()));
+                            //}
+                            //}
 
                             addModel.setQualification(qualification);
                             addModel.setGradingSystem(equivalenceGradingSystem);
                             addModel.setPurposeOfEquivalence(item.getPurposeOfEquivalence());
 
-                            EquivalenceGroup equivalenceGroup = new EquivalenceGroup();
+                            GroupEQNew equivalenceGroup = new GroupEQNew();
                             equivalenceGroup.setName(item.getGroupName());
-                            equivalenceGroup.setId(item.getGroupId());
+                            equivalenceGroup.setId(Integer.parseInt(item.getGroupId()));
                             addModel.setGroup(equivalenceGroup);
 
 
                             addModel.setExaminationSystem(item.getExaminationSystem());
                             ExaminingBody examiningBody = new ExaminingBody();
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                examiningBody = countryTemp.getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
-
+                                examiningBody = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
                             }
+
                             addModel.setExaminingBody(examiningBody);
                             addModel.setCountry(countryTemp);
                             addModel.setSession(item.getSession());
@@ -206,14 +218,14 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             deleteParams.setCaseId(item.getCaseId());
                             deleteParams.setDocId(item.getDocId());
                             Global.deleteParams.add(deleteParams);
-
                         }
 
                         BottomLayout.setVisibility(View.GONE);
-
                         Global.stepNumberEQ = "2";
+
                         Intent intent = new Intent(getActivity(), ApplyEquivalenceActivity.class);
                         startActivity(intent);
+
                     } else if (response.getResult().getStepNumber().equals("4")) {
                         Global.isIncompleteAppointmentEQ = true;
                         Global.equivalenceQualificationList.clear();
@@ -224,11 +236,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             //Global.documentsTotalFee = Integer.parseInt(item.getDocumentDetailList().getAmount());
 
                             AddQualificationModel addModel = new AddQualificationModel();
-                            EquivalenceGradingSystem equivalenceGradingSystem = new EquivalenceGradingSystem();
-                            equivalenceGradingSystem.setId(item.getGradingSystemId());
+                            EquivalenceGradingSystemEQNew equivalenceGradingSystem = new EquivalenceGradingSystemEQNew();
+                            equivalenceGradingSystem.setId(Integer.parseInt(item.getGradingSystemId()));
                             equivalenceGradingSystem.setName(item.getGradingSystemName());
-                            List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
-                            equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+                            //List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
+                            //equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+
                             List<EquivalenceFileModel> imagesModelList = new ArrayList<>();
                             for (int y = 0; y < item.getCaseUploadedDocumentResponse().size(); y++) {
                                 EquivalenceFileModel imagesModel = new EquivalenceFileModel();
@@ -238,7 +251,6 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                 imagesModelList.add(imagesModel);
                             }
                             addModel.setSelectedFilesList(imagesModelList);
-
 
                             List<EquivalenceTravelFileModel> imagesTravellingModelList = new ArrayList<>();
 
@@ -263,39 +275,43 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             addModel.setQualificationSubjectResponseList(gradesEntered);
 
                             Country countryTemp = new Country();
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                countryTemp = Global.getDetailsEquivalence.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                            /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                            }*/
+
+                            for (int j = 0; j < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); j++) {
+                                countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().get(j);
                             }
 
                             Qualification qualification = new Qualification();
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                qualification = countryTemp.getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
-
-                            }
-
+                            /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                            }*/
+                            qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().get(Integer.parseInt(item.getQualificationId()));
 
                             addModel.setQualification(qualification);
                             addModel.setGradingSystem(equivalenceGradingSystem);
                             addModel.setPurposeOfEquivalence(item.getPurposeOfEquivalence());
 
 
-                            EquivalenceGroup equivalenceGroup = new EquivalenceGroup();
+                            GroupEQNew equivalenceGroup = new GroupEQNew();
                             equivalenceGroup.setName(item.getGroupName());
-                            equivalenceGroup.setId(item.getGroupId());
+                            equivalenceGroup.setId(Integer.parseInt(item.getGroupId()));
                             addModel.setGroup(equivalenceGroup);
 
                             addModel.setExaminationSystem(item.getExaminationSystem());
                             ExaminingBody examiningBody = new ExaminingBody();
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                examiningBody = countryTemp.getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
-
+                                String str = item.getExaminingBody();
+                                examiningBody = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
                             }
+
 
                             String documenttype = item.getDocumentDetailList().getDocumentType();
                             String isurgent = item.getDocumentDetailList().getUrgent();
                             switch (documenttype) {
                                 case "New/First Time":
-                                    if (isurgent == "true") {
+                                    if (isurgent.equals("true")) {
                                         Global.documentsTotalFee += 6000;
                                         //    Global.documentAmountArray[i] = 6000;
                                     } else {
@@ -305,7 +321,7 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     break;
 
                                 case "Duplicate":
-                                    if (isurgent == "true") {
+                                    if (isurgent.equals("true")) {
                                         Global.documentsTotalFee += 12000;
                                         //    Global.documentAmountArray[i] = 12000;
                                     } else {
@@ -315,7 +331,7 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     break;
 
                                 case "1st Revision":
-                                    if (isurgent == "true") {
+                                    if (isurgent.equals("true")) {
                                         Global.documentsTotalFee += 12000;
                                         // Global.documentAmountArray[i] = 12000;
                                     } else {
@@ -325,7 +341,7 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     break;
 
                                 case "2nd Revision":
-                                    if (isurgent == "true") {
+                                    if (isurgent.equals("true")) {
                                         Global.documentsTotalFee += 18000;
                                         //  Global.documentAmountArray[i] = 18000;
                                     } else {
@@ -335,7 +351,7 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     break;
 
                                 case "3rd Revision":
-                                    if (isurgent == "true") {
+                                    if (isurgent.equals("true")) {
                                         Global.documentsTotalFee += 24000;
                                         //    Global.documentAmountArray[i] = 24000;
                                     } else {
@@ -385,12 +401,13 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             //Global.allDocumentsFeeEQ= item.getDocumentDetailList().getAmount();
 
                             AddQualificationModel addModel = new AddQualificationModel();
-                            EquivalenceGradingSystem equivalenceGradingSystem = new EquivalenceGradingSystem();
-                            equivalenceGradingSystem.setId(item.getGradingSystemId());
+                            EquivalenceGradingSystemEQNew equivalenceGradingSystem = new EquivalenceGradingSystemEQNew();
+                            equivalenceGradingSystem.setId(Integer.parseInt(item.getGradingSystemId()));
                             equivalenceGradingSystem.setName(item.getGradingSystemName());
-                            List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
 
-                            equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+                            //List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
+                            //equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+
                             List<EquivalenceFileModel> imagesModelList = new ArrayList<>();
                             for (int y = 0; y < item.getCaseUploadedDocumentResponse().size(); y++) {
                                 EquivalenceFileModel imagesModel = new EquivalenceFileModel();
@@ -426,12 +443,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
 
                             Country countryTemp = new Country();
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                countryTemp = Global.getDetailsEquivalence.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                                countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
                             }
 
                             Qualification qualification = new Qualification();
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                qualification = countryTemp.getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                                qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
 
                             }
 
@@ -439,15 +456,15 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                             addModel.setGradingSystem(equivalenceGradingSystem);
                             addModel.setPurposeOfEquivalence(item.getPurposeOfEquivalence());
 
-                            EquivalenceGroup equivalenceGroup = new EquivalenceGroup();
+                            GroupEQNew equivalenceGroup = new GroupEQNew();
                             equivalenceGroup.setName(item.getGroupName());
-                            equivalenceGroup.setId(item.getGroupId());
+                            equivalenceGroup.setId(Integer.parseInt(item.getGroupId()));
                             addModel.setGroup(equivalenceGroup);
 
                             addModel.setExaminationSystem(item.getExaminationSystem());
                             ExaminingBody examiningBody = new ExaminingBody();
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                examiningBody = countryTemp.getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
+                                examiningBody = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
 
                             }
                             addModel.setExaminingBody(examiningBody);
@@ -590,11 +607,11 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     Document_EQ item = response.body().getResult().getDocument().get(i);
 
                                     AddQualificationModel addModel = new AddQualificationModel();
-                                    EquivalenceGradingSystem equivalenceGradingSystem = new EquivalenceGradingSystem();
-                                    equivalenceGradingSystem.setId(item.getGradingSystemId());
+                                    EquivalenceGradingSystemEQNew equivalenceGradingSystem = new EquivalenceGradingSystemEQNew();
+                                    equivalenceGradingSystem.setId(Integer.parseInt(item.getGradingSystemId()));
                                     equivalenceGradingSystem.setName(item.getGradingSystemName());
-                                    List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
-                                    equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+                                    //List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
+                                    //equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
 
                                     //todo : adding images without travelling
                                     List<EquivalenceFileModel> imagesModelList = new ArrayList<>();
@@ -632,12 +649,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
 
                                     Country countryTemp = new Country();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        countryTemp = Global.getDetailsEquivalence.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                                        countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
                                     }
 
                                     Qualification qualification = new Qualification();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        qualification = countryTemp.getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                                        qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
 
                                     }
 
@@ -645,16 +662,16 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     addModel.setGradingSystem(equivalenceGradingSystem);
                                     addModel.setPurposeOfEquivalence(item.getPurposeOfEquivalence());
 
-                                    EquivalenceGroup equivalenceGroup = new EquivalenceGroup();
+                                    GroupEQNew equivalenceGroup = new GroupEQNew();
                                     equivalenceGroup.setName(item.getGroupName());
-                                    equivalenceGroup.setId(item.getGroupId());
+                                    equivalenceGroup.setId(Integer.parseInt(item.getGroupId()));
                                     addModel.setGroup(equivalenceGroup);
 
 
                                     addModel.setExaminationSystem(item.getExaminationSystem());
                                     ExaminingBody examiningBody = new ExaminingBody();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        examiningBody = countryTemp.getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
+                                        examiningBody = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
 
                                     }
                                     addModel.setExaminingBody(examiningBody);
@@ -696,11 +713,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     //Global.documentsTotalFee = Integer.parseInt(item.getDocumentDetailList().getAmount());
 
                                     AddQualificationModel addModel = new AddQualificationModel();
-                                    EquivalenceGradingSystem equivalenceGradingSystem = new EquivalenceGradingSystem();
-                                    equivalenceGradingSystem.setId(item.getGradingSystemId());
+                                    EquivalenceGradingSystemEQNew equivalenceGradingSystem = new EquivalenceGradingSystemEQNew();
+                                    equivalenceGradingSystem.setId(Integer.parseInt(item.getGradingSystemId()));
                                     equivalenceGradingSystem.setName(item.getGradingSystemName());
-                                    List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
-                                    equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+                                    //List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
+                                    //equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+
                                     List<EquivalenceFileModel> imagesModelList = new ArrayList<>();
                                     for (int y = 0; y < item.getCaseUploadedDocumentResponse().size(); y++) {
                                         EquivalenceFileModel imagesModel = new EquivalenceFileModel();
@@ -736,12 +754,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
 
                                     Country countryTemp = new Country();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        countryTemp = Global.getDetailsEquivalence.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                                        countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
                                     }
 
                                     Qualification qualification = new Qualification();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        qualification = countryTemp.getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                                        qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
 
                                     }
 
@@ -751,15 +769,15 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     addModel.setPurposeOfEquivalence(item.getPurposeOfEquivalence());
 
 
-                                    EquivalenceGroup equivalenceGroup = new EquivalenceGroup();
+                                    GroupEQNew equivalenceGroup = new GroupEQNew();
                                     equivalenceGroup.setName(item.getGroupName());
-                                    equivalenceGroup.setId(item.getGroupId());
+                                    equivalenceGroup.setId(Integer.parseInt(item.getGroupId()));
                                     addModel.setGroup(equivalenceGroup);
 
                                     addModel.setExaminationSystem(item.getExaminationSystem());
                                     ExaminingBody examiningBody = new ExaminingBody();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        examiningBody = countryTemp.getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
+                                        examiningBody = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
 
                                     }
 
@@ -860,12 +878,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     //Global.allDocumentsFeeEQ= item.getDocumentDetailList().getAmount();
 
                                     AddQualificationModel addModel = new AddQualificationModel();
-                                    EquivalenceGradingSystem equivalenceGradingSystem = new EquivalenceGradingSystem();
-                                    equivalenceGradingSystem.setId(item.getGradingSystemId());
+                                    EquivalenceGradingSystemEQNew equivalenceGradingSystem = new EquivalenceGradingSystemEQNew();
+                                    equivalenceGradingSystem.setId(Integer.parseInt(item.getGradingSystemId()));
                                     equivalenceGradingSystem.setName(item.getGradingSystemName());
-                                    List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
+                                    //List<EquivalenceGrade> equivalenceGrades = new ArrayList<>();
 
-                                    equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
+                                    //equivalenceGradingSystem.setEquivalenceGrade(equivalenceGrades);
                                     List<EquivalenceFileModel> imagesModelList = new ArrayList<>();
                                     for (int y = 0; y < item.getCaseUploadedDocumentResponse().size(); y++) {
                                         EquivalenceFileModel imagesModel = new EquivalenceFileModel();
@@ -901,12 +919,12 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
 
                                     Country countryTemp = new Country();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        countryTemp = Global.getDetailsEquivalence.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
+                                        countryTemp = Global.detailsEquivalenceNewModel.getResult().getCountries().stream().filter(y -> y.getId().equals(item.getCountryId())).findFirst().get();
                                     }
 
                                     Qualification qualification = new Qualification();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        qualification = countryTemp.getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
+                                        qualification = Global.detailsEquivalenceNewModel.getResult().getQualification().stream().filter(y -> y.getId().equals(item.getQualificationId())).findFirst().get();
 
                                     }
 
@@ -914,15 +932,15 @@ public class IncompleteAppt_Eq extends Fragment implements ItemClickListeners {
                                     addModel.setGradingSystem(equivalenceGradingSystem);
                                     addModel.setPurposeOfEquivalence(item.getPurposeOfEquivalence());
 
-                                    EquivalenceGroup equivalenceGroup = new EquivalenceGroup();
+                                    GroupEQNew equivalenceGroup = new GroupEQNew();
                                     equivalenceGroup.setName(item.getGroupName());
-                                    equivalenceGroup.setId(item.getGroupId());
+                                    equivalenceGroup.setId(Integer.parseInt(item.getGroupId()));
                                     addModel.setGroup(equivalenceGroup);
 
                                     addModel.setExaminationSystem(item.getExaminationSystem());
                                     ExaminingBody examiningBody = new ExaminingBody();
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                        examiningBody = countryTemp.getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
+                                        examiningBody = Global.detailsEquivalenceNewModel.getResult().getExaminingBody().stream().filter(y -> y.getName().equals(item.getExaminingBody())).findFirst().get();
 
                                     }
                                     addModel.setExaminingBody(examiningBody);

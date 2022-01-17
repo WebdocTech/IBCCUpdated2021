@@ -29,15 +29,15 @@ import com.webdoc.ibcc.Adapter.Spinner.Equivalence.CountriesAdapter;
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.ProvinceAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.ApplyEquivalenceActivity;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.EquivalenceEducationDetailsFragment;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Country;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.Province;
 import com.webdoc.ibcc.DashBoard.Home.HomeSharedViewModel.HomeSharedViewModel;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Province;
+//import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Country;
+//import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Province;
 import com.webdoc.ibcc.ResponseModels.IntiateCase.IntiateCase;
-import com.webdoc.ibcc.ResponseModels.RemoveQualificationEQ.RemoveQualificationEQ;
-import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 import com.webdoc.ibcc.api.APIClient;
 import com.webdoc.ibcc.api.APIInterface;
 import com.webdoc.ibcc.databinding.FragmentEquivalencePersonalInfoBinding;
@@ -54,7 +54,6 @@ public class EquivalencePersonalInfoFragment extends Fragment {
     ArrayAdapter<CharSequence> title_spinner_adapter;
     String title, nationality, country, country_Id, domicile, domicile_Id, province, province_Id;
     int spinnerPositionTitle;
-    VolleyRequestController volleyRequestController;
 
     String parentsEmployment = "Private";
     String firstName, lastName, dob, pob, userTitle, domicileID, pAddress, pCity, pCountryId,
@@ -67,8 +66,6 @@ public class EquivalencePersonalInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutBinding = FragmentEquivalencePersonalInfoBinding.inflate(inflater, container, false);
         viewModel = ViewModelProviders.of(getActivity()).get(HomeSharedViewModel.class);
-
-        volleyRequestController = new VolleyRequestController(getActivity());
 
         if (Global.userLoginResponse.getResult() != null) {
             Picasso.get()
@@ -202,13 +199,13 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         });
 
         //SPINNER NATIONALITY
-        CountriesAdapter spinner_nationality_adapter = new CountriesAdapter(getActivity(), R.layout.spinner_item, Global.getDetailsEquivalence.getResult().getCountries());
+        CountriesAdapter spinner_nationality_adapter = new CountriesAdapter(getActivity(), R.layout.spinner_item, Global.detailsEquivalenceNewModel.getResult().getCountries());
         layoutBinding.spinnerNationality.setAdapter(spinner_nationality_adapter);
 
         Country selectedNationality = null;
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getCountries().size(); i++) {
-            if (Global.userLoginResponse.getResult().getCustomerProfile().getcCountryId().equalsIgnoreCase(Global.getDetailsEquivalence.getResult().getCountries().get(i).getId().toString())) {
-                selectedNationality = Global.getDetailsEquivalence.getResult().getCountries().get(i);
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); i++) {
+            if (Global.userLoginResponse.getResult().getCustomerProfile().getcCountryId().equalsIgnoreCase(Global.detailsEquivalenceNewModel.getResult().getCountries().get(i).getId().toString())) {
+                selectedNationality = Global.detailsEquivalenceNewModel.getResult().getCountries().get(i);
                 break;
             }
         }
@@ -218,7 +215,7 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         layoutBinding.spinnerNationality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nationality = Global.getDetailsEquivalence.getResult().getCountries().get(position).getName();
+                nationality = Global.detailsEquivalenceNewModel.getResult().getCountries().get(position).getName();
             }
 
             @Override
@@ -229,13 +226,13 @@ public class EquivalencePersonalInfoFragment extends Fragment {
 
         //SPINNER COUNTRY
         CountriesAdapter arrayAdapter3 = new CountriesAdapter(getActivity(), R.layout.spinner_item,
-                Global.getDetailsEquivalence.getResult().getCountries());
+                Global.detailsEquivalenceNewModel.getResult().getCountries());
         layoutBinding.spinnerCountry.setAdapter(arrayAdapter3);
 
         Country selectedCountry = null;
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getCountries().size(); i++) {
-            if (Global.userLoginResponse.getResult().getCustomerProfile().getcCountryId().equalsIgnoreCase(Global.getDetailsEquivalence.getResult().getCountries().get(i).getId().toString())) {
-                selectedCountry = Global.getDetailsEquivalence.getResult().getCountries().get(i);
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getCountries().size(); i++) {
+            if (Global.userLoginResponse.getResult().getCustomerProfile().getcCountryId().equalsIgnoreCase(Global.detailsEquivalenceNewModel.getResult().getCountries().get(i).getId().toString())) {
+                selectedCountry = Global.detailsEquivalenceNewModel.getResult().getCountries().get(i);
                 break;
             }
         }
@@ -245,8 +242,8 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         layoutBinding.spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-                country = Global.getDetailsEquivalence.getResult().getCountries().get(position).getName();
-                country_Id = Global.getDetailsEquivalence.getResult().getCountries().get(position).getId().toString();
+                country = Global.detailsEquivalenceNewModel.getResult().getCountries().get(position).getName();
+                country_Id = Global.detailsEquivalenceNewModel.getResult().getCountries().get(position).getId().toString();
             }
 
             @Override
@@ -256,13 +253,13 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         });
 
         //PROVINCE SPINNER
-        ProvinceAdapter arrayAdapter1 = new ProvinceAdapter(getActivity(), R.layout.spinner_item, Global.getDetailsEquivalence.getResult().getProvince());
+        ProvinceAdapter arrayAdapter1 = new ProvinceAdapter(getActivity(), R.layout.spinner_item, Global.detailsEquivalenceNewModel.getResult().getProvince());
         layoutBinding.spinnerProvince.setAdapter(arrayAdapter1);
 
         Province selectedProvince = null;
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getProvince().size(); i++) {
-            if (Global.userLoginResponse.getResult().getCustomerProfile().getcProvinceId().equalsIgnoreCase(Global.getDetailsEquivalence.getResult().getProvince().get(i).getId().toString())) {
-                selectedProvince = Global.getDetailsEquivalence.getResult().getProvince().get(i);
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getProvince().size(); i++) {
+            if (Global.userLoginResponse.getResult().getCustomerProfile().getcProvinceId().equalsIgnoreCase(Global.detailsEquivalenceNewModel.getResult().getProvince().get(i).getId().toString())) {
+                selectedProvince = Global.detailsEquivalenceNewModel.getResult().getProvince().get(i);
                 break;
             }
         }
@@ -272,8 +269,8 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         layoutBinding.spinnerProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-                province = Global.getDetailsEquivalence.getResult().getProvince().get(position).getName();
-                province_Id = Global.getDetailsEquivalence.getResult().getProvince().get(position).getId().toString();
+                province = Global.detailsEquivalenceNewModel.getResult().getProvince().get(position).getName();
+                province_Id = Global.detailsEquivalenceNewModel.getResult().getProvince().get(position).getId().toString();
             }
 
             @Override
@@ -283,13 +280,13 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         });
 
         //SPINNER DOMICILE
-        ProvinceAdapter arrayAdapter2 = new ProvinceAdapter(getActivity(), R.layout.spinner_item, Global.getDetailsEquivalence.getResult().getProvince());
+        ProvinceAdapter arrayAdapter2 = new ProvinceAdapter(getActivity(), R.layout.spinner_item, Global.detailsEquivalenceNewModel.getResult().getProvince());
         layoutBinding.spinnerCertificate.setAdapter(arrayAdapter2);
 
         Province selectedDomicile = null;
-        for (int i = 0; i < Global.getDetailsEquivalence.getResult().getProvince().size(); i++) {
-            if (Global.userLoginResponse.getResult().getCustomerProfile().getDomicile().equalsIgnoreCase(Global.getDetailsEquivalence.getResult().getProvince().get(i).getId().toString())) {
-                selectedDomicile = Global.getDetailsEquivalence.getResult().getProvince().get(i);
+        for (int i = 0; i < Global.detailsEquivalenceNewModel.getResult().getProvince().size(); i++) {
+            if (Global.userLoginResponse.getResult().getCustomerProfile().getDomicile().equalsIgnoreCase(Global.detailsEquivalenceNewModel.getResult().getProvince().get(i).getId().toString())) {
+                selectedDomicile = Global.detailsEquivalenceNewModel.getResult().getProvince().get(i);
                 break;
             }
         }
@@ -299,8 +296,8 @@ public class EquivalencePersonalInfoFragment extends Fragment {
         layoutBinding.spinnerCertificate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-                domicile = Global.getDetailsEquivalence.getResult().getProvince().get(position).getName();
-                domicile_Id = Global.getDetailsEquivalence.getResult().getProvince().get(position).getId().toString();
+                domicile = Global.detailsEquivalenceNewModel.getResult().getProvince().get(position).getName();
+                domicile_Id = Global.detailsEquivalenceNewModel.getResult().getProvince().get(position).getId().toString();
             }
 
             @Override

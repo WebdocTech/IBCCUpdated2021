@@ -1,6 +1,7 @@
 package com.webdoc.ibcc.Adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,12 @@ import com.webdoc.ibcc.ResponseModels.ViewAppointmentsEQ.ViewAppointmentsEQD;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 
 public class CompletedApptEQtAdapter extends RecyclerView.Adapter<CompletedApptEQtAdapter.ViewHolder> {
-    Activity context;
+    Context context;
     VolleyRequestController volleyRequestController;
 
-    public CompletedApptEQtAdapter(Activity context) {
+    public CompletedApptEQtAdapter(Context context) {
         this.context = context;
-        this.volleyRequestController = new VolleyRequestController(context);
+        //this.volleyRequestController = new VolleyRequestController(context);
     }
 
     @NonNull

@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.webdoc.ibcc.Adapter.Spinner.Equivalence.GradesAdapter;
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.EducationDetails.UpdateQualification.UpdateQualification;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceSubjectEQNew;
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
@@ -27,11 +29,11 @@ import java.util.List;
 
 public class EditSubjectsAdapter extends RecyclerView.Adapter<EditSubjectsAdapter.ViewHolder> {
     Activity context;
-    List<EquivalenceSubject> equivalenceSubjectList = null;
-    EquivalenceGrade grade;
+    List<EquivalenceSubjectEQNew> equivalenceSubjectList = null;
+    GradesEQNew grade;
     List<String> newMarksList = new ArrayList<String>();
 
-    public EditSubjectsAdapter(Activity context, List<EquivalenceSubject> equivalenceSubjectList) {
+    public EditSubjectsAdapter(Activity context, List<EquivalenceSubjectEQNew> equivalenceSubjectList) {
         this.context = context;
         this.equivalenceSubjectList = equivalenceSubjectList;
     }
@@ -52,7 +54,7 @@ public class EditSubjectsAdapter extends RecyclerView.Adapter<EditSubjectsAdapte
     @Override
     public void onBindViewHolder(@NonNull final EditSubjectsAdapter.ViewHolder holder, final int position) {
 
-        EquivalenceSubject subjectItem = equivalenceSubjectList.get(position);
+        EquivalenceSubjectEQNew subjectItem = equivalenceSubjectList.get(position);
 
         holder.tv_subjectName.setText(subjectItem.getName());
         holder.tv_subj_name_grades.setText(subjectItem.getName());
@@ -85,7 +87,7 @@ public class EditSubjectsAdapter extends RecyclerView.Adapter<EditSubjectsAdapte
                             Global.utils.hideKeyboard(context);
                         } else {
                             String marks = Obtained_Marks + "/" + Total_Marks;
-                            grade = new EquivalenceGrade();
+                            grade = new GradesEQNew();
                             grade.setId(subjectItem.getId());
                             grade.setName(marks);
                             Global.selectedGradeList.set(position, grade);

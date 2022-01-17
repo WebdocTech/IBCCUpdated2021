@@ -7,17 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.EquivalenceGradingSystemEQNew;
 import com.webdoc.ibcc.R;
 import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGradingSystem;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.Qualification;
 
 import java.util.List;
 
-public class EquivalenceGradingSystemAdapter extends ArrayAdapter<EquivalenceGradingSystem> {
+public class EquivalenceGradingSystemAdapter extends ArrayAdapter<EquivalenceGradingSystemEQNew> {
     private Activity context;
-    List<EquivalenceGradingSystem> data = null;
+    List<EquivalenceGradingSystemEQNew> data = null;
 
-    public EquivalenceGradingSystemAdapter(Activity context, int resource, List<EquivalenceGradingSystem> data) {
+    public EquivalenceGradingSystemAdapter(Activity context, int resource,
+                                           List<EquivalenceGradingSystemEQNew> data) {
         super(context, resource, data);
         this.context = context;
         this.data = data;
@@ -40,7 +41,7 @@ public class EquivalenceGradingSystemAdapter extends ArrayAdapter<EquivalenceGra
             row = inflater.inflate(R.layout.spinner_item, parent, false);
         }
 
-        EquivalenceGradingSystem item = data.get(position);
+        EquivalenceGradingSystemEQNew item = data.get(position);
         String Id = String.valueOf(item.getId());
         String name = item.getName();
 
