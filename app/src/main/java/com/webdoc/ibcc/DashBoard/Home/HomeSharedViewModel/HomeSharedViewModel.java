@@ -572,8 +572,7 @@ public class HomeSharedViewModel extends ViewModel {
         }
     }
 
-    public void
-    callImageDocumentApi(Context context) {
+    public void callImageDocumentApi(Context context) {
         if (Global.utils.isInternerConnected(context)) {
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -595,17 +594,16 @@ public class HomeSharedViewModel extends ViewModel {
             builder.setType(MultipartBody.FORM);
 
             for (int i = 0; i < Global.phpfiles.size(); i++) {
-                //String fullPath = Commons.getPath(Global.phpfiles.get(i), context);
+
                 File file = new File(FileUitls.getPath(context, Global.phpfiles.get(i)));
-                //File file = new File(fullPath);
 
                 builder.addFormDataPart(
                         "image[]",
                         file.getName(),
+
                         RequestBody.create(MediaType.parse(context.getContentResolver().getType(Global.phpfiles.get(i))), file)
                 );
             }
-
             RequestBody requestBody = builder.build();
             jsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(jsonPlaceHolderApi.class);
             Call<PhpfilesResponse> call1 = jsonPlaceHolderApi.callImagesFormDataApi(requestBody);

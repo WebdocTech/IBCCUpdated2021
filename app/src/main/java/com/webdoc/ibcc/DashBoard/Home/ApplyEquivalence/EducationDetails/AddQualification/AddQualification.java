@@ -782,44 +782,65 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
             @Override
             public void onClick(View view) {
                 //android 11 permissions:
-                /*if (SDK_INT >= Build.VERSION_CODES.R) {
-                    if (checkPermission()) {
+                if (SDK_INT >= Build.VERSION_CODES.R) {
+                    /*if (checkPermission()) {
                         selectPDF();
                         fileChooserAlertDialog.dismiss();
                     } else {
                         requestPermission();
-                    }
-                } else {*/
-                selectPDF();
-                fileChooserAlertDialog.dismiss();
-                //}
+                    }*/
+                    fileChooserAlertDialog.dismiss();
+                    Global.utils.showErrorSnakeBar(AddQualification.this, "Sorry for inconvenience, unfortunately unable to select documents in android 11,  We are working on it !");
+                } else {
+                    selectPDF();
+                    fileChooserAlertDialog.dismiss();
+                }
             }
         });
 
         tv_pdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if (SDK_INT >= 30) {
+                if (SDK_INT >= Build.VERSION_CODES.R) {
                     //only api 30 above
-                    Toast.makeText(AddQualification.this, "Unable to select files in Android version 11", Toast.LENGTH_SHORT).show();
-                } else {*/
-                selectPDF();
-                fileChooserAlertDialog.dismiss();
-                //}
+                    fileChooserAlertDialog.dismiss();
+                    Global.utils.showErrorSnakeBar(AddQualification.this, "Sorry for inconvenience, unfortunately unable to select documents in android 11, We are working on it !");
+                } else {
+                    selectPDF();
+                    fileChooserAlertDialog.dismiss();
+                }
             }
         });
 
         iv_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //android 11 permissions:
-                /*if (SDK_INT >= Build.VERSION_CODES.R) {
-                    if (checkPermission()) {*/
+
                 selectGalleryImages();
                 fileChooserAlertDialog.dismiss();
-                    /*} else {
-                        requestPermission();
-                    }
+/*
+                if (SDK_INT >= Build.VERSION_CODES.R) {
+                    //only api 30 above
+                    fileChooserAlertDialog.dismiss();
+                    Global.utils.showErrorSnakeBar(AddQualification.this, "Sorry for inconvenience, unfortunately unable to select documents in android 11, We are working on it !");
+                } else {
+                    selectGalleryImages();
+                    fileChooserAlertDialog.dismiss();
+                }*/
+
+            }
+        });
+
+        tv_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                selectGalleryImages();
+                fileChooserAlertDialog.dismiss();
+             /*   if (SDK_INT >= Build.VERSION_CODES.R) {
+                    //only api 30 above
+                    fileChooserAlertDialog.dismiss();
+                    Global.utils.showErrorSnakeBar(AddQualification.this, "Sorry for inconvenience, unfortunately unable to select documents in android 11, We are working on it !");
                 } else {
                     selectGalleryImages();
                     fileChooserAlertDialog.dismiss();
@@ -827,55 +848,11 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
             }
         });
 
-        tv_gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectGalleryImages();
-                fileChooserAlertDialog.dismiss();
-            }
-        });
-
         fileChooserAlertDialog.show();
     }
 
-    // for android version 11 or above:
-    private boolean checkPermission() {
-        if (SDK_INT >= Build.VERSION_CODES.R) {
-            return Environment.isExternalStorageManager();
-        } else {
-            int result = ContextCompat.checkSelfPermission(AddQualification.this, READ_EXTERNAL_STORAGE);
-            int result1 = ContextCompat.checkSelfPermission(AddQualification.this, WRITE_EXTERNAL_STORAGE);
-            return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
-    // for android version 11 or above:
-    private void requestPermission() {
-        if (SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                intent.addCategory("android.intent.category.DEFAULT");
-                intent.setData(Uri.parse(String.format("package:%s", getApplicationContext().getPackageName())));
-                startActivityForResult(intent, 2296);
-            } catch (Exception e) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                startActivityForResult(intent, 2296);
-            }
-        } else {
-            //below android 11
-            //ActivityCompat.requestPermissions(AddQualification.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-        }
-    }
-
     public void selectPDF() {
-        /*Intent intent = new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF(s)"), PDF_REQUEST_CODE);*/
 
-        // scope storage work for PDF file
         try {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, WRITE_PERMISSION);
@@ -893,25 +870,33 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
     }
 
     public void selectGalleryImages() {
-        /*Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(Intent.createChooser(intent, "Select Image(s)"), GALLERY_REQUEST_CODE);*/
-
-        // scope storage permission for gallery...
         try {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, WRITE_PERMISSION);
             } else {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                i.setType("image/*");
-                i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                startActivityForResult(i, GALLERY_REQUEST_CODE);
+
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, GALLERY_REQUEST_CODE);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            showFileChooser();
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -1047,18 +1032,6 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            showFileChooser();
-        } else {
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
     private int getfilesize(Uri pdfUri) {
         Cursor returnCursor =
                 getContentResolver().query(pdfUri, null, null, null, null);
@@ -1119,37 +1092,6 @@ public class AddQualification extends AppCompatActivity implements VolleyListene
                 Global.utils.hideCustomLoadingDialog();
                 Global.utils.showErrorSnakeBar(this, addQualificationEQ.getResult().getResponseMessage());
             }
-        }
-    }
-
-    private static String[] PERMISSIONS_STORAGE = {
-            READ_EXTERNAL_STORAGE,
-            WRITE_EXTERNAL_STORAGE
-    };
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-    }
-
-    private void setSpinnerError(Spinner spinner, String error) {
-        View selectedView = spinner.getSelectedView();
-        if (selectedView != null && selectedView instanceof TextView) {
-            spinner.requestFocus();
-            TextView selectedTextView = (TextView) selectedView;
-            selectedTextView.setError("error"); // any name of the error will do
-            selectedTextView.setTextColor(Color.RED); //text color in which you want your error message to be displayed
-            selectedTextView.setText(error); // actual error message
-            spinner.performClick(); // to open the spinner list if error is found.
         }
     }
 

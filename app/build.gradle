@@ -11,8 +11,8 @@ android {
         applicationId "com.webdoc.ibcc"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 11
-        versionName "3.0.3"
+        versionCode 12
+        versionName "3.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

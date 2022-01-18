@@ -21,7 +21,7 @@ public class Rates {
     private Double ang;
     @SerializedName("AOA")
     @Expose
-    private Integer aoa;
+    private Double aoa;
     @SerializedName("ARS")
     @Expose
     private Double ars;
@@ -552,11 +552,11 @@ public class Rates {
         this.ang = ang;
     }
 
-    public Integer getAoa() {
+    public Double getAoa() {
         return aoa;
     }
 
-    public void setAoa(Integer aoa) {
+    public void setAoa(Double aoa) {
         this.aoa = aoa;
     }
 
