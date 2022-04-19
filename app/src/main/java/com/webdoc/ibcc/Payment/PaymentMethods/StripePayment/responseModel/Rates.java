@@ -39,7 +39,7 @@ public class Rates {
     private Double bam;
     @SerializedName("BBD")
     @Expose
-    private Integer bbd;
+    private Double bbd;
     @SerializedName("BDT")
     @Expose
     private Double bdt;
@@ -54,7 +54,7 @@ public class Rates {
     private Double bif;
     @SerializedName("BMD")
     @Expose
-    private Integer bmd;
+    private Double bmd;
     @SerializedName("BND")
     @Expose
     private Double bnd;
@@ -66,7 +66,7 @@ public class Rates {
     private Double brl;
     @SerializedName("BSD")
     @Expose
-    private Integer bsd;
+    private Double bsd;
     @SerializedName("BTC")
     @Expose
     private Double btc;
@@ -111,7 +111,7 @@ public class Rates {
     private Double crc;
     @SerializedName("CUC")
     @Expose
-    private Integer cuc;
+    private Double cuc;
     @SerializedName("CUP")
     @Expose
     private Double cup;
@@ -210,7 +210,7 @@ public class Rates {
     private Double iqd;
     @SerializedName("IRR")
     @Expose
-    private Integer irr;
+    private Double irr;
     @SerializedName("ISK")
     @Expose
     private Double isk;
@@ -240,7 +240,7 @@ public class Rates {
     private Double kmf;
     @SerializedName("KPW")
     @Expose
-    private Integer kpw;
+    private Double kpw;
     @SerializedName("KRW")
     @Expose
     private Double krw;
@@ -336,7 +336,7 @@ public class Rates {
     private Double omr;
     @SerializedName("PAB")
     @Expose
-    private Integer pab;
+    private Double pab;
     @SerializedName("PEN")
     @Expose
     private Double pen;
@@ -414,7 +414,7 @@ public class Rates {
     private Double svc;
     @SerializedName("SYP")
     @Expose
-    private Integer syp;
+    private Double syp;
     @SerializedName("SZL")
     @Expose
     private Double szl;
@@ -444,7 +444,7 @@ public class Rates {
     private Double twd;
     @SerializedName("TZS")
     @Expose
-    private Integer tzs;
+    private Double tzs;
     @SerializedName("UAH")
     @Expose
     private Double uah;
@@ -453,7 +453,7 @@ public class Rates {
     private Double ugx;
     @SerializedName("USD")
     @Expose
-    private Integer usd;
+    private Double usd;
     @SerializedName("UYU")
     @Expose
     private Double uyu;
@@ -510,7 +510,7 @@ public class Rates {
     private Double zmw;
     @SerializedName("ZWL")
     @Expose
-    private Integer zwl;
+    private Double zwl;
 
     public Double getAed() {
         return aed;
@@ -600,11 +600,11 @@ public class Rates {
         this.bam = bam;
     }
 
-    public Integer getBbd() {
+    public Double getBbd() {
         return bbd;
     }
 
-    public void setBbd(Integer bbd) {
+    public void setBbd(Double bbd) {
         this.bbd = bbd;
     }
 
@@ -640,11 +640,11 @@ public class Rates {
         this.bif = bif;
     }
 
-    public Integer getBmd() {
+    public Double getBmd() {
         return bmd;
     }
 
-    public void setBmd(Integer bmd) {
+    public void setBmd(Double bmd) {
         this.bmd = bmd;
     }
 
@@ -672,11 +672,11 @@ public class Rates {
         this.brl = brl;
     }
 
-    public Integer getBsd() {
+    public Double getBsd() {
         return bsd;
     }
 
-    public void setBsd(Integer bsd) {
+    public void setBsd(Double bsd) {
         this.bsd = bsd;
     }
 
@@ -792,11 +792,11 @@ public class Rates {
         this.crc = crc;
     }
 
-    public Integer getCuc() {
+    public Double getCuc() {
         return cuc;
     }
 
-    public void setCuc(Integer cuc) {
+    public void setCuc(Double cuc) {
         this.cuc = cuc;
     }
 
@@ -1056,11 +1056,11 @@ public class Rates {
         this.iqd = iqd;
     }
 
-    public Integer getIrr() {
+    public Double getIrr() {
         return irr;
     }
 
-    public void setIrr(Integer irr) {
+    public void setIrr(Double irr) {
         this.irr = irr;
     }
 
@@ -1136,11 +1136,11 @@ public class Rates {
         this.kmf = kmf;
     }
 
-    public Integer getKpw() {
+    public Double getKpw() {
         return kpw;
     }
 
-    public void setKpw(Integer kpw) {
+    public void setKpw(Double kpw) {
         this.kpw = kpw;
     }
 
@@ -1392,11 +1392,11 @@ public class Rates {
         this.omr = omr;
     }
 
-    public Integer getPab() {
+    public Double getPab() {
         return pab;
     }
 
-    public void setPab(Integer pab) {
+    public void setPab(Double pab) {
         this.pab = pab;
     }
 
@@ -1600,11 +1600,11 @@ public class Rates {
         this.svc = svc;
     }
 
-    public Integer getSyp() {
+    public Double getSyp() {
         return syp;
     }
 
-    public void setSyp(Integer syp) {
+    public void setSyp(Double syp) {
         this.syp = syp;
     }
 
@@ -1680,11 +1680,11 @@ public class Rates {
         this.twd = twd;
     }
 
-    public Integer getTzs() {
+    public Double getTzs() {
         return tzs;
     }
 
-    public void setTzs(Integer tzs) {
+    public void setTzs(Double tzs) {
         this.tzs = tzs;
     }
 
@@ -1704,11 +1704,11 @@ public class Rates {
         this.ugx = ugx;
     }
 
-    public Integer getUsd() {
+    public Double getUsd() {
         return usd;
     }
 
-    public void setUsd(Integer usd) {
+    public void setUsd(Double usd) {
         this.usd = usd;
     }
 
@@ -1856,11 +1856,11 @@ public class Rates {
         this.zmw = zmw;
     }
 
-    public Integer getZwl() {
+    public Double getZwl() {
         return zwl;
     }
 
-    public void setZwl(Integer zwl) {
+    public void setZwl(Double zwl) {
         this.zwl = zwl;
     }
 

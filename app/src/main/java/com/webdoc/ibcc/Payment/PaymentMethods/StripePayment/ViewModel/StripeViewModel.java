@@ -15,7 +15,6 @@ import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.Pyament.RequestModel.Equi
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Payment.PaymentMethods.StripePayment.responseModel.DollerRateResponseModel;
-import com.webdoc.ibcc.ResponseModels.PdfResult.PdfResult;
 import com.webdoc.ibcc.ResponseModels.SavePaymentInfo.SavePaymentInfo;
 import com.webdoc.ibcc.Retrofit.jsonPlaceHolderApi;
 import com.webdoc.ibcc.api.APIClient;
@@ -55,17 +54,21 @@ public class StripeViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void callSavePaymentEQApi(String keyUserPhone, double priceInDollors, double priceInPKR,
-                                     double sevenDollor, double fivePercentAmount) {
+    public void callSavePaymentEQApi(String keyUserPhone, double pkrRate) {
 
         if (!TextUtils.isEmpty(Global.caseId)) {
             case_id = Global.caseId;
         } else {
             case_id = Global.incompleteCaseId;
         }
+        double ibccAmount = pkrRate * 140;
+        double webdocAmount = pkrRate * 20;
+        double bankCharges = pkrRate * 15;
+        double courierFee = pkrRate * 5;
+        double totalAmount = pkrRate * 180;
 
         user_id = Global.userLoginResponse.getResult().getCustomerProfile().getId();
-        amount_paid = String.valueOf(priceInPKR);
+        amount_paid = String.valueOf(totalAmount);
         bank = "Stripe Payment";
         account_number = Global.userLoginResponse.getResult().getCustomerProfile().getMobile();
         mobile_number = Global.userLoginResponse.getResult().getCustomerProfile().getMobile();
@@ -73,15 +76,14 @@ public class StripeViewModel extends AndroidViewModel {
         transaction_reference_number = "";
         transaction_datetime = "";
         center = Global.center;
-        IBCC_amount = String.valueOf(Global.ibccAmount);
-        webdoc_amount = String.valueOf(sevenDollor);
+        IBCC_amount = String.valueOf(ibccAmount);
+        webdoc_amount = String.valueOf(webdocAmount);
         status = "Success";
-        String bank_charges = String.valueOf(fivePercentAmount);
-        String courier_amount = "200";
+        String bank_charges = String.valueOf(bankCharges);
+        String courier_amount = String.valueOf(courierFee);
         String order_id = "";
         userIdEq = Global.userLoginResponse.getResult().getCustomerProfile().getId();
         String platform = "Android";
-
 
         callingSavePaymentForEquilance(case_id, amount_paid, bank, account_number,
                 mobile_number, transection_type, transaction_reference_number,

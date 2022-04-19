@@ -21,11 +21,10 @@ import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.detailsEquivalenceModels.GradesEQNew;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.R;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceGrade;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.EquivalenceSubject;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.webdoc.ibcc.Essentails.Global.equivalenceGradeList;
 
 public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHolder> {
     Activity context;
@@ -104,15 +103,18 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.ViewHo
 
 
         //SPINNER GRADE
-        GradesAdapter gradesAdapter = new GradesAdapter(context, R.layout.spinner_item, Global.equivalenceGradeList);
+        GradesAdapter gradesAdapter = new GradesAdapter(context, R.layout.spinner_item, equivalenceGradeList);
         holder.spinner_grades.setAdapter(gradesAdapter);
         holder.spinner_grades.setSelection(0);
 
         holder.spinner_grades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long id) {
-                grade = Global.equivalenceGradeList.get(pos);
-                Global.selectedGradeList.set(position, grade);
+                grade = equivalenceGradeList.get(pos);
+                GradesEQNew gradesEQNew = new GradesEQNew();
+                gradesEQNew.setName(grade.getName());
+                gradesEQNew.setId(Global.equivalenceSubjectList.get(position).getId());
+                Global.selectedGradeList.set(position, gradesEQNew);
             }
 
             @Override

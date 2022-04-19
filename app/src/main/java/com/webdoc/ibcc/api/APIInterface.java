@@ -49,7 +49,7 @@ public interface APIInterface {
     @GET("Pdf")
     Call<PdfResult> callPDF();
 
-    @POST("api/latest.json?app_id=fb516545580f47859cadb37203688a08")
+    @GET("api/latest.json?app_id=fb516545580f47859cadb37203688a08")
     Call<DollerRateResponseModel> callDollorRate();
 
     @POST("Equivalence/GetDetailsEquivalence")

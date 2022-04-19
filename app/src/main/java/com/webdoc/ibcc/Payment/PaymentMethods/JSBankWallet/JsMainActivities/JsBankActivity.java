@@ -88,6 +88,7 @@ public class JsBankActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

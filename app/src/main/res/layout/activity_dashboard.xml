@@ -183,7 +183,7 @@
                 app:layout_constraintStart_toEndOf="@+id/iv_faq"
                 app:layout_constraintTop_toTopOf="@+id/hGuideline36Per_Dashboard"
                 app:srcCompat="@drawable/dasboard_profile"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,8 +1,5 @@
 package com.webdoc.ibcc.UserRegistration;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,10 +8,11 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,7 +34,6 @@ import com.webdoc.ibcc.databinding.ActivityMobileVerificationBinding;
 import java.util.concurrent.TimeUnit;
 
 public class MobileVerificationActivity extends AppCompatActivity {
-    private ProgressBar progressBar;
     private String verificationID;
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken codeResendToken;
@@ -382,7 +379,8 @@ public class MobileVerificationActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
                                                 FirebaseAuth.getInstance().signOut();
-                                                progressBar.setVisibility(View.GONE);
+                                                //   progressBar.setVisibility(View.GONE);
+                                                Global.utils.hideCustomLoadingDialog();
 
                                                 // Global.utils.hideCustomLoadingDialog();
                                                 // SuccessAlertDialog();
@@ -431,7 +429,8 @@ public class MobileVerificationActivity extends AppCompatActivity {
             String code = phoneAuthCredential.getSmsCode();
 
             if (code != null) {
-                progressBar.setVisibility(View.VISIBLE);
+                Global.utils.showCustomLoadingDialog(MobileVerificationActivity.this);
+                //  progressBar.setVisibility(View.VISIBLE);
                 char[] codeSplit = code.toCharArray();
 
                 layoutBinding.etGetCode1.setText(String.valueOf(codeSplit[0]));
@@ -451,7 +450,8 @@ public class MobileVerificationActivity extends AppCompatActivity {
                 layoutBinding.btnVerifyNow.setEnabled(false);
                 signInWithCredential(phoneAuthCredential);
             } else {
-                progressBar.setVisibility(View.VISIBLE);
+                Global.utils.showCustomLoadingDialog(MobileVerificationActivity.this);
+                //       progressBar.setVisibility(View.VISIBLE);
 
                 layoutBinding.etGetCode1.setText("*");
                 layoutBinding.etGetCode2.setText("*");

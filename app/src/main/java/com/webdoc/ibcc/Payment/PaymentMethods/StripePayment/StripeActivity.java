@@ -16,9 +16,7 @@ import com.webdoc.ibcc.DashBoard.Home.ApplyAttestation.DocumentCheckList.Documen
 import com.webdoc.ibcc.DashBoard.Home.ApplyEquivalence.CallCourier_EQ.CallCourier_EQ;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Essentails.Preferences;
-import com.webdoc.ibcc.Payment.PaymentMethods.JazzCash.JazzCashPaymentActivity;
 import com.webdoc.ibcc.Payment.PaymentMethods.StripePayment.ViewModel.StripeViewModel;
-import com.webdoc.ibcc.ResponseModels.SavePaymentInfo.SavePaymentInfo;
 import com.webdoc.ibcc.databinding.ActivityStripeBinding;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -32,7 +30,6 @@ public class StripeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         initViews();
         observers();
     }
@@ -53,9 +50,12 @@ public class StripeActivity extends AppCompatActivity {
 
         viewModel.LD_getDollorRate().observe(this, response -> {
             if (response != null) {
-                double priceInDollors = calculateInternationalCharges(response.getRates().getPkr());
-                viewModel.callSavePaymentEQApi(preferences.getKeyUserPhone(), priceInDollors, totalAmountinRupees,
-                        sevenDollar, fivePercentAmount);
+                //    double priceInDollors = calculateInternationalCharges(response.getRates().getPkr());
+
+
+                double pkrRate = response.getRates().getPkr();
+
+                viewModel.callSavePaymentEQApi(preferences.getKeyUserPhone(), pkrRate);
             }
         });
     }
@@ -164,12 +164,13 @@ public class StripeActivity extends AppCompatActivity {
 
     public double calculateInternationalCharges(double pkrRate) {
         //200 courier fee
-        int documentsTotalFee = Global.documentsTotalFee;
+      /*  int documentsTotalFee = Global.documentsTotalFee;
         sevenDollar = pkrRate * 7; //webdoc amount:
         double amount = documentsTotalFee + 200 + sevenDollar;
         fivePercentAmount = amount * 0.05; //bank charges:\
         totalAmountinRupees = amount + fivePercentAmount;
-        finalAmountinDollor = totalAmountinRupees / pkrRate;
+        finalAmountinDollor = totalAmountinRupees / pkrRate;*/
+
 
         return finalAmountinDollor;
     }
