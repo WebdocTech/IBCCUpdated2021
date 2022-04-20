@@ -1,34 +1,24 @@
 package com.webdoc.ibcc;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.gson.JsonObject;
 import com.webdoc.ibcc.DashBoard.Dashboard;
-import com.webdoc.ibcc.DataModel.LoginUser;
 import com.webdoc.ibcc.Essentails.Constants;
 import com.webdoc.ibcc.Essentails.Global;
 import com.webdoc.ibcc.Essentails.Preferences;
-import com.webdoc.ibcc.Payment.PaymentMethods.BankAlfalah.BankAlfalhCreditDebit.BankAlfalahCreditDebitActivity;
-import com.webdoc.ibcc.ResponseModels.GetDetailsEquivalence.GetDetailsEquivalence;
 import com.webdoc.ibcc.ResponseModels.PdfResult.PdfResult;
-import com.webdoc.ibcc.ResponseModels.UserLoginResult.UserLoginResult;
 import com.webdoc.ibcc.ServerManager.VolleyRequestController;
 import com.webdoc.ibcc.UserRegistration.RegistrationSharedViewModel.RegistrationSharedViewModel;
 import com.webdoc.ibcc.api.APIClient;
 import com.webdoc.ibcc.api.APIInterface;
 import com.webdoc.ibcc.databinding.ActivitySplashScreenBinding;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +38,7 @@ public class SplashScreen extends AppCompatActivity /*implements VolleyListener*
 
         viwModel = ViewModelProviders.of(this).get(RegistrationSharedViewModel.class);
 
-        callingLogin();
+        callPDFApi();
         observers();
 
     }
@@ -85,6 +75,40 @@ public class SplashScreen extends AppCompatActivity /*implements VolleyListener*
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             startActivity(intent);
             finish();
+        }
+    }
+
+    public void callPDFApi() {
+        if (Constants.isInternetConnected(SplashScreen.this)) {
+            Global.utils.showCustomLoadingDialog(SplashScreen.this);
+
+            APIInterface apiInterface = APIClient.getClient(Constants.BASE_URL);
+            Call<PdfResult> call = apiInterface.callPDF();
+
+            call.enqueue(new Callback<PdfResult>() {
+                @Override
+                public void onResponse(Call<PdfResult> call, Response<PdfResult> response) {
+                    Global.utils.hideCustomLoadingDialog();
+
+                    if (response.isSuccessful()) {
+
+                        Global.pdfResponse = response.body();
+                        callingLogin();
+
+                    } else {
+                        Toast.makeText(SplashScreen.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PdfResult> call, Throwable t) {
+                    Global.utils.hideCustomLoadingDialog();
+                    Log.i("dsd", t.getMessage());
+                    Toast.makeText(SplashScreen.this, "Ooops something went wrong !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(SplashScreen.this, "Please connect internet connection !", Toast.LENGTH_SHORT).show();
         }
     }
 

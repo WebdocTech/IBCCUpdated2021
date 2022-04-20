@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "886950799447",
+    "firebase_url": "https://ibcc-1782b-default-rtdb.firebaseio.com",
     "project_id": "ibcc-1782b",
     "storage_bucket": "ibcc-1782b.appspot.com"
   },
@@ -14,11 +15,35 @@
       },
       "oauth_client": [
         {
-          "client_id": "886950799447-dmprfiai5q118hcmm19mp042je4euuu9.apps.googleusercontent.com",
+          "client_id": "886950799447-1vq97ab8latgsrik132uoqasqjj2larv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.ibcc",
+            "certificate_hash": "f27a788a224bb9bcced62e7f8fd316444522c093"
+          }
+        },
+        {
+          "client_id": "886950799447-44fd7fqt4fhh0c4jdd5un6pel7a32gf0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.ibcc",
+            "certificate_hash": "53afd81ba22c01c70b88875fc93c90f10422116a"
+          }
+        },
+        {
+          "client_id": "886950799447-5vvbnlbcdm4u68buheul8655ecolvua8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.webdoc.ibcc",
             "certificate_hash": "2d2255b364d5e28f5989d3288430a2d3d8c5ad91"
+          }
+        },
+        {
+          "client_id": "886950799447-kn6mupkkuvtspoe178rilme52imp483d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.ibcc",
+            "certificate_hash": "51ba0a9a1b51679d062b3026b4e42848b3139610"
           }
         },
         {
@@ -37,6 +62,13 @@
             {
               "client_id": "886950799447-6lbicmllb6082gqehobaa6acslfmgnd2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "886950799447-okdt1mq1d3s5k72i8lpqad06i4ejb2fi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.webdoc.ibcc"
+              }
             }
           ]
         }

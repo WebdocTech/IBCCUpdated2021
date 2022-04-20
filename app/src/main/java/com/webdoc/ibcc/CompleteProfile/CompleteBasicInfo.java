@@ -1,7 +1,5 @@
 package com.webdoc.ibcc.CompleteProfile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.webdoc.ibcc.Adapter.Spinner.SpinnerCountriesAdapter;
 import com.webdoc.ibcc.Essentails.Global;
@@ -52,23 +49,28 @@ public class CompleteBasicInfo extends AppCompatActivity implements DatePickerDi
         });
 
         //NATIONALITY SPINNER
-        SpinnerCountriesAdapter arrayAdapter = new SpinnerCountriesAdapter(this, R.layout.spinner_item, Global.pdfResponse.getResult().getCountries());
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        layoutBinding.spinnerCountry.setAdapter(arrayAdapter);
-        layoutBinding.spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-                spin_valueNat = Global.pdfResponse.getResult().getCountries().get(position).getName();
-                spin_valueNat_Id = Global.pdfResponse.getResult().getCountries().get(position).getId().toString();
+        Log.i("dfg", Global.pdfResponse.getResult().getCountries() + "");
+        if(Global.pdfResponse.getResult().getCountries()!=null)
+        {
+            SpinnerCountriesAdapter arrayAdapter = new SpinnerCountriesAdapter(this, R.layout.spinner_item, Global.pdfResponse.getResult().getCountries());
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            layoutBinding.spinnerCountry.setAdapter(arrayAdapter);
+            layoutBinding.spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+                    spin_valueNat = Global.pdfResponse.getResult().getCountries().get(position).getName();
+                    spin_valueNat_Id = Global.pdfResponse.getResult().getCountries().get(position).getId().toString();
 
-                nationalityCheck = true;
-            }
+                    nationalityCheck = true;
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub;
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub;
+                }
+            });
+
+        }
 
         //DATE OF BIRTH
         layoutBinding.tvDob.setOnClickListener(new View.OnClickListener() {
